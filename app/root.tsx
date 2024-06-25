@@ -8,6 +8,8 @@ import {
 } from "@remix-run/react";
 import globalCss from "./styles/global.css?url";
 import resetCss from "./styles/reset.css?url";
+import { NextUIProvider } from "@nextui-org/react";
+
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: globalCss },
   { rel: "stylesheet", href: resetCss },
@@ -22,9 +24,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
-        <ScrollRestoration />
-        <Scripts />
+        <NextUIProvider>
+          {children}
+          <ScrollRestoration />
+          <Scripts />
+        </NextUIProvider>
       </body>
     </html>
   );

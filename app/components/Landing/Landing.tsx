@@ -1,5 +1,11 @@
+import Categories from "../Categories/Categories";
+
 const Landing = () => {
-  return <div>Landing</div>;
+  return (
+    <div>
+      <Categories />
+    </div>
+  );
 };
 
 export default Landing;
