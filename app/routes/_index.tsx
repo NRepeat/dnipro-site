@@ -16,7 +16,6 @@ export default function Index() {
       <Navbar />
       {/* <div className="flex-center  bg-teal-100"> */}
       {/* <div className="bg-mainBg max-w-[90%] "> */}
-      <HeroTitle />
 
       <Landing />
       {/* </div> */}

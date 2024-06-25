@@ -30,7 +30,7 @@ const Video = () => {
     }
   }, [innerWidth]);
   return (
-    <div className="md:w-full flex flex-center w-full ">
+    <div className="md:w-full flex flex-center w-full">
       <div
         id="new-collection"
         className=" flex flex-col flex-center absolute text-gray-100 translate-x-1/2 right-1/2 sm:top-40 md:top-14 lg:top-36 top-10 opacity-0 gap-2"

@@ -10,7 +10,7 @@ const HeroTitle = () => {
   }, []);
 
   return (
-    <section className="w-full ">
+    <section className="  ">
       <div className="relative">
         <div className="flex-col flex-center">
           {/* <p className="hero-title" id="hero-title">

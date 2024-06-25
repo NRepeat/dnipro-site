@@ -1,16 +1,44 @@
+import { CategoryCard } from "~/types/types";
 import {
-  blackImg,
-  blueImg,
+  cross,
   highlightFirstVideo,
   highlightFourthVideo,
   highlightSecondVideo,
   highlightThirdVideo,
-  whiteImg,
-  yellowImg,
+  hoodieImage,
+  jacketImage,
+  t_short,
 } from "../utils";
 
 export const navLists = ["Для нього", "Для неї", "Бренди", "Про нас"];
-
+export const categoriesData: CategoryCard[] = [
+  {
+    name: "Верхній одяг",
+    image: [jacketImage, cross],
+    gridColumnPosition: "col-start-1 row-start-2 col-span-6   h-[500px]",
+    gridRowPosition: "row-span-1",
+  },
+  {
+    name: "Взуття",
+    image: [cross],
+    gridColumnPosition: "col-span-8 row-start-2  col-start-7  h-[500px]",
+    gridRowPosition: "row-span-1",
+  },
+  {
+    name: "Футболки",
+    image: [t_short],
+    gridColumnPosition:
+      "col-start-6  row-start-1  row-end-2  col-span-9 h-[600px]",
+    gridRowPosition: "row-span-1",
+  },
+  {
+    name: "Худі",
+    image: [hoodieImage],
+    gridColumnPosition:
+      "col-start-1 col-end-6 row-start-1 row-end-3 col-span-4 h-[600px]",
+    gridRowPosition: "row-span-2 ",
+  },
+];
 export const highlightsSlides = [
   {
     id: 1,
@@ -43,33 +71,6 @@ export const highlightsSlides = [
     textLists: ["All-new Action button.", "What will yours do?."],
     video: highlightFourthVideo,
     videoDuration: 3.63,
-  },
-];
-
-export const models = [
-  {
-    id: 1,
-    title: "iPhone 15 Pro in Natural Titanium",
-    color: ["#8F8A81", "#ffe7b9", "#6f6c64"],
-    img: yellowImg,
-  },
-  {
-    id: 2,
-    title: "iPhone 15 Pro in Blue Titanium",
-    color: ["#53596E", "#6395ff", "#21242e"],
-    img: blueImg,
-  },
-  {
-    id: 3,
-    title: "iPhone 15 Pro in White Titanium",
-    color: ["#C9C8C2", "#ffffff", "#C9C8C2"],
-    img: whiteImg,
-  },
-  {
-    id: 4,
-    title: "iPhone 15 Pro in Black Titanium",
-    color: ["#454749", "#3b3b3b", "#181819"],
-    img: blackImg,
   },
 ];
 

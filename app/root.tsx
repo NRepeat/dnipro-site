@@ -8,7 +8,8 @@ import {
 } from "@remix-run/react";
 import globalCss from "./styles/global.css?url";
 import resetCss from "./styles/reset.css?url";
-import { NextUIProvider } from "@nextui-org/react";
+
+import { NextUIProvider } from "@nextui-org/system";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: globalCss },
