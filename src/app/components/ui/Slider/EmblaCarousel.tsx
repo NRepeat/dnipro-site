@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { EmblaOptionsType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
@@ -12,7 +12,7 @@ type PropType = {
   playOnInit?: boolean;
 };
 
-const Slider: React.FC<PropType> = (props) => {
+const SliderCustom: React.FC<PropType> = (props) => {
   const {
     slides,
     options,
@@ -70,19 +70,36 @@ const Slider: React.FC<PropType> = (props) => {
   //     .on("autoplay:stop", () => setIsPlaying(false))
   //     .on("reInit", () => setIsPlaying(autoplay.isPlaying()));
   // }, [emblaApi]);
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
 
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
   return (
-    <div className="embla">
-      <div className="embla__viewport" ref={emblaRef}>
-        <div className="embla__container">
+    <div className="embla h-full">
+      <div className="embla__viewport h-full" ref={emblaRef}>
+        <div className="embla__container h-full">
           {slides?.map((slide) => (
-            <div className="embla__slide" key={slide}>
-              <div className={slideStyle}>{slide}</div>
+            <div className="embla__slide h-full" key={slide}>
+              <div className={`${slideStyle} h-full`}>{slide}</div>
             </div>
           ))}
         </div>
       </div>
-
+      <button
+        className="embla__prev absolute left-0 top-1/2"
+        onClick={scrollPrev}
+      >
+        Prev
+      </button>
+      <button
+        className="embla__next right-0 top-1/2 absolute"
+        onClick={scrollNext}
+      >
+        Next
+      </button>
       {/* <div className="embla__controls">
         <div className="embla__buttons">
           <PrevButton
@@ -103,4 +120,4 @@ const Slider: React.FC<PropType> = (props) => {
   );
 };
 
-export default Slider;
+export default SliderCustom;

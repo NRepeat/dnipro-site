@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Cinzel } from "@next/font/google";
+import { Providers } from "./providers/providers";
+import { NavBar } from "./page";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -23,7 +25,10 @@ export default function RootLayout({
       <body
         className={`${inter.className} ${cinzel.className} ${cinzel.variable} `}
       >
-        {children}
+        <Providers>
+          <NavBar></NavBar>
+          {children}
+        </Providers>
       </body>
     </html>
   );

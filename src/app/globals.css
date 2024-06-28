@@ -42,4 +42,7 @@ body {
   .card {
     @apply w-24 h-32 flex bg-fuchsia-200 items-center justify-center opacity-0;
   }
+  .content-container {
+    height: calc(100vh - 4rem);
+  }
 }
