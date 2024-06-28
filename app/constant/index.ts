@@ -7,6 +7,7 @@ import {
   highlightThirdVideo,
   hoodieImage,
   jacketImage,
+  sneakersP,
   t_short,
 } from "../utils";
 
@@ -17,12 +18,14 @@ export const categoriesData: CategoryCard[] = [
     image: [jacketImage, cross],
     gridColumnPosition: "col-start-1 row-start-2 col-span-6   h-[500px]",
     gridRowPosition: "row-span-1",
+    delay: 2800,
   },
   {
     name: "Взуття",
-    image: [cross],
-    gridColumnPosition: "col-span-8 row-start-2  col-start-7  h-[500px]",
+    image: [sneakersP, sneakersP],
+    gridColumnPosition: "col-span-8 row-start-2  col-start-7  h-[300px]",
     gridRowPosition: "row-span-1",
+    delay: 3100,
   },
   {
     name: "Футболки",

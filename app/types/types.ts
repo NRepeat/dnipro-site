@@ -10,6 +10,7 @@ export interface CategoryCard {
   icon?: string;
   button?: boolean;
   footer?: string;
+  delay?: number;
 }
 
 export interface Collection extends CategoryCard {}

@@ -1,5 +1,3 @@
-import React from "react";
-import { cross, hoodieImage, jacketImage, t_short } from "~/utils";
 import { categoriesData } from "~/constant";
 import CardC from "./Card";
 

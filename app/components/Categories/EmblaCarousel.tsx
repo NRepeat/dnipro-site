@@ -1,63 +1,64 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { EmblaOptionsType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import { NextButton, PrevButton, usePrevNextButtons } from "./Buttons";
 import { Image } from "@nextui-org/image";
 
 type PropType = {
   slides: string[];
   options?: EmblaOptionsType;
+  delay: number;
 };
 
 const EmblaCarousel: React.FC<PropType> = (props) => {
-  const { slides, options } = props;
+  const { slides, options, delay = 3000 } = props;
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [
-    Autoplay({ playOnInit: true, delay: 3000 }),
+    Autoplay({ playOnInit: true, delay, stopOnMouseEnter: true }),
   ]);
-  const [isPlaying, setIsPlaying] = useState(true);
 
-  const {
-    prevBtnDisabled,
-    nextBtnDisabled,
-    onPrevButtonClick,
-    onNextButtonClick,
-  } = usePrevNextButtons(emblaApi);
+  // const [isPlaying, setIsPlaying] = useState(true);
 
-  const onButtonAutoplayClick = useCallback(
-    (callback: () => void) => {
-      const autoplay = emblaApi?.plugins()?.autoplay;
-      if (!autoplay) return;
+  // const {
+  //   prevBtnDisabled,
+  //   nextBtnDisabled,
+  //   onPrevButtonClick,
+  //   onNextButtonClick,
+  // } = usePrevNextButtons(emblaApi);
 
-      const resetOrStop =
-        autoplay.options.stopOnInteraction === false
-          ? autoplay.reset
-          : autoplay.stop;
+  // const onButtonAutoplayClick = useCallback(
+  //   (callback: () => void) => {
+  //     const autoplay = emblaApi?.plugins()?.autoplay;
+  //     if (!autoplay) return;
 
-      resetOrStop();
-      callback();
-    },
-    [emblaApi]
-  );
+  //     const resetOrStop =
+  //       autoplay.options.stopOnInteraction === false
+  //         ? autoplay.reset
+  //         : autoplay.stop;
 
-  const toggleAutoplay = useCallback(() => {
-    const autoplay = emblaApi?.plugins()?.autoplay;
-    if (!autoplay) return;
+  //     resetOrStop();
+  //     callback();
+  //   },
+  //   [emblaApi]
+  // );
 
-    const playOrStop = autoplay.isPlaying() ? autoplay.stop : autoplay.play;
-    playOrStop();
-  }, [emblaApi]);
+  // const toggleAutoplay = useCallback(() => {
+  //   const autoplay = emblaApi?.plugins()?.autoplay;
+  //   if (!autoplay) return;
 
-  useEffect(() => {
-    const autoplay = emblaApi?.plugins()?.autoplay;
-    if (!autoplay) return;
+  //   const playOrStop = autoplay.isPlaying() ? autoplay.stop : autoplay.play;
+  //   playOrStop();
+  // }, [emblaApi]);
 
-    setIsPlaying(autoplay.isPlaying());
-    emblaApi
-      .on("autoplay:play", () => setIsPlaying(true))
-      .on("autoplay:stop", () => setIsPlaying(false))
-      .on("reInit", () => setIsPlaying(autoplay.isPlaying()));
-  }, [emblaApi]);
+  // useEffect(() => {
+  //   const autoplay = emblaApi?.plugins()?.autoplay;
+  //   if (!autoplay) return;
+
+  // setIsPlaying(autoplay.isPlaying());
+  // emblaApi
+  //   .on("autoplay:play", () => setIsPlaying(true))
+  //   .on("autoplay:stop", () => setIsPlaying(false))
+  //   .on("reInit", () => setIsPlaying(autoplay.isPlaying()));
+  // }, [emblaApi]);
 
   return (
     <div className="embla">

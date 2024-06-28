@@ -12,7 +12,6 @@ const CardC = ({ categoriesData }: { categoriesData: CategoryCard }) => {
   };
 
   const OPTIONS: EmblaOptionsType = {};
-  const SLIDE_COUNT = 5;
   const SLIDES = categoriesData.image;
   return (
     <Card
@@ -30,7 +29,7 @@ const CardC = ({ categoriesData }: { categoriesData: CategoryCard }) => {
         </h4>
       </CardHeader>
       {categoriesData.image.length >= 2 ? (
-        <EmblaCarousel slides={SLIDES} options={OPTIONS} />
+        <EmblaCarousel slides={SLIDES} options={OPTIONS} delay={} />
       ) : (
         <Image
           removeWrapper
