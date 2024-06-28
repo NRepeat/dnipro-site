@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import Slider from "./components/ui/Slider/EmblaCarousel";
 import { useEffect } from "react";
+import Welcome from "./components/Welcome/Welcome";
 export default function Home() {
   gsap.registerPlugin(ScrollTrigger);
   const categoriesData = ["box-1", "box-2", "box-3"];
@@ -58,19 +59,19 @@ export default function Home() {
     //   },
     //   duration: 0.6,
     // });
-    const updateValues = () => {
-      const position = ScrollTrigger.positionInViewport(
-        "#box-2",
-        "center"
-      ).toFixed(2);
-      console.log("🚀 ~ Home ~ position:", position);
-    };
-    ScrollTrigger.create({
-      start: 0,
-      end: "max",
-      onUpdate: updateValues,
-    });
-    updateValues();
+    // const updateValues = () => {
+    //   const position = ScrollTrigger.positionInViewport(
+    //     "#box-2",
+    //     "center"
+    //   ).toFixed(2);
+    //   console.log("🚀 ~ Home ~ position:", position);
+    // };
+    // ScrollTrigger.create({
+    //   start: 0,
+    //   end: "max",
+    //   onUpdate: updateValues,
+    // });
+    // updateValues();
   }, []);
 
   const div1 = (
@@ -84,18 +85,18 @@ export default function Home() {
     </div>
   );
   const data = [
-    [div2, div2, div2, div2],
+    // [div2, div2, div2, div2],
     [div1, div1, div1, div1, div1],
   ];
   // const data = ["1", "2", "3"];
 
   return (
-    <main className="flex min-h-screen text-yellow-200 flex-col items-center justify-between p-24">
+    <main className="">
       {/* <div id="box-1" className="h-screen flex items-center ">
         1
       </div> */}
-      <div className="flex flex-row gap-2">
-        {/* <div id="box-2" className="card">
+
+      {/* <div id="box-2" className="card">
           2
         </div>
         <div id="box-2" className="card">
@@ -104,14 +105,15 @@ export default function Home() {
         <div id="box-2" className="card">
           2
         </div> */}
-        <Slider
+      <Welcome />
+      {/* <Slider
           options={{}}
           delay={3000}
           slides={data}
           playOnInit={false}
           slideStyle="flex items-center justify-center gap-2"
-        ></Slider>
-      </div>
+        ></Slider> */}
+
       {/* <div id="box-3" className="h-screen flex items-center">
         3
       </div> */}
