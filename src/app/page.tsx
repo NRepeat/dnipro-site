@@ -14,8 +14,8 @@ import {
   Link,
   Button,
 } from "@nextui-org/react";
+import CardWithTextFullWidth from "./components/Card/Card";
 export default function Home() {
-  gsap.registerPlugin(ScrollTrigger);
   const categoriesData = ["box-1", "box-2", "box-3"];
   const cartIds = categoriesData.map((category) => `#${category}`);
 
@@ -43,67 +43,11 @@ export default function Home() {
   //   onUpdate: updateValues,
   // });
   // updateValues();
-
+  useGSAP(() => {}, []);
   return (
-    <main className="">
+    <main className="bg-gradient-to-r h-full from-slate-300 to-slate-500 flex flex-col">
       <Welcome />
+      <CardWithTextFullWidth id="brand-cards" />
     </main>
   );
 }
-
-export const NavBar = () => {
-  const comp = useRef(null);
-
-  useGSAP(() => {
-    let ctx = gsap.context(() => {
-      const t1 = gsap.timeline();
-      t1.fromTo(
-        "#nav-bar-1",
-        {
-          opacity: 0,
-          y: -40,
-        },
-        {
-          y: 0,
-          opacity: 1,
-        }
-      );
-    }, comp);
-
-    return () => ctx.revert();
-  }, []);
-  return (
-    <Navbar shouldHideOnScroll ref={comp} id="nav-bar-1">
-      <NavbarBrand>
-        <p className="font-bold text-inherit">ACME</p>
-      </NavbarBrand>
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Features
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="#" aria-current="page">
-            Customers
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Integrations
-          </Link>
-        </NavbarItem>
-      </NavbarContent>
-      <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
-            Sign Up
-          </Button>
-        </NavbarItem>
-      </NavbarContent>
-    </Navbar>
-  );
-};

@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Cinzel } from "@next/font/google";
 import { Providers } from "./providers/providers";
-import { NavBar } from "./page";
+import { NavBar } from "./components/ui/Navbar/Navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ export default function RootLayout({
         className={`${inter.className} ${cinzel.className} ${cinzel.variable} `}
       >
         <Providers>
-          <NavBar></NavBar>
+          <NavBar />
           {children}
         </Providers>
       </body>

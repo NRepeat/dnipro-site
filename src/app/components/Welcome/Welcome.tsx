@@ -10,6 +10,7 @@ import {
 } from "@nextui-org/react";
 import SliderCustom from "../ui/Slider/EmblaCarousel";
 import { useGSAP } from "@gsap/react";
+import CardWithTextFullWidth from "../Card/Card";
 
 const Welcome = () => {
   const comp = useRef(null);
@@ -56,7 +57,7 @@ const Welcome = () => {
     return () => ctx.revert();
   }, []);
   return (
-    <div className="relative h-svh w-full" ref={comp}>
+    <div className="relative h-screen w-full" ref={comp}>
       <div
         id="intro-slider"
         className=" p-10 bg-gray-50 absolute top-0 left-0 font-spaceGrotesk z-10 w-full flex flex-col gap-10 tracking-tight"
@@ -91,7 +92,7 @@ const CardW = ({ id, position }: { id: number; position: string }) => {
     <Image
       removeWrapper
       alt="Card example background"
-      className="z-0 w-full h-full  -translate-y-6 object-cover  hover:scale-105 transition-all rounded-none"
+      className="z-0 w-full h-full   object-cover  hover:scale-105 transition-all rounded-none"
       src="https://nextui.org/images/card-example-6.jpeg"
     />
   );
@@ -99,7 +100,7 @@ const CardW = ({ id, position }: { id: number; position: string }) => {
   return (
     <Card
       id={`card-${id}`}
-      className="h-full flex bg-gray-950 justify-center place-items-center w-full rounded-none  relative  "
+      className="h-full  flex bg-gray-950 justify-center place-items-center w-full rounded-none  relative  "
       isFooterBlurred
     >
       <CardHeader className="absolute z-[1] top-1 flex-col items-start ">
