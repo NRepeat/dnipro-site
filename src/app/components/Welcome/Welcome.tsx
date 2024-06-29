@@ -6,7 +6,7 @@ import images from "@/app/utils/assets/images";
 import Image, { StaticImageData } from "next/image";
 
 const Welcome = () => {
-  const { image10, image12, image11, image9 } = images;
+  const { image10, image12, image11, image9, image6 } = images;
   return (
     <div className="relative h-screen w-full">
       <div
@@ -25,9 +25,9 @@ const Welcome = () => {
       </div>
       <div className="flex flex-row content-container">
         {[
-          { id: 1, image: image10 },
-          { id: 2, image: image9 },
-          { id: 3, image: image12 },
+          { id: 1, image: [image10, image6] },
+          { id: 2, image: [image9, image12] },
+          { id: 3, image: [image12, image11] },
         ].map((i) => (
           <CardW key={i.id} id={i.id} image={i.image} />
         ))}
@@ -38,15 +38,16 @@ const Welcome = () => {
 
 export default Welcome;
 
-const CardW = ({ id, image }: { id: number; image: StaticImageData }) => {
-  const slide1 = (
+const CardW = ({ id, image }: { id: number; image: StaticImageData[] }) => {
+  const slides = image.map((imag, i) => (
     <Image
+      key={i}
       alt="Card example background"
       className="z-0 w-full h-full   object-cover  hover:scale-105 transition-all rounded-none"
-      src={image}
+      src={imag}
     />
-  );
-  const slides = [slide1, slide1];
+  ));
+
   return (
     <Card
       id={`card-${id}`}
