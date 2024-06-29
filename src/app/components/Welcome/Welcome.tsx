@@ -1,18 +1,12 @@
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
-import {
-  Button,
-  Card,
-  CardFooter,
-  CardHeader,
-  Image,
-  Slider,
-} from "@nextui-org/react";
+import { Button, Card, CardFooter, CardHeader } from "@nextui-org/react";
 import SliderCustom from "../ui/Slider/EmblaCarousel";
-import { useGSAP } from "@gsap/react";
-import CardWithTextFullWidth from "../Card/Card";
+import images from "@/app/utils/assets/images";
+import Image, { StaticImageData } from "next/image";
 
 const Welcome = () => {
+  const { image10, image12, image11, image9 } = images;
   return (
     <div className="relative h-screen w-full">
       <div
@@ -31,11 +25,11 @@ const Welcome = () => {
       </div>
       <div className="flex flex-row content-container">
         {[
-          { id: 1, position: "top-[-50px]" },
-          { id: 2, position: "top-[50px]" },
-          { id: 3, position: "top-[-50px]" },
+          { id: 1, image: image10 },
+          { id: 2, image: image9 },
+          { id: 3, image: image12 },
         ].map((i) => (
-          <CardW key={i.id} id={i.id} position={i.position} />
+          <CardW key={i.id} id={i.id} image={i.image} />
         ))}
       </div>
     </div>
@@ -44,13 +38,12 @@ const Welcome = () => {
 
 export default Welcome;
 
-const CardW = ({ id, position }: { id: number; position: string }) => {
+const CardW = ({ id, image }: { id: number; image: StaticImageData }) => {
   const slide1 = (
     <Image
-      removeWrapper
       alt="Card example background"
       className="z-0 w-full h-full   object-cover  hover:scale-105 transition-all rounded-none"
-      src="https://nextui.org/images/card-example-6.jpeg"
+      src={image}
     />
   );
   const slides = [slide1, slide1];

@@ -69,6 +69,9 @@ export default function Home() {
     >
       <Welcome />
       <ScrollSection />
+      <footer className="footer">
+        <span>Footer</span>
+      </footer>
     </main>
   );
 }
