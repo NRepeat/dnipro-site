@@ -15,39 +15,60 @@ import {
   Button,
 } from "@nextui-org/react";
 import CardWithTextFullWidth from "./components/Card/Card";
+import ScrollSection from "./components/ui/HorizontalScroll/HorizontalScroll";
 export default function Home() {
-  const categoriesData = ["box-1", "box-2", "box-3"];
-  const cartIds = categoriesData.map((category) => `#${category}`);
+  const comp = useRef(null);
 
-  // Конечная анимация для всех элементов
-  // tl.to(cartIds, {
-  //   opacity: 1,
-  //   x: 0,
-  //   stagger: {
-  //     amount: 1,
-  //     from: "center",
-  //     ease: "power2.inOut", // Плавный старт и остановка
-  //   },
-  //   duration: 0.6,
-  // });
-  // const updateValues = () => {
-  //   const position = ScrollTrigger.positionInViewport(
-  //     "#box-2",
-  //     "center"
-  //   ).toFixed(2);
-  //   console.log("🚀 ~ Home ~ position:", position);
-  // };
-  // ScrollTrigger.create({
-  //   start: 0,
-  //   end: "max",
-  //   onUpdate: updateValues,
-  // });
-  // updateValues();
-  useGSAP(() => {}, []);
+  gsap.registerPlugin(ScrollTrigger);
+  useGSAP(() => {
+    let ctx = gsap.context(() => {
+      const t1 = gsap.timeline();
+      t1.from("#intro-slider", {
+        xPercent: "-100",
+        duration: 0.6,
+        delay: 0.3,
+      })
+        .from(["#title-1", "#title-2", "#title-3"], {
+          opacity: 0,
+          y: "+=30",
+          stagger: 0.5,
+        })
+        .to(["#title-1", "#title-2", "#title-3"], {
+          opacity: 0,
+          y: "-=30",
+          delay: 0.3,
+          stagger: 0.5,
+        })
+        .to("#intro-slider", {
+          xPercent: "-100",
+          duration: 0.6,
+        })
+
+        .from(["#card-1", "#card-2", "#card-3"], {
+          opacity: 0,
+
+          duration: 0.5,
+          ease: "power2.out",
+          stagger: { from: "start", amount: 0.1 },
+        })
+        .to(["#card-1", "#card-2", "#card-3"], {
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.out",
+          stagger: { from: "start", amount: 0.1 },
+        });
+    }, comp);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <main className="bg-gradient-to-r h-full from-slate-300 to-slate-500 flex flex-col">
+    <main
+      className="bg-gradient-to-r h-full from-slate-300 to-slate-500 flex flex-col"
+      ref={comp}
+    >
       <Welcome />
-      <CardWithTextFullWidth id="brand-cards" />
+      <ScrollSection />
     </main>
   );
 }
