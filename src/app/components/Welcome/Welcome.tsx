@@ -1,12 +1,10 @@
-import { useLayoutEffect, useRef } from "react";
-import gsap from "gsap";
 import { Button, Card, CardFooter, CardHeader } from "@nextui-org/react";
 import SliderCustom from "../ui/Slider/EmblaCarousel";
 import images from "@/app/utils/assets/images";
 import Image, { StaticImageData } from "next/image";
 
 const Welcome = () => {
-  const { image10, image12, image11, image9, image6 } = images;
+  const { image10, image12, image11, image9, image6 } = images.models;
   return (
     <div className="relative h-screen w-full">
       {/* <div

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { EmblaOptionsType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
@@ -18,58 +18,20 @@ const SliderCustom: React.FC<PropType> = (props) => {
     options,
     children,
     slideStyle,
-    playOnInit,
+    playOnInit = false,
     delay = 2000,
   } = props;
 
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [
-    Autoplay({ playOnInit, delay }),
+    Autoplay({
+      playOnInit,
+      delay,
+      stopOnMouseEnter: true,
+      stopOnInteraction: false,
+    }),
   ]);
   emblaApi?.on;
 
-  // const [isPlaying, setIsPlaying] = useState(true);
-
-  // const {
-  //   prevBtnDisabled,
-  //   nextBtnDisabled,
-  //   onPrevButtonClick,
-  //   onNextButtonClick,
-  // } = usePrevNextButtons(emblaApi);
-
-  // const onButtonAutoplayClick = useCallback(
-  //   (callback: () => void) => {
-  //     const autoplay = emblaApi?.plugins()?.autoplay;
-  //     if (!autoplay) return;
-
-  //     const resetOrStop =
-  //       autoplay.options.stopOnInteraction === false
-  //         ? autoplay.reset
-  //         : autoplay.stop;
-
-  //     resetOrStop();
-  //     callback();
-  //   },
-  //   [emblaApi]
-  // );
-
-  // const toggleAutoplay = useCallback(() => {
-  //   const autoplay = emblaApi?.plugins()?.autoplay;
-  //   if (!autoplay) return;
-
-  //   const playOrStop = autoplay.isPlaying() ? autoplay.stop : autoplay.play;
-  //   playOrStop();
-  // }, [emblaApi]);
-
-  // useEffect(() => {
-  //   const autoplay = emblaApi?.plugins()?.autoplay;
-  //   if (!autoplay) return;
-
-  //   setIsPlaying(autoplay.isPlaying());
-  //   emblaApi
-  //     .on("autoplay:play", () => setIsPlaying(true))
-  //     .on("autoplay:stop", () => setIsPlaying(false))
-  //     .on("reInit", () => setIsPlaying(autoplay.isPlaying()));
-  // }, [emblaApi]);
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
   }, [emblaApi]);
@@ -77,15 +39,20 @@ const SliderCustom: React.FC<PropType> = (props) => {
   const scrollNext = useCallback(() => {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
+
   return (
-    <div className="embla h-full">
+    <div className="embla h-full w-full">
       <div className="embla__viewport h-full" ref={emblaRef}>
         <div className="embla__container h-full">
-          {slides?.map((slide) => (
-            <div className="embla__slide h-full" key={slide}>
-              <div className={`${slideStyle} h-full`}>{slide}</div>
-            </div>
-          ))}
+          {children
+            ? children
+            : slides?.map((slide) => (
+                <div className="embla__slide h-full" key={slide}>
+                  <div className={`${slideStyle} h-full`}>
+                    {children ? children : slide}
+                  </div>
+                </div>
+              ))}
         </div>
       </div>
       <button

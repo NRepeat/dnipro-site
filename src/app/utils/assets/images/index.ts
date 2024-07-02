@@ -9,6 +9,16 @@ import image10 from "../../../../../public/assets/13.jpg";
 import image11 from "../../../../../public/assets/15.jpg";
 import image12 from "../../../../../public/assets/18.jpg";
 
+import baldinini from "../../../../../public/assets/baldinini.svg";
+import boss from "../../../../../public/assets/boss-hugo-boss-11150.svg";
+import armani from "../../../../../public/assets/emporio-armani.svg";
+import prada from "../../../../../public/assets/Prada-Logo.svg";
+import premiata from "../../../../../public/assets/premiata-logo-vector.svg";
+import versace from "../../../../../public/assets/versace-3.svg";
+import versace1 from "../../../../../public/assets/versace-3.svg";
+import versace2 from "../../../../../public/assets/versace-3.svg";
+import versace3 from "../../../../../public/assets/versace-3.svg";
+
 const images = {
   image1,
   image2,
@@ -21,5 +31,13 @@ const images = {
   image11,
   image12,
 };
-
-export default images;
+const brandsIcons: { [key: string]: string } = {
+  prada,
+  premiata,
+  versace,
+  versace1,
+  versace2,
+  versace3,
+};
+const image = { models: images, brandsIcons };
+export default image;
