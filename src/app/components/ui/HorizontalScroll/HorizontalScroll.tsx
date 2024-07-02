@@ -48,16 +48,15 @@ function ScrollSection() {
       <div ref={triggerRef}>
         <div ref={sectionRef} className="scroll-section-inner">
           <div className="scroll-section flex justify-center ">
-            <div className="w-full flex justify-center flex-col  relative items-center">
-              <div className="w-full">
-                <Image
-                  src={image1}
-                  alt="image1"
-                  className="w-1/3  h-auto object-cover"
-                />
-              </div>
+            <div className="w-full flex justify-center   relative items-center">
+              <Image
+                src={image1}
+                alt="image1"
+                className="w-1/3  h-auto object-cover"
+              />
+
               <div className="w-10/12 pl-8 flex flex-col justify-evenly">
-                <div className="absolute text-white top-44 right-[100px]">
+                <div className=" text-white top-44 right-[100px]">
                   <h1 className="text-9xl">Software Engineer</h1>
                   <h1 className="text-9xl">Designer</h1>
                   <h1 className="text-9xl">Freelancer</h1>

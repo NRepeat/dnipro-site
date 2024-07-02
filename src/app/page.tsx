@@ -23,40 +23,29 @@ export default function Home() {
   useGSAP(() => {
     let ctx = gsap.context(() => {
       const t1 = gsap.timeline();
-      t1.from("#intro-slider", {
-        xPercent: "-100",
-        duration: 0.6,
-        delay: 0.3,
-      })
-        .from(["#title-1", "#title-2", "#title-3"], {
-          opacity: 0,
-          y: "+=30",
-          stagger: 0.5,
-        })
-        .to(["#title-1", "#title-2", "#title-3"], {
-          opacity: 0,
-          y: "-=30",
-          delay: 0.3,
-          stagger: 0.5,
-        })
-        .to("#intro-slider", {
-          xPercent: "-100",
-          duration: 0.6,
-        })
+      // t1.from("#intro-slider", {
+      //   xPercent: "-100",
+      //   duration: 0.6,
+      //   delay: 0.3,
+      // })
 
-        .from(["#card-1", "#card-2", "#card-3"], {
-          opacity: 0,
+      // .to("#intro-slider", {
+      //   xPercent: "-100",
+      //   duration: 0.6,
+      // })
 
-          duration: 0.5,
-          ease: "power2.out",
-          stagger: { from: "start", amount: 0.1 },
-        })
-        .to(["#card-1", "#card-2", "#card-3"], {
-          opacity: 1,
-          duration: 0.5,
-          ease: "power2.out",
-          stagger: { from: "start", amount: 0.1 },
-        });
+      t1.from(["#card-1", "#card-2", "#card-3"], {
+        opacity: 0,
+
+        duration: 1,
+        ease: "power2.out",
+        stagger: { from: "start", amount: 0.5 },
+      }).to(["#card-1", "#card-2", "#card-3"], {
+        opacity: 1,
+        duration: 1,
+        ease: "power2.out",
+        stagger: { from: "start", amount: 0.5 },
+      });
     }, comp);
 
     return () => ctx.revert();

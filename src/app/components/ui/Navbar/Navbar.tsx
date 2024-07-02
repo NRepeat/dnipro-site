@@ -12,29 +12,6 @@ import Link from "next/link";
 import { useRef } from "react";
 
 export const NavBar = () => {
-  const comp = useRef(null);
-
-  useGSAP(() => {
-    gsap.from("#nav-bar-1", {
-      opacity: 0,
-      y: -10,
-      delay: 1,
-    });
-    gsap.to("#nav-bar-1", {
-      opacity: 1,
-      y: 0,
-      delay: 1,
-    });
-    // let ctx = gsap.context(() => {
-    //   const t1 = gsap.timeline();
-    //   t1.to("#nav-bar-1", {
-    //     opacity: 1,
-    //     y: 0,
-    //   });
-    // }, comp);
-
-    // return () => ctx.revert();
-  }, []);
   return (
     // <div className="flex opacity-0" id="nav-bar-1" ref={comp}>
     <Navbar shouldHideOnScroll>
@@ -42,19 +19,14 @@ export const NavBar = () => {
         <p className="font-bold text-inherit">ACME</p>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Features
-          </Link>
-        </NavbarItem>
         <NavbarItem isActive>
-          <Link href="#" aria-current="page">
-            Customers
+          <Link color="foreground" href="/">
+            Жіноче
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" href="#">
-            Integrations
+          <Link href="/man" aria-current="page">
+            Чоловіче
           </Link>
         </NavbarItem>
       </NavbarContent>
