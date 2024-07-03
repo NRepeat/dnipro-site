@@ -9,11 +9,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
-
+  const params = useParams();
   return (
     <main className="w-full flex justify-center">
       <div className="max-w-[1024px] flex justify-start w-full px-6">
-        <Filter pathname={pathname} />
+        <Filter pathname={pathname} sex={params.sex} />
         {children}
       </div>
     </main>
