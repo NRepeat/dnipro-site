@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import Filter from "../components/Filter/Filter";
 
 export default function RootLayout({
@@ -8,12 +8,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const pathname = useParams();
-  console.log("🚀 ~ pathname:", pathname);
+  const pathname = usePathname();
+
   return (
     <main className="w-full flex justify-center">
       <div className="max-w-[1024px] flex justify-start w-full px-6">
-        <Filter />
+        <Filter pathname={pathname} />
         {children}
       </div>
     </main>
