@@ -1,6 +1,7 @@
 import { handleFormAction } from "@/app/data/collection";
 import PriceRange from "./PriceRange";
 import { Size } from "./Size";
+import Brand from "./Brand";
 
 const Filter = ({ pathname, sex }: { pathname: string; sex: string }) => {
   return (
@@ -12,6 +13,7 @@ const Filter = ({ pathname, sex }: { pathname: string; sex: string }) => {
       </form>
       <PriceRange />
       <Size sex={sex} />
+      <Brand />
     </div>
   );
 };
