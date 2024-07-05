@@ -12,7 +12,7 @@ const Brand = () => {
         label="Select amenities"
         orientation="horizontal"
         value={groupSelected}
-        onChange={setGroupSelected}
+        onChange={() => setGroupSelected}
       >
         {data.map((data) => (
           <CustomCheckbox value={data.brand} key={data.brand}>

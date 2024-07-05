@@ -17,7 +17,6 @@ const updateName = async (id: number, name: string) => {
       collections = collections.map((collection) =>
         collection.id === id ? newData : collection
       );
-      console.log("Updated Collections: ", collections);
     }
   } catch (error) {
     console.error(error);

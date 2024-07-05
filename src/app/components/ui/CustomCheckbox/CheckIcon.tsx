@@ -1,5 +1,5 @@
 import React from "react";
-export const CheckIcon = (props) => (
+export const CheckIcon = (props: any) => (
   <svg
     aria-hidden="true"
     fill="none"

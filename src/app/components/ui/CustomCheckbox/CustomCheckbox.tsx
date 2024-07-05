@@ -22,7 +22,7 @@ const checkbox = tv({
   },
 });
 
-export const CustomCheckbox = (props) => {
+export const CustomCheckbox = (props: any) => {
   const {
     children,
     isSelected,
@@ -42,14 +42,9 @@ export const CustomCheckbox = (props) => {
         <input {...getInputProps()} />
       </VisuallyHidden>
       <Chip
-        classNames={{
-          base: styles.base(),
-          content: styles.content(),
-        }}
         color="primary"
         startContent={isSelected ? <CheckIcon className="ml-1" /> : null}
         variant="faded"
-        {...getLabelProps()}
       >
         {children ? children : isSelected ? "Enabled" : "Disabled"}
       </Chip>

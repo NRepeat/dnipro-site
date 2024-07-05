@@ -5,7 +5,7 @@ import { CustomCheckbox } from "../ui/CustomCheckbox/CustomCheckbox";
 const womanSizes = [28, 29, 30, 31, 32];
 const manSizes = [38, 39, 40, 41, 42];
 
-export const Size = ({ sex }: { sex: "man" | "woman" }) => {
+export const Size = ({ sex }: { sex: string | string[] }) => {
   const [groupSelected, setGroupSelected] = React.useState([]);
 
   const manSizeMap = manSizes.map((size) => (
@@ -25,13 +25,10 @@ export const Size = ({ sex }: { sex: "man" | "woman" }) => {
         label="Select amenities"
         orientation="horizontal"
         value={groupSelected}
-        onChange={setGroupSelected}
+        onChange={() => setGroupSelected}
       >
         {sex === "man" ? manSizeMap : womanSizeMap}
       </CheckboxGroup>
-      <p className="mt-4 ml-1 text-default-500">
-        Selected: {groupSelected.join(", ")}
-      </p>
     </div>
   );
 };
