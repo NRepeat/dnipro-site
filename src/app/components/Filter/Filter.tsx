@@ -7,8 +7,7 @@ import Material from "./Material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FilterStateType } from "@/app/store/slice/filterSlice";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Filter = ({
   pathname,
@@ -27,16 +26,10 @@ const Filter = ({
   const { price } = filter;
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
-    params.set("price", price.join(","));
-    router.push(
-      {
-        pathname: router.pathname,
-        query: params.toString(),
-      },
-      undefined,
-      { shallow: true }
-    );
-  }, [filter, searchParams, price, router]);
+    params.set("min", price[0].toString());
+    params.set("max", price[1].toString());
+    router.replace(`${pathname}?${params.toString()}`);
+  }, [filter, searchParams, price, router, pathname]);
 
   return (
     <div className="flex flex-col gap-4">
