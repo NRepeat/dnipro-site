@@ -9,12 +9,9 @@ export default function RootLayout({
     filters: string[];
   };
 }>) {
-  console.log("🚀 ~ params:", params);
   return (
-    <main className="w-full flex justify-center">
-      <div className="max-w-[1024px] flex justify-start w-full px-6">
-        <Filter>{children}</Filter>
-      </div>
+    <main className="w-full ">
+      <Filter>{children}</Filter>
     </main>
   );
 }

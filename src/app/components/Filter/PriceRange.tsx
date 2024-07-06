@@ -1,9 +1,9 @@
 "use client";
 
-import { Slider } from "@nextui-org/react";
+import { Input, Slider } from "@nextui-org/react";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setFilter, setPrice } from "../../store/slice/filterSlice";
+import { setPrice } from "../../store/slice/filterSlice";
 const PriceRange = () => {
   const filter = useSelector(
     (state: { filter: { price: [number, number] } }) => state.filter
@@ -28,29 +28,32 @@ const PriceRange = () => {
   };
 
   return (
-    <div className="flex flex-col gap-2 w-full  items-start justify-center">
+    <div className="flex flex-col gap-2  items-center max-w-52">
       <Slider
         label="Ціна"
         formatOptions={{ style: "currency", currency: "UAH" }}
         step={10}
         maxValue={1000}
         minValue={100}
+        color="foreground"
         value={filter.price}
         onChange={handleSetValue}
         onMouseDownCapture={() => console.log("asdas")}
         className="max-w-md"
       />
-      <input
-        type="number"
-        value={filter.price[0]}
-        max={1000}
-        onChange={(e) => handleInput(e, true)}
-      />
-      <input
-        type="text"
-        value={filter.price[1]}
-        onChange={(e) => handleInput(e, false)}
-      />
+      <div className="flex">
+        <Input
+          type="number"
+          value={`${filter.price[0]}`}
+          max={1000}
+          onChange={(e) => handleInput(e, true)}
+        />
+        <Input
+          type="text"
+          value={`${filter.price[1]}`}
+          onChange={(e) => handleInput(e, false)}
+        />
+      </div>
     </div>
   );
 };

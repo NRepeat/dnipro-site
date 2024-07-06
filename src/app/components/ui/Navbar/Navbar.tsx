@@ -13,14 +13,13 @@ import { useRef } from "react";
 
 export const NavBar = () => {
   return (
-    // <div className="flex opacity-0" id="nav-bar-1" ref={comp}>
     <Navbar shouldHideOnScroll>
       <NavbarBrand>
         <p className="font-bold text-inherit">ACME</p>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem isActive>
-          <Link color="foreground" href="/">
+          <Link color="foreground" href="/" prefetch={true}>
             Жіноче
           </Link>
         </NavbarItem>
@@ -41,6 +40,5 @@ export const NavBar = () => {
         </NavbarItem>
       </NavbarContent>
     </Navbar>
-    // </div>
   );
 };

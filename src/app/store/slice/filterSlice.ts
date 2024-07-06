@@ -2,28 +2,28 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export type FilterStateType = {
-  filter: any[];
   price: number[];
+  isChanged: boolean;
 };
 const initialState: FilterStateType = {
-  filter: [""],
   price: [100, 1000],
+  isChanged: false,
 };
 
 const filterSlice = createSlice({
   name: "filter",
   initialState,
   reducers: {
-    setFilter: (state, action: PayloadAction<string[]>) => {
-      state.filter = action.payload;
-    },
-
     setPrice: (state, action: PayloadAction<number[]>) => {
       state.price = action.payload;
+      state.isChanged = true;
+    },
+    setIsFilterChanged: (state, action: PayloadAction<boolean>) => {
+      state.isChanged = action.payload;
     },
   },
 });
 
-export const { setFilter, setPrice } = filterSlice.actions;
+export const { setPrice, setIsFilterChanged } = filterSlice.actions;
 
 export default filterSlice.reducer;

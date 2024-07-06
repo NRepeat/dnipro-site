@@ -10,10 +10,9 @@ export default function RootLayout({
     category: string;
   };
 }>) {
-  console.log("🚀 ~ params:", params);
   return (
     <main className="w-full flex justify-center">
-      <div className="max-w-[1024px] flex justify-start w-full px-6">
+      <div className="max-w-[1524px] flex justify-start w-full px-6">
         {children}
       </div>
     </main>
