@@ -1,4 +1,4 @@
-import Filter from "../components/Filter/Filter";
+import Filter from "@/app/components/Filter/Filter";
 
 export default function RootLayout({
   children,
@@ -6,15 +6,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
   params: {
-    sex: string;
-    category: string;
+    filters: string[];
   };
 }>) {
   console.log("🚀 ~ params:", params);
   return (
     <main className="w-full flex justify-center">
       <div className="max-w-[1024px] flex justify-start w-full px-6">
-        {children}
+        <Filter>{children}</Filter>
       </div>
     </main>
   );

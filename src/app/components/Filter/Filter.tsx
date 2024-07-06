@@ -1,44 +1,48 @@
-import { handleFormAction } from "@/app/data/collection";
+"use client";
 import PriceRange from "./PriceRange";
-import { Size } from "./Size";
+
 import Brand from "./Brand";
 import Color from "./Color";
 import Material from "./Material";
-import { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FilterStateType } from "@/app/store/slice/filterSlice";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { filterProducts } from "@/app/data/collection";
 
-const Filter = ({
-  pathname,
-  sex,
-}: {
-  pathname: string;
-  sex: string | string[];
-}) => {
+type FilterProps = {
+  children: React.ReactNode;
+};
+const Filter: FC<FilterProps> = ({ children }) => {
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const filter = useSelector(
     (state: { filter: FilterStateType }) => state.filter
   );
-  console.log("🚀 ~ filter:", filter);
   const { price } = filter;
-  useEffect(() => {
+
+  const handleFilterFormSubmit = () => {
     const params = new URLSearchParams(searchParams);
     params.set("min", price[0].toString());
     params.set("max", price[1].toString());
     router.replace(`${pathname}?${params.toString()}`);
-  }, [filter, searchParams, price, router, pathname]);
-
+  };
   return (
-    <div className="flex flex-col gap-4">
-      <PriceRange />
-      <Size sex={sex} />
-      <Brand />
-      <Color />
-      <Material />
-    </div>
+    <>
+      <form action={() => handleFilterFormSubmit()}>
+        <button>submit</button>
+      </form>
+      <div className="flex flex-col gap-4">
+        <PriceRange />
+        {/* <Size sex={sex} /> */}
+        <Brand />
+        <Color />
+        <Material />
+      </div>
+      {children}
+    </>
   );
 };
 

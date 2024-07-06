@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
-let collections = [{ id: 1, name: "firsCollection" }];
+let collections = [{ id: 1, name: "firsCollection", price: "100" }];
 export const getCollectionByID = async (id: number) => {
   try {
     const collection = collections.find((data) => data.id === id);
@@ -22,6 +22,12 @@ const updateName = async (id: number, name: string) => {
     console.error(error);
   }
 };
+
+export const filterProducts = ({ price }: { price: string }) => {
+  const collection = collections.filter((data) => data.price === price);
+  if (collection) return collection;
+};
+
 export const handleFormAction = async (formData: FormData) => {
   const newCollection = formData.get("name") as string;
   const pathname = formData.get("pathname") as string;
