@@ -7,7 +7,7 @@ const CollectionGrid = ({ products }: { products: any[] }) => {
   ));
 
   return (
-    <div className="grid grid-flow-row-dense grid-cols-4 gap-2">
+    <div className="grid grid-flow-row-dense md:grid-cols-2 lg:grid-cols-4 gap-2">
       {mapCollectionCard}
     </div>
   );

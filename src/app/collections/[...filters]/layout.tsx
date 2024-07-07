@@ -9,9 +9,5 @@ export default function RootLayout({
     filters: string[];
   };
 }>) {
-  return (
-    <main className="w-full ">
-      <Filter>{children}</Filter>
-    </main>
-  );
+  return <Filter>{children}</Filter>;
 }

@@ -13,7 +13,7 @@ type CollectionCardProps = {
 
 const CollectionCard: FC<CollectionCardProps> = ({ product }) => {
   return (
-    <Card className="max-w-[350px]">
+    <Card className="max-w-[350px] min-w-[250px]">
       <CardBody className="flex w-full items-center justify-center">
         <Image
           src={product.thumbnail}

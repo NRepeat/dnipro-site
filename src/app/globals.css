@@ -58,7 +58,7 @@
     align-items: center;
   }
   .footer {
-    height: 100vh;
+    margin-top: auto;
     display: flex;
     justify-content: center;
     align-items: center;

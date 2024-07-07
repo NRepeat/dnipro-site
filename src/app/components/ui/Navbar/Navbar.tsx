@@ -1,4 +1,8 @@
 "use client";
+import {
+  FilterStateType,
+  setFilterShouldStick,
+} from "@/app/store/slice/filterSlice";
 import { useGSAP } from "@gsap/react";
 import {
   Navbar,
@@ -7,13 +11,26 @@ import {
   NavbarItem,
   Button,
 } from "@nextui-org/react";
-import gsap from "gsap";
+import { AnimationDefinition } from "framer-motion";
 import Link from "next/link";
-import { useRef } from "react";
+import { useDispatch } from "react-redux";
 
 export const NavBar = () => {
+  const dispatch = useDispatch();
+
+  const handleOnScrollPositionChange = (e: AnimationDefinition) => {
+    dispatch(setFilterShouldStick(e === "visible" ? false : true));
+  };
   return (
-    <Navbar shouldHideOnScroll>
+    <Navbar
+      shouldHideOnScroll
+      disableScrollHandler
+      // onScrollPositionChange={handleOnScrollPositionChange}
+      // onMenuOpenChange={handleOnScrollPositionChange}
+      motionProps={{
+        onAnimationComplete: (e) => handleOnScrollPositionChange(e),
+      }}
+    >
       <NavbarBrand>
         <p className="font-bold text-inherit">ACME</p>
       </NavbarBrand>
