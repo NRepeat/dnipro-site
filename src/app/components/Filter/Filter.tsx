@@ -9,11 +9,13 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   FilterStateType,
   setFilterIsOpen,
+  setFlipState,
 } from "@/app/store/slice/filterSlice";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@nextui-org/react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { Flip } from "gsap/all";
 
 type FilterProps = {
   children: React.ReactNode;
@@ -37,6 +39,7 @@ const Filter: FC<FilterProps> = ({ children }) => {
     }
   }, [filter.filterShouldStick]);
   const handleShowFilter = () => {
+    dispatch(setFlipState(Flip.getState(".container")));
     dispatch(setFilterIsOpen(!filter.filterIsOpen));
   };
   const handleFilterFormSubmit = () => {
@@ -81,7 +84,6 @@ const Filter: FC<FilterProps> = ({ children }) => {
                 <Button onClick={handleFilterFormSubmit}>Apply filter</Button>
               )}
               <PriceRange />
-              {/* <Size sex={sex} /> */}
               <Brand />
               <Color />
               <Material />

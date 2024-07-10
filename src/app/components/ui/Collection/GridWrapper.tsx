@@ -1,10 +1,13 @@
 "use client";
-import { FilterStateType } from "@/app/store/slice/filterSlice";
+import {
+  FilterStateType,
+  setFilterIsOpen,
+} from "@/app/store/slice/filterSlice";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Flip } from "gsap/all";
 import React, { useRef, useEffect, useState, useLayoutEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 gsap.registerPlugin(Flip);
 
@@ -20,7 +23,9 @@ const GridWrapper = ({
   const filter = useSelector(
     (state: { filter: FilterStateType }) => state.filter
   );
+  const dispatch = useDispatch();
   const state = React.useRef<any>();
+  state.current = filter.flipRef;
   React.useLayoutEffect(() => {
     if (state.current) {
       Flip.from(state.current, {
@@ -30,16 +35,13 @@ const GridWrapper = ({
       });
     }
   }, [filter.filterIsOpen]);
-  useEffect(() => {
-    if (filter.filterIsOpen) {
-      state.current = Flip.getState(".container");
-    } else {
-      // state.current = Flip.getState(".container");
-    }
-  }, [filter.filterIsOpen]);
-
+  // const handleShowFilter = () => {
+  //   state.current = Flip.getState(".container");
+  //   dispatch(setFilterIsOpen(!filter.filterIsOpen));
+  // };
   return (
     <div className={`grid ${filter.filterIsOpen ? "grid-1" : "grid-2"}`}>
+      {/* <button onClick={handleShowFilter}>toggle</button> */}
       {children}
     </div>
   );

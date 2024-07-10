@@ -1,17 +1,20 @@
 // store/filterSlice.js
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { Flip } from "gsap/all";
 
 export type FilterStateType = {
   price: number[];
   isChanged: boolean;
   filterIsOpen: boolean;
   filterShouldStick: boolean;
+  flipRef: any;
 };
 const initialState: FilterStateType = {
   price: [100, 1000],
   isChanged: false,
   filterIsOpen: false,
   filterShouldStick: false,
+  flipRef: null,
 };
 
 const filterSlice = createSlice({
@@ -31,6 +34,9 @@ const filterSlice = createSlice({
     setFilterShouldStick: (state, action: PayloadAction<boolean>) => {
       state.filterShouldStick = action.payload;
     },
+    setFlipState: (state, action) => {
+      state.flipRef = action.payload;
+    },
   },
 });
 
@@ -39,6 +45,7 @@ export const {
   setIsFilterChanged,
   setFilterShouldStick,
   setFilterIsOpen,
+  setFlipState,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;
