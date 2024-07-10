@@ -29,18 +29,18 @@ const GridWrapper = ({
         ease: "power2.inOut",
       });
     }
-  }, [gridState]);
-  const handleClick = () => {
-    state.current = Flip.getState(".container");
-    setGridState(!gridState);
-  };
+  }, [filter.filterIsOpen]);
+  useEffect(() => {
+    if (filter.filterIsOpen) {
+      state.current = Flip.getState(".container");
+    } else {
+      // state.current = Flip.getState(".container");
+    }
+  }, [filter.filterIsOpen]);
+
   return (
-    <div>
-      <button onClick={handleClick}>toggle</button>;
-      <div className={`grid ${gridState ? "grid-1" : "grid-2"}`}>
-        <div className="container orange">1</div>
-        <div className="container blue">2</div>
-      </div>
+    <div className={`grid ${filter.filterIsOpen ? "grid-1" : "grid-2"}`}>
+      {children}
     </div>
   );
 };
