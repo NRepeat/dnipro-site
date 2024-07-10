@@ -5,9 +5,9 @@ const page = async () => {
   const productsData = await fetch("https://dummyjson.com/products");
   const products = await productsData.json().then((data) => data.products);
   return (
-    <>
-      <CollectionGrid products={products} />
-    </>
+    <div className="w-full h-full overflow-y-scroll ">
+      <CollectionGrid products={products} />;
+    </div>
   );
 };
 

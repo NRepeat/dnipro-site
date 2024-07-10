@@ -8,6 +8,7 @@ import React, { FC, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   FilterStateType,
+  setFilterIsOpen,
   setIsFilterChanged,
 } from "@/app/store/slice/filterSlice";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -34,18 +35,20 @@ const Filter: FC<FilterProps> = ({ children }) => {
       gsap.to(filterRef.current, { top: 60, duration: 0.2 });
     }
   }, [filter.filterShouldStick]);
+  const handleShowFilter = () => {
+    dispatch(setFilterIsOpen(!filter.filterIsOpen));
+  };
   const handleFilterFormSubmit = () => {
-    const params = new URLSearchParams(searchParams);
-    const data = Object.keys(filter).map((key) => {
-      if (Array.isArray(filter[key])) {
-        params.set(`${[key]}`, filter[key].join("-"));
-      } else {
-        params.set(`${[key]}`, filter[key]);
-      }
-      dispatch(setIsFilterChanged(false));
-    });
-
-    router.replace(`${pathname}?${params.toString()}`);
+    // const params = new URLSearchParams(searchParams);
+    // const data = Object.keys(filter).map((key) => {
+    //   if (Array.isArray(filter[key])) {
+    //     params.set(`${[key]}`, filter[key].join("-"));
+    //   } else {
+    //     params.set(`${[key]}`, filter[key]);
+    //   }
+    //   dispatch(setIsFilterChanged(false));
+    // });
+    // router.replace(`${pathname}?${params.toString()}`);
   };
   return (
     <div className="flex gap-3 flex-col w-full ">
@@ -55,25 +58,30 @@ const Filter: FC<FilterProps> = ({ children }) => {
         } left-0 bg-blue-100 z-30 backdrop-blur-sm h-[50px] w-full`}
         ref={filterRef}
       >
-        <p>Show filters</p>
+        <Button onClick={handleShowFilter}>
+          <p>Show filters</p>
+        </Button>
         <div className="flex">
           <p>Order by: recommendation</p>
           <p>Grid layout</p>
         </div>
       </div>
-      {filter.filterIsOpen && (
-        <div className="flex flex-col gap-4">
-          {filter.isChanged && (
-            <Button onClick={handleFilterFormSubmit}>Apply filter</Button>
-          )}
-          <PriceRange />
-          {/* <Size sex={sex} /> */}
-          <Brand />
-          <Color />
-          <Material />
-        </div>
-      )}
-      {children}
+
+      <div className="flex h-screen overflow-hidden">
+        {filter.filterIsOpen && (
+          <div className="flex flex-col gap-4 ">
+            {filter.isChanged && (
+              <Button onClick={handleFilterFormSubmit}>Apply filter</Button>
+            )}
+            <PriceRange />
+            {/* <Size sex={sex} /> */}
+            <Brand />
+            <Color />
+            <Material />
+          </div>
+        )}
+        <div>{children}</div>
+      </div>
     </div>
   );
 };
