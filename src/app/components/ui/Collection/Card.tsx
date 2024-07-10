@@ -12,8 +12,9 @@ type CollectionCardProps = {
 };
 
 const CollectionCard: FC<CollectionCardProps> = ({ product }) => {
+  const className = product.title.replace(/[\s']/g, "-");
   return (
-    <Card className="max-w-[350px] min-w-[250px]">
+    <Card className={`.${className} max-w-[350px] min-w-[250px]`}>
       <CardBody className="flex w-full items-center justify-center">
         <Image
           src={product.thumbnail}

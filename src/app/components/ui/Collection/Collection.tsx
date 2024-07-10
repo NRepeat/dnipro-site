@@ -1,16 +1,15 @@
 import React from "react";
 import CollectionCard from "./Card";
+import GridWrapper from "./GridWrapper";
 
 const CollectionGrid = ({ products }: { products: any[] }) => {
-  const mapCollectionCard = products.map((product) => (
-    <CollectionCard key={product.title} product={product} />
-  ));
+  let productId: string[] = [];
+  const mapCollectionCard = products.map((product) => {
+    productId.push(product.title.replace(/[\s']/g, "-"));
+    return <CollectionCard key={product.title} product={product} />;
+  });
 
-  return (
-    <div className="grid grid-flow-row-dense md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-      {mapCollectionCard}
-    </div>
-  );
+  return <GridWrapper productIds={productId}>{mapCollectionCard}</GridWrapper>;
 };
 
 export default CollectionGrid;

@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   FilterStateType,
   setFilterIsOpen,
-  setIsFilterChanged,
 } from "@/app/store/slice/filterSlice";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@nextui-org/react";
@@ -31,8 +30,10 @@ const Filter: FC<FilterProps> = ({ children }) => {
   useGSAP(() => {
     if (filter.filterShouldStick) {
       gsap.to(filterRef.current, { top: 0, duration: 0.2 });
+      gsap.to("#filter-body", { top: 60, duration: 0.2 });
     } else {
       gsap.to(filterRef.current, { top: 60, duration: 0.2 });
+      gsap.to("#filter-body", { top: 120, duration: 0.2 });
     }
   }, [filter.filterShouldStick]);
   const handleShowFilter = () => {
@@ -67,20 +68,29 @@ const Filter: FC<FilterProps> = ({ children }) => {
         </div>
       </div>
 
-      <div className="flex h-screen overflow-hidden">
+      <div className="flex  w-full ">
         {filter.filterIsOpen && (
-          <div className="flex flex-col gap-4 ">
-            {filter.isChanged && (
-              <Button onClick={handleFilterFormSubmit}>Apply filter</Button>
-            )}
-            <PriceRange />
-            {/* <Size sex={sex} /> */}
-            <Brand />
-            <Color />
-            <Material />
+          <div
+            className={` sticky ${
+              filter.filterIsOpen ? "top-[120px]" : "top-[50px] "
+            }  z-auto left-0 h-[350px]`}
+            id="filter-body"
+          >
+            <div className="flex flex-col gap-4 min-h-full">
+              {filter.isChanged && (
+                <Button onClick={handleFilterFormSubmit}>Apply filter</Button>
+              )}
+              <PriceRange />
+              {/* <Size sex={sex} /> */}
+              <Brand />
+              <Color />
+              <Material />
+            </div>
           </div>
         )}
-        <div>{children}</div>
+        <div className="w-full flex justify-center items-center">
+          {children}
+        </div>
       </div>
     </div>
   );
