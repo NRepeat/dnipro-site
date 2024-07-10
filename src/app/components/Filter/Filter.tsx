@@ -31,6 +31,7 @@ const Filter: FC<FilterProps> = ({ children }) => {
   const filterRef = useRef<HTMLDivElement>(null);
   const filterBodyRef = useRef<HTMLDivElement>(null);
 
+  // Animation for filterShouldStick
   useEffect(() => {
     if (filter.filterShouldStick) {
       gsap.to(filterRef.current, { top: 0, duration: 0.2 });
@@ -39,7 +40,10 @@ const Filter: FC<FilterProps> = ({ children }) => {
       gsap.to(filterRef.current, { top: 60, duration: 0.2 });
       gsap.to(filterBodyRef.current, { top: 120, duration: 0.2 });
     }
+  }, [filter.filterShouldStick]);
 
+  // Animation for filterIsOpen
+  useEffect(() => {
     if (filter.filterIsOpen) {
       gsap.fromTo(
         filterBodyRef.current,
@@ -62,7 +66,7 @@ const Filter: FC<FilterProps> = ({ children }) => {
         }
       );
     }
-  }, [filter.filterShouldStick, filter.filterIsOpen]);
+  }, [filter.filterIsOpen]);
 
   const handleShowFilter = () => {
     const data = Flip.getState(".container");
