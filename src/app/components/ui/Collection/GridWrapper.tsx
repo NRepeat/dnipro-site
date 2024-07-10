@@ -30,7 +30,7 @@ const GridWrapper = ({
     if (state.current) {
       Flip.from(state.current, {
         duration: 1,
-        absolute: true,
+
         ease: "power2.inOut",
       });
     }
