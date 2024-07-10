@@ -35,13 +35,9 @@ const GridWrapper = ({
       });
     }
   }, [filter.filterIsOpen]);
-  // const handleShowFilter = () => {
-  //   state.current = Flip.getState(".container");
-  //   dispatch(setFilterIsOpen(!filter.filterIsOpen));
-  // };
+
   return (
     <div className={`grid ${filter.filterIsOpen ? "grid-1" : "grid-2"}`}>
-      {/* <button onClick={handleShowFilter}>toggle</button> */}
       {children}
     </div>
   );

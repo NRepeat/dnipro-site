@@ -31,38 +31,51 @@ const Filter: FC<FilterProps> = ({ children }) => {
   const filterRef = useRef<HTMLDivElement>(null);
   const filterBodyRef = useRef<HTMLDivElement>(null);
 
-  // Animation for filterShouldStick
   useEffect(() => {
     if (filter.filterShouldStick) {
-      gsap.to(filterRef.current, { top: 0, duration: 0.2 });
-      gsap.to(filterBodyRef.current, { top: 60, duration: 0.2 });
+      gsap.to(filterRef.current, {
+        top: 0,
+        duration: 0.4,
+        delay: 0.2,
+        ease: "power1.out",
+      });
+      gsap.to(filterBodyRef.current, {
+        top: 60,
+        duration: 0.5,
+        delay: 0.2,
+        ease: "power1.out",
+      });
     } else {
-      gsap.to(filterRef.current, { top: 60, duration: 0.2 });
-      gsap.to(filterBodyRef.current, { top: 120, duration: 0.2 });
+      gsap.to(filterRef.current, {
+        top: 60,
+        duration: 0.3,
+        delay: 0.3,
+        ease: "power1.out",
+      });
+      gsap.to(filterBodyRef.current, {
+        top: 120,
+        duration: 0.4,
+        delay: 0.3,
+        ease: "power1.out",
+      });
     }
   }, [filter.filterShouldStick]);
 
-  // Animation for filterIsOpen
   useEffect(() => {
     if (filter.filterIsOpen) {
       gsap.fromTo(
-        filterBodyRef.current,
-        { opacity: 0, x: -300, display: "block" },
-        { opacity: 1, x: 0, duration: 1 }
+        "#filter-body",
+        { autoAlpha: 0, x: -300 },
+        { autoAlpha: 1, x: 0, duration: 1, display: "block" }
       );
     } else {
       gsap.fromTo(
-        filterBodyRef.current,
-        { opacity: 1, x: 0, display: "block" },
+        "#filter-body",
+        { autoAlpha: 1, x: 0, display: "block" },
         {
-          opacity: 0,
+          autoAlpha: 1,
           x: -300,
           duration: 1,
-          onComplete: () => {
-            if (filterBodyRef.current) {
-              filterBodyRef.current.style.display = "none";
-            }
-          },
         }
       );
     }
@@ -98,12 +111,16 @@ const Filter: FC<FilterProps> = ({ children }) => {
       <div className="flex w-full">
         <div
           className={`sticky ${
-            filter.filterIsOpen ? "top-[120px]" : "top-[50px]"
-          } z-auto left-0 h-[350px]`}
-          id="filter-body"
+            filter.filterIsOpen ? "top-[120px] " : "top-[50px]  opacity-0 "
+          } z-auto left-0 h-[350px] transition-opacity duration-1000`}
           ref={filterBodyRef}
         >
-          <div className="flex flex-col gap-4 min-h-full">
+          <div
+            className={`flex flex-col gap-4 min-h-full invisible   ${
+              filter.filterIsOpen ? "w-full" : "absolute w-[240px] "
+            }`}
+            id="filter-body"
+          >
             {filter.isChanged && (
               <Button onClick={handleFilterFormSubmit}>Apply filter</Button>
             )}

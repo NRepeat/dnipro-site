@@ -12,50 +12,37 @@ import {
   Button,
 } from "@nextui-org/react";
 import { AnimationDefinition } from "framer-motion";
+import gsap, { ScrollToPlugin, ScrollTrigger } from "gsap/all";
 import Link from "next/link";
+import React from "react";
 import { useDispatch } from "react-redux";
 
 export const NavBar = () => {
+  return <Nav>asdasd</Nav>;
+};
+
+const Nav = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useDispatch();
 
-  const handleOnScrollPositionChange = (e: AnimationDefinition) => {
-    dispatch(setFilterShouldStick(e === "visible" ? false : true));
-  };
-  return (
-    <Navbar
-      shouldHideOnScroll
-      disableScrollHandler
-      // onScrollPositionChange={handleOnScrollPositionChange}
-      // onMenuOpenChange={handleOnScrollPositionChange}
-      motionProps={{
-        onAnimationComplete: (e) => handleOnScrollPositionChange(e),
-      }}
-    >
-      <NavbarBrand>
-        <p className="font-bold text-inherit">ACME</p>
-      </NavbarBrand>
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem isActive>
-          <Link color="foreground" href="/" prefetch={true}>
-            Жіноче
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link href="/man" aria-current="page">
-            Чоловіче
-          </Link>
-        </NavbarItem>
-      </NavbarContent>
-      <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
-            Sign Up
-          </Button>
-        </NavbarItem>
-      </NavbarContent>
-    </Navbar>
-  );
+  gsap.registerPlugin(ScrollTrigger);
+  useGSAP(() => {
+    const handleOnScrollPositionChange = (direction: number) => {
+      direction === -1 ? showAnim.play() : showAnim.reverse();
+      dispatch(setFilterShouldStick(direction === -1 ? false : true));
+    };
+    const showAnim = gsap
+      .from(".main-tool-bar", {
+        yPercent: -100,
+        paused: true,
+        duration: 0.2,
+      })
+      .progress(1);
+
+    ScrollTrigger.create({
+      start: "top top",
+      end: "max",
+      onUpdate: (self) => handleOnScrollPositionChange(self.direction),
+    });
+  }, []);
+  return <nav className="main-tool-bar">{children}</nav>;
 };

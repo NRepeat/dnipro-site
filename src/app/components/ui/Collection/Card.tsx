@@ -14,7 +14,7 @@ type CollectionCardProps = {
 const CollectionCard: FC<CollectionCardProps> = ({ product }) => {
   const className = product.title.replace(/[\s']/g, "-").toLowerCase();
   return (
-    <Card className="container  transition-transform-background-disable">
+    <Card className="container  transition-transform-background-disable w-[300px]">
       <CardBody className="flex w-full items-center justify-center overflow-hidden">
         <Image
           src={product.thumbnail}
