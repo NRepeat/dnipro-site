@@ -63,7 +63,9 @@
   }
   .main-tool-bar {
     height: 60px;
-    background: red;
+    background: rgb(255, 255, 255);
+    opacity: 0.9;
+
     text-align: center;
     display: flex;
     align-items: center;

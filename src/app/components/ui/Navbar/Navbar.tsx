@@ -44,5 +44,5 @@ const Nav = ({ children }: { children: React.ReactNode }) => {
       onUpdate: (self) => handleOnScrollPositionChange(self.direction),
     });
   }, []);
-  return <nav className="main-tool-bar">{children}</nav>;
+  return <nav className="main-tool-bar backdrop-blur-sm">{children}</nav>;
 };

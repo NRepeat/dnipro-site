@@ -14,13 +14,12 @@ type CollectionCardProps = {
 const CollectionCard: FC<CollectionCardProps> = ({ product }) => {
   const className = product.title.replace(/[\s']/g, "-").toLowerCase();
   return (
-    <Card className="container  transition-transform-background-disable w-[300px]">
-      <CardBody className="flex w-full items-center justify-center overflow-hidden">
+    <Card className="container  transition-transform-background-disable w-full rounded-none cursor-pointer">
+      <CardBody className="flex w-full items-center justify-center overflow-hidden min-h-[400px]">
         <Image
           src={product.thumbnail}
           alt="image"
-          height={100}
-          className="w-full h-auto object-cover"
+          className="w-full h-auto object-cover rounded-none"
         />
       </CardBody>
       <CardFooter className="justify-between">

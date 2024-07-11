@@ -29,15 +29,23 @@ const GridWrapper = ({
   React.useLayoutEffect(() => {
     if (state.current) {
       Flip.from(state.current, {
-        duration: 1,
-
-        ease: "power2.inOut",
+        stagger: {
+          each: 0.5,
+          grid: "auto",
+          from: "start",
+          amount: 1.5,
+          axis: "y",
+          ease: "sine.in",
+        },
+        ease: "sine.out",
       });
     }
   }, [filter.filterIsOpen]);
 
   return (
-    <div className={`grid ${filter.filterIsOpen ? "grid-1" : "grid-2"}`}>
+    <div
+      className={`grid ${filter.filterIsOpen ? "grid-cols-3" : "grid-cols-4"}`}
+    >
       {children}
     </div>
   );
