@@ -15,6 +15,7 @@ import { Button } from "@nextui-org/react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Flip } from "gsap/all";
+import Category from "./Category";
 
 type FilterProps = {
   children: React.ReactNode;
@@ -92,11 +93,11 @@ const Filter: FC<FilterProps> = ({ children }) => {
   };
 
   return (
-    <div className="flex gap-3 flex-col w-full">
+    <div className="flex gap-3 flex-col w-full ">
       <div
-        className={`flex justify-between px-4 items-center sticky ${
-          filter.filterShouldStick ? "top-0" : "top-[60px]"
-        } left-0 bg-blue-100 z-30 backdrop-blur-sm h-[50px] w-full`}
+        className={`flex justify-between px-4  items-center sticky ${
+          filter.filterShouldStick ? "top-0 " : "top-[60px] "
+        } left-0 bg-blue-100 z-30 backdrop-blur-sm h-[50px] w-full `}
         ref={filterRef}
       >
         <Button onClick={handleShowFilter}>
@@ -112,22 +113,23 @@ const Filter: FC<FilterProps> = ({ children }) => {
         <div
           className={`sticky ${
             filter.filterIsOpen ? "top-[120px] " : "top-[50px]  opacity-0 "
-          } z-auto left-0 h-[350px] transition-opacity duration-1000`}
+          } z-auto left-0 h-[350px] transition-opacity `}
           ref={filterBodyRef}
         >
           <div
             className={`flex flex-col gap-4 min-h-full invisible   ${
-              filter.filterIsOpen ? "w-full" : "absolute w-[240px] "
+              filter.filterIsOpen ? "w-[350px]" : "absolute w-[240px] "
             }`}
             id="filter-body"
           >
             {filter.isChanged && (
               <Button onClick={handleFilterFormSubmit}>Apply filter</Button>
             )}
-            <PriceRange />
+            <Category category={[{ name: "test", properties: ["1", "2"] }]} />
+            {/* <PriceRange />
             <Brand />
             <Color />
-            <Material />
+            <Material /> */}
           </div>
         </div>
         <div className="w-full flex justify-center items-center">
