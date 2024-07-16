@@ -4,12 +4,8 @@ import GridWrapper from "./GridWrapper";
 
 const CollectionGrid = ({ products }: { products: any[] }) => {
   let productId: string[] = [];
-  const mapCollectionCard = products.map((product) => {
-    productId.push(product.title.replace(/[\s']/g, "-"));
-    return <CollectionCard key={product.title} product={product} />;
-  });
 
-  return <GridWrapper productIds={productId}>{mapCollectionCard}</GridWrapper>;
+  return <GridWrapper products={products}></GridWrapper>;
 };
 
 export default CollectionGrid;

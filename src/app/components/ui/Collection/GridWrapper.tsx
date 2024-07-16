@@ -6,27 +6,51 @@ import {
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Flip } from "gsap/all";
-import React, { useRef, useEffect, useState, useLayoutEffect } from "react";
+import React, {
+  useRef,
+  useEffect,
+  useState,
+  useLayoutEffect,
+  useCallback,
+} from "react";
+import { useInView } from "react-intersection-observer";
 import { useDispatch, useSelector } from "react-redux";
-
-gsap.registerPlugin(Flip);
+import CollectionCard from "./Card";
+import { getUsers } from "@/app/actions/getProducts";
 
 const GridWrapper = ({
   children,
-  productIds,
+  products,
 }: {
-  children: React.ReactNode;
-  productIds: string[];
+  children?: React.ReactNode;
+  products: any[];
 }) => {
-  const [gridState, setGridState] = React.useState(true);
-  const d = productIds.map((id) => `.${id}`);
+  const NUMBER_OF_USERS_TO_FETCH = 10;
+  const [offset, setOffset] = useState(NUMBER_OF_USERS_TO_FETCH);
+  const [users, setUsers] = useState<any[]>(products);
+  const { ref, inView } = useInView();
   const filter = useSelector(
     (state: { filter: FilterStateType }) => state.filter
   );
-  const dispatch = useDispatch();
   const state = React.useRef<any>();
+  const mapCollectionCard = users.map((product) => {
+    return <CollectionCard key={product.title} product={product} />;
+  });
+  const loadMoreUsers = useCallback(async () => {
+    const apiUsers = await getUsers(NUMBER_OF_USERS_TO_FETCH, offset);
+    console.log("🚀 ~ loadMoreUsers ~ apiUserss:", apiUsers);
+    setUsers([...users, ...apiUsers]);
+    setOffset(offset + NUMBER_OF_USERS_TO_FETCH);
+  }, [offset, users]);
+  useEffect(() => {
+    if (inView) {
+      loadMoreUsers();
+    }
+  }, [inView, loadMoreUsers]);
+  gsap.registerPlugin(Flip);
+
   state.current = filter.flipRef;
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (state.current) {
       Flip.from(state.current, {
         stagger: {
@@ -46,6 +70,8 @@ const GridWrapper = ({
     <div
       className={`grid ${filter.filterIsOpen ? "grid-cols-3" : "grid-cols-4"}`}
     >
+      {mapCollectionCard}
+      <div ref={ref}>Loading...</div>
       {children}
     </div>
   );

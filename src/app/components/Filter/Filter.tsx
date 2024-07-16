@@ -125,7 +125,12 @@ const Filter: FC<FilterProps> = ({ children }) => {
             {filter.isChanged && (
               <Button onClick={handleFilterFormSubmit}>Apply filter</Button>
             )}
-            <Category category={[{ name: "test", properties: ["1", "2"] }]} />
+            <Category
+              category={[
+                { name: "test", properties: ["1", "2"] },
+                { name: "Price", properties: [""], price: true },
+              ]}
+            />
             {/* <PriceRange />
             <Brand />
             <Color />
