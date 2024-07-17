@@ -3,8 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Cinzel } from "@next/font/google";
 import { Providers } from "./providers/providers";
-import { NavBar } from "./components/ui/Navbar/Navbar";
 import CustomFooter from "./components/Footer/Footer";
+import NavBar from "./components/ui/Navbar/Navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

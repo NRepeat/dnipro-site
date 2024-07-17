@@ -14,22 +14,20 @@ import {
 import { AnimationDefinition } from "framer-motion";
 import gsap, { ScrollToPlugin, ScrollTrigger } from "gsap/all";
 import Link from "next/link";
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { useDispatch } from "react-redux";
 
-export const NavBar = () => {
-  return <Nav>asdasd</Nav>;
-};
-
-const Nav = ({ children }: { children: React.ReactNode }) => {
+const NavBar = () => {
   const dispatch = useDispatch();
 
   gsap.registerPlugin(ScrollTrigger);
-  useGSAP(() => {
+
+  useLayoutEffect(() => {
     const handleOnScrollPositionChange = (direction: number) => {
       direction === -1 ? showAnim.play() : showAnim.reverse();
       dispatch(setFilterShouldStick(direction === -1 ? false : true));
     };
+
     const showAnim = gsap
       .from(".main-tool-bar", {
         yPercent: -100,
@@ -43,6 +41,26 @@ const Nav = ({ children }: { children: React.ReactNode }) => {
       end: "max",
       onUpdate: (self) => handleOnScrollPositionChange(self.direction),
     });
-  }, []);
-  return <nav className="main-tool-bar backdrop-blur-sm">{children}</nav>;
+  }, [dispatch]);
+
+  return (
+    <nav className="main-tool-bar backdrop-blur-sm">
+      <Navbar>
+        <NavbarBrand>
+          <Link href="/">Brand</Link>
+        </NavbarBrand>
+        <NavbarContent>
+          <NavbarItem>
+            <Link href="/about">About</Link>
+          </NavbarItem>
+          <NavbarItem>
+            <Link href="/contact">Contact</Link>
+          </NavbarItem>
+        </NavbarContent>
+        <Button>Sign In</Button>
+      </Navbar>
+    </nav>
+  );
 };
+
+export default NavBar;

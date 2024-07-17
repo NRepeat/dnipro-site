@@ -10,7 +10,7 @@ export type FilterStateType = {
   flipRef: Flip.FlipState | null;
 };
 const initialState: FilterStateType = {
-  price: [100, 1000],
+  price: [100, 300],
   isChanged: false,
   filterIsOpen: false,
   filterShouldStick: false,

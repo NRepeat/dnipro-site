@@ -17,63 +17,63 @@ import { useInView } from "react-intersection-observer";
 import { useDispatch, useSelector } from "react-redux";
 import CollectionCard from "./Card";
 import { getUsers } from "@/app/actions/getProducts";
+import { Spinner } from "@nextui-org/react";
 
 const GridWrapper = ({
   children,
-  products,
+  productsInitialData,
 }: {
   children?: React.ReactNode;
-  products: any[];
+  productsInitialData: any[];
 }) => {
-  const NUMBER_OF_USERS_TO_FETCH = 10;
+  const NUMBER_OF_USERS_TO_FETCH = 12;
   const [offset, setOffset] = useState(NUMBER_OF_USERS_TO_FETCH);
-  const [users, setUsers] = useState<any[]>(products);
+  const [products, setUsers] = useState<any[]>(productsInitialData);
   const { ref, inView } = useInView();
   const filter = useSelector(
     (state: { filter: FilterStateType }) => state.filter
   );
   const state = React.useRef<any>();
-  const mapCollectionCard = users.map((product) => {
-    return <CollectionCard key={product.title} product={product} />;
-  });
+
   const loadMoreUsers = useCallback(async () => {
-    const apiUsers = await getUsers(NUMBER_OF_USERS_TO_FETCH, offset);
-    console.log("🚀 ~ loadMoreUsers ~ apiUserss:", apiUsers);
-    setUsers([...users, ...apiUsers]);
+    const apiProducts = await getUsers(NUMBER_OF_USERS_TO_FETCH, offset);
+
+    setUsers([...products, ...apiProducts]);
     setOffset(offset + NUMBER_OF_USERS_TO_FETCH);
-  }, [offset, users]);
+  }, [offset, products]);
   useEffect(() => {
     if (inView) {
       loadMoreUsers();
     }
-  }, [inView, loadMoreUsers]);
+  }, [inView, loadMoreUsers, filter]);
   gsap.registerPlugin(Flip);
 
   state.current = filter.flipRef;
   useLayoutEffect(() => {
     if (state.current) {
       Flip.from(state.current, {
-        stagger: {
-          each: 0.5,
-          grid: "auto",
-          from: "start",
-          amount: 1.5,
-          axis: "y",
-          ease: "sine.in",
-        },
         ease: "sine.out",
       });
     }
   }, [filter.filterIsOpen]);
-
+  const mapCollectionCard = products.map((product, i) => {
+    return <CollectionCard key={i} product={product} />;
+  });
   return (
-    <div
-      className={`grid ${filter.filterIsOpen ? "grid-cols-3" : "grid-cols-4"}`}
-    >
-      {mapCollectionCard}
-      <div ref={ref}>Loading...</div>
-      {children}
-    </div>
+    <main className="flex flex-col">
+      <div
+        className={`grid ${
+          filter.filterIsOpen ? "grid-cols-3" : "grid-cols-4"
+        }`}
+      >
+        {mapCollectionCard}
+
+        {children}
+      </div>
+      <div ref={ref} className="w-full justify-center flex py-4">
+        <Spinner />
+      </div>
+    </main>
   );
 };
 

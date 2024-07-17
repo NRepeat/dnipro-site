@@ -28,32 +28,38 @@ const PriceRange = () => {
   };
 
   return (
-    <div className="flex flex-col gap-2  items-center max-w-52">
-      <Slider
-        label="Ціна"
-        formatOptions={{ style: "currency", currency: "UAH" }}
-        step={10}
-        maxValue={1000}
-        minValue={100}
-        color="foreground"
-        value={filter.price}
-        onChange={handleSetValue}
-        onMouseDownCapture={() => console.log("asdas")}
-        className="max-w-md"
-      />
-      <div className="flex">
+    <div className="flex flex-col gap-2  items-center w-full overflow-hidden px-2 py-2">
+      <div className="flex gap-2">
         <Input
           type="number"
+          color="default"
+          className="text-black text-bold  "
+          variant="underlined"
           value={`${filter.price[0]}`}
           max={1000}
           onChange={(e) => handleInput(e, true)}
         />
         <Input
-          type="text"
+          type="number"
+          color="default"
+          className="text-black text-bold  "
+          variant="underlined"
           value={`${filter.price[1]}`}
-          onChange={(e) => handleInput(e, false)}
+          max={1000}
+          onChange={(e) => handleInput(e, true)}
         />
       </div>
+      <Slider
+        label=""
+        formatOptions={{ style: "currency", currency: "UAH" }}
+        step={10}
+        maxValue={1000}
+        minValue={100}
+        color="primary"
+        value={filter.price}
+        size="sm"
+        onChange={handleSetValue}
+      />
     </div>
   );
 };

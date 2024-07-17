@@ -17,7 +17,11 @@ const Category: FC<CategoryProps> = ({ category }) => {
       <Checkbox key={property}>{property}</Checkbox>
     ));
     return (
-      <AccordionItem key={category.name} title={category.name}>
+      <AccordionItem
+        key={category.name}
+        title={category.name}
+        className="overflow-hidden"
+      >
         {category.price ? (
           <PriceRange />
         ) : (

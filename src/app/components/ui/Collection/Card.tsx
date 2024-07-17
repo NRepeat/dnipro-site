@@ -23,7 +23,6 @@ type CollectionCardProps = {
 };
 const divideIntoThreeParts = (number: number, stepK: number) => {
   const step = Math.ceil(number / stepK);
-  console.log("🚀 ~ divideIntoThreeParts ~ step:", step);
   let ranges = [];
 
   for (let i = 0; i < number; i += step) {
@@ -70,7 +69,7 @@ const CollectionCard: FC<CollectionCardProps> = ({ product }) => {
       <CardHeader>
         {images.length > 0 && <Pag total={images.length} index={imageIndex} />}
       </CardHeader>
-      <CardBody className="flex w-full items-center justify-center overflow-hidden min-h-[400px]">
+      <CardBody className="flex w-full items-center justify-center overflow-hidden min-h-[300px]">
         <Image
           ref={imageRefs}
           src={images[imageIndex] ? images[imageIndex] : images[0]}
@@ -80,7 +79,6 @@ const CollectionCard: FC<CollectionCardProps> = ({ product }) => {
       </CardBody>
       <CardFooter className="justify-between">
         <p className="text-medium">{product.title}</p>
-        <p>{product.price} UAH</p>
       </CardFooter>
     </Card>
   );
