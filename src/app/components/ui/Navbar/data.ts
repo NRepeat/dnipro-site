@@ -1,6 +1,6 @@
 const newArrivals = [
-  { link: "/all", label: "Всі нові надходження" },
-  { link: "/clothing", label: "Одежа" },
+  { link: "/all", label: "Всі  нові надходження" },
+  { link: "/clothing", label: "Одежа " },
   { link: "/shoes", label: "Взуття" },
   { link: "/bags", label: "Сумки" },
 ];
@@ -27,6 +27,8 @@ export const navBardData = {
       slug: "woman",
       categories: [
         { label: "Нові надходження", data: newArrivals },
+        { label: "Одежа", data: womanClothing },
+        { label: "Одежа", data: womanClothing },
         { label: "Одежа", data: womanClothing },
       ],
     },
