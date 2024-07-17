@@ -67,7 +67,6 @@ const GridWrapper = ({
         }`}
       >
         {mapCollectionCard}
-
         {children}
       </div>
       <div ref={ref} className="w-full justify-center flex py-4">

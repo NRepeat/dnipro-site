@@ -4,7 +4,6 @@ import React from "react";
 
 const page = async ({ params }: { params: { filter: string[] } }) => {
   const products = await getFilteredProducts(params.filter[0]);
-  console.log("🚀 ~ page ~ products:", products);
 
   return <GridWrapper productsInitialData={products} />;
 };
