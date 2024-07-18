@@ -11,7 +11,14 @@ const womanClothing = [
   { link: "/pants", label: "Штани" },
   { link: "/jackets", label: "Куртки" },
 ];
-
+const womanShoes = [
+  { link: "/shoes/running", label: "Running Shoes" },
+  { link: "/shoes/high-heels", label: "High Heels" },
+  { link: "/shoes/sandals", label: "Sandals" },
+  { link: "/shoes/boots", label: "Boots" },
+  { link: "/shoes/flats", label: "Flats" },
+  { link: "/shoes/sneakers", label: "Sneakers" },
+];
 const manClothing = [
   { link: "/shirts", label: "Сорочки" },
   { link: "/pants", label: "Штани" },
@@ -28,8 +35,13 @@ export const navBardData = {
       categories: [
         { label: "Нові надходження", data: newArrivals },
         { label: "Одежа", data: womanClothing },
-        { label: "Одежа", data: womanClothing },
-        { label: "Одежа", data: womanClothing },
+        { label: "Взуття", data: womanShoes },
+        { label: "Взуття", data: womanShoes },
+        { label: "Взуття", data: womanShoes },
+        { label: "Взуття", data: womanShoes },
+        { label: "Взуття", data: womanShoes },
+        { label: "Взуття", data: womanShoes },
+        { label: "Взуття", data: womanShoes },
       ],
     },
     {

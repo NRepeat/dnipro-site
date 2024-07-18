@@ -18,9 +18,10 @@ import {
 import { AnimationDefinition } from "framer-motion";
 import gsap, { ScrollToPlugin, ScrollTrigger } from "gsap/all";
 import Link from "next/link";
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { navBardData } from "./data";
+import NavButtonWithDropdownMenuWrapper from "./DropdownMenu";
 
 const NavBar = () => {
   const dispatch = useDispatch();
@@ -76,76 +77,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-
-const NavButtonWithDropdownMenuWrapper = ({
-  hoveredButton,
-  setHoveredButton,
-}: {
-  hoveredButton: string | null;
-  setHoveredButton: React.Dispatch<React.SetStateAction<string | null>>;
-}) => {
-  const handleDropDownTrigger = (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-  ) => {
-    const buttonKey = e.currentTarget.getAttribute("data-key");
-
-    if (buttonKey) {
-      setHoveredButton(buttonKey);
-    }
-  };
-  const Buttons = navBardData.pages.map((page, i) => (
-    <NavbarItem key={i} className="w-full ">
-      <Link
-        href={page.link}
-        key={page.slug}
-        data-key={page.slug}
-        onMouseEnter={(e) => handleDropDownTrigger(e)}
-        className=" border-b-4 h-full w-full flex justify-center items-center font-bold hover:border-b-4 hover:border-b-green-500 transition-colors duration-200"
-      >
-        <p>{page.label}</p>
-      </Link>
-    </NavbarItem>
-  ));
-  useLayoutEffect(() => {
-    console.log("🚀 ~ hoveredButton:", hoveredButton);
-
-    gsap.from(".dropdown-menu", { x: 0, y: -100, zIndex: -1110, opacity: 0 });
-    gsap.to(".dropdown-menu", { x: 0, y: 0, zIndex: -10, opacity: 1 });
-  }, [hoveredButton]);
-  return (
-    <NavbarContent>
-      <div
-        className="w-full flex h-full "
-        onMouseLeave={() => setHoveredButton(null)}
-      >
-        {Buttons}
-        {!hoveredButton && (
-          <div className="dropdown-menu absolute w-full  left-0  top-[30px] overflow-hidden border-t-2 border-b-2 border-violet-500 bg-slate-700">
-            {hoveredButton}
-            <div className="flex w-full  justify-center py-8">
-              <div className="max-w-xl w-full  ">
-                <div className="flex gap-28 flex-wrap">
-                  {navBardData.pages[0].categories?.map((category) => (
-                    <div key={category.label} className="flex flex-col l">
-                      <p className="text-gray-400 text-left pb-2 capitalize text-[0.8rem]  font-bold">
-                        {category.label.toUpperCase()}
-                      </p>
-                      {category.data.map((d) => (
-                        <p
-                          className="pt-4 pl-2 text-left text-gray-200 capitalize text-[0.6rem] font-light"
-                          key={d.label}
-                        >
-                          {d.label.toUpperCase()}
-                        </p>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </NavbarContent>
-  );
-};
