@@ -49,18 +49,13 @@ const NavBar = () => {
     });
   }, [dispatch]);
 
-  const [hoveredButton, setHoveredButton] = useState<string | null>(null);
-
   return (
     <div className="main-tool-bar  w-full  ">
       <Navbar className="text-black  max-navbar-w-disable w-full" isBordered>
         <NavbarBrand>
           <Link href="/">Brand</Link>
         </NavbarBrand>
-        <NavButtonWithDropdownMenuWrapper
-          hoveredButton={hoveredButton}
-          setHoveredButton={setHoveredButton}
-        />
+        <NavButtonWithDropdownMenuWrapper />
         <NavbarContent justify="end">
           <NavbarItem className="hidden lg:flex">
             <Link href="#">Login</Link>

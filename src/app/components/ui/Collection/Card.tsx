@@ -11,6 +11,7 @@ import {
 import gsap from "gsap/all";
 import React, { FC, useRef, useState } from "react";
 import Pag from "./Pag";
+import Link from "next/link";
 
 type CollectionCardProps = {
   product: {
@@ -19,6 +20,7 @@ type CollectionCardProps = {
     discount: string;
     thumbnail: string;
     images: string[];
+    id: string;
   };
 };
 const divideIntoThreeParts = (number: number, stepK: number) => {
@@ -35,6 +37,7 @@ const divideIntoThreeParts = (number: number, stepK: number) => {
 };
 
 const CollectionCard: FC<CollectionCardProps> = ({ product }) => {
+  console.log("🚀 ~ product:", product);
   const [images, setImages] = useState<string[]>([
     product.thumbnail,
     ...product.images,
@@ -61,26 +64,30 @@ const CollectionCard: FC<CollectionCardProps> = ({ product }) => {
   };
 
   return (
-    <Card
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => setImageIndex(0)}
-      className={`container  transition-transform-background-disable w-full rounded-none cursor-pointer  border-1 hover:border-black`}
-    >
-      <CardHeader>
-        {images.length > 0 && <Pag total={images.length} index={imageIndex} />}
-      </CardHeader>
-      <CardBody className="flex w-full items-center justify-center overflow-hidden min-h-[300px]">
-        <Image
-          ref={imageRefs}
-          src={images[imageIndex] ? images[imageIndex] : images[0]}
-          alt="image"
-          className={`w-full h-auto object-cover rounded-none  `}
-        />
-      </CardBody>
-      <CardFooter className="justify-between">
-        <p className="text-medium">{product.title}</p>
-      </CardFooter>
-    </Card>
+    <Link href={`/product/${product.id}`}>
+      <Card
+        onMouseMove={handleMouseMove}
+        onMouseLeave={() => setImageIndex(0)}
+        className={`container  transition-transform-background-disable w-full rounded-none cursor-pointer  border-1 hover:border-black`}
+      >
+        <CardHeader>
+          {images.length > 0 && (
+            <Pag total={images.length} index={imageIndex} />
+          )}
+        </CardHeader>
+        <CardBody className="flex w-full items-center justify-center overflow-hidden min-h-[300px]">
+          <Image
+            ref={imageRefs}
+            src={images[imageIndex] ? images[imageIndex] : images[0]}
+            alt="image"
+            className={`w-full h-auto object-cover rounded-none  `}
+          />
+        </CardBody>
+        <CardFooter className="justify-between">
+          <p className="text-medium">{product.title}</p>
+        </CardFooter>
+      </Card>
+    </Link>
   );
 };
 

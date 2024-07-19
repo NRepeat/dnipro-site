@@ -28,3 +28,16 @@ export const getFilteredProducts = async (filter: string) => {
     throw new Error(`An error happened: ${error}`);
   }
 };
+
+export const getProduct = async (id: string) => {
+  try {
+    const url = `https://dummyjson.com/products/${id}`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error: unknown) {
+    console.log(error);
+    throw new Error(`An error happened: ${error}`);
+  }
+};

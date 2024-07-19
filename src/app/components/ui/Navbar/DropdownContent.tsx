@@ -21,10 +21,10 @@ const DropdownContent = ({
         gsap.fromTo(
           dropdownRef.current,
           {
-            opacity: 0,
+            autoAlpha: 0,
           },
           {
-            opacity: 1,
+            autoAlpha: 1,
             duration: 0.5,
           }
         );
@@ -34,41 +34,26 @@ const DropdownContent = ({
         //   { opacity: 0 },
         //   { opacity: 0, delay: 0.1, duration: 0.5 }
         // );
-      } else {
+      } else if (!prevButtonState && !hoveredButton) {
         gsap.fromTo(
           dropdownRef.current,
           {
-            opacity: 1,
+            autoAlpha: 0,
           },
           {
-            opacity: 0,
+            autoAlpha: 0,
             duration: 0.5,
           }
         );
-      }
-      if (prevButtonState && hoveredButton) {
-        const toh = dropdownContentRef.current?.clientHeight;
-        gsap.fromTo(
-          dropdownContentRef.current,
-          { opacity: 0, height: 0, overflow: "hidden" },
-          {
-            opacity: 1,
-            delay: 0.1,
-            duration: 1,
-            height: "auto",
-            overflow: "auto",
-          }
-        );
+      } else if (!hoveredButton) {
         gsap.fromTo(
           dropdownRef.current,
           {
-            opacity: 1,
-            overflow: "hidden",
+            autoAlpha: 1,
           },
           {
-            opacity: 1,
+            autoAlpha: 0,
             duration: 0.5,
-            overflow: "auto",
           }
         );
       }
@@ -82,12 +67,12 @@ const DropdownContent = ({
   return (
     <div
       ref={dropdownRef}
-      className="dropdown-menu absolute w-full  left-0 top-[60px]  border-t-2 border-b-2 border-violet-500 bg-slate-700 overflow-hidden"
+      className="dropdown-menu absolute w-full  left-0 top-[65px]  border-t-2 border-b-2 border-violet-500 bg-slate-700 opacity-0"
     >
       {hoveredButton}
       <div
         ref={dropdownContentRef}
-        className="dropdown-wrapper  text-black flex w-full  justify-center  bg-slate-50   border-black border-2  overflow-hidden max-h-[500px]"
+        className="dropdown-wrapper  text-black flex w-full  justify-center  bg-slate-50   border-black border-2   overflow-auto max-h-[500px]"
       >
         <div className="flex py-8 gap-28 flex-wrap justify-evenly  ">
           {pageCategoryData &&

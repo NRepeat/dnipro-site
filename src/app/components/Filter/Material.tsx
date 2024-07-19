@@ -22,11 +22,7 @@ const Material = () => {
           onChange={() => setGroupSelected}
         >
           {data.map((data) => (
-            <CustomCheckbox
-              value={data.material}
-              key={data.material}
-              onChange={() => console.log("asdasd")}
-            >
+            <CustomCheckbox value={data.material} key={data.material}>
               {data.material}
             </CustomCheckbox>
           ))}
