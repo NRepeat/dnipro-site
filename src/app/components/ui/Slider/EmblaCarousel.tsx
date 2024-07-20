@@ -7,10 +7,12 @@ import "@/app/styles/slider.css";
 type SliderPropType = {
   slides?: any[];
   options?: EmblaOptionsType;
-  delay: number;
+  delay?: number;
   children?: React.ReactNode;
   slideStyle?: string;
   playOnInit?: boolean;
+  autoPlay?: boolean;
+  selectedSlide?: number;
 };
 
 const SliderCustom: React.FC<SliderPropType> = (props) => {
@@ -20,17 +22,24 @@ const SliderCustom: React.FC<SliderPropType> = (props) => {
     children,
     slideStyle,
     playOnInit = false,
-    delay = 2000,
+    delay,
+    selectedSlide,
+    autoPlay,
   } = props;
 
-  const [emblaRef, emblaApi] = useEmblaCarousel(options, [
-    Autoplay({
-      playOnInit,
-      delay,
-      stopOnMouseEnter: true,
-      stopOnInteraction: false,
-    }),
-  ]);
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    options,
+    autoPlay
+      ? [
+          Autoplay({
+            playOnInit,
+            delay,
+            stopOnMouseEnter: true,
+            stopOnInteraction: false,
+          }),
+        ]
+      : []
+  );
   emblaApi?.on;
 
   const scrollPrev = useCallback(() => {
@@ -41,14 +50,19 @@ const SliderCustom: React.FC<SliderPropType> = (props) => {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
 
+  useEffect(() => {
+    if (selectedSlide) {
+      emblaApi?.scrollTo(selectedSlide);
+    }
+  }, [selectedSlide, emblaApi]);
   return (
     <div className="embla h-full w-full">
       <div className="embla__viewport h-full" ref={emblaRef}>
         <div className="embla__container h-full">
           {children
             ? children
-            : slides?.map((slide) => (
-                <div className="embla__slide h-full" key={slide}>
+            : slides?.map((slide, i) => (
+                <div className="embla__slide h-full" key={i + "slide"}>
                   <div className={`${slideStyle} h-full`}>
                     {children ? children : slide}
                   </div>

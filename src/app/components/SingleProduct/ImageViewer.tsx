@@ -2,42 +2,47 @@
 import React, { useState } from "react";
 import VerticalEmblaCarousel from "../ui/Slider/VerticalSlider/EmblaCarousel";
 import { EmblaOptionsType } from "embla-carousel";
-import Image from "next/image";
-import { Slider } from "@nextui-org/react";
-import EmblaCarousel from "../ui/Slider/VerticalSlider/EmblaCarousel";
+import { Image, Slider } from "@nextui-org/react";
 import SliderCustom from "../ui/Slider/EmblaCarousel";
 const ImageViewer = ({ images }: { images: string[] }) => {
-  const [selectedImage, setSelectedImage] = useState<string>();
+  const [selectedImage, setSelectedImage] = useState<number>();
 
   const OPTIONS: EmblaOptionsType = { axis: "y" };
-  const imagesNode = images.map((image) => (
+  const verticalImages = images.map((image, i) => (
     <Image
+      key={i + "v"}
+      alt="Card example background"
+      className="z-0  h-full   object-cover  hover:scale-105 transition-all rounded-none"
       src={image}
-      alt=""
-      onClick={() => setSelectedImage(image)}
-      className="max-w-[100px]"
-      key={image}
-      width={300}
-      height={350}
+      onClick={() => setSelectedImage(i)}
+    />
+  ));
+  const horizontalImages = images.map((image, i) => (
+    <Image
+      key={i + "h"}
+      alt="Card example background"
+      className="z-0  h-full   object-cover  hover:scale-105 transition-all rounded-none"
+      src={image}
+      onClick={() => setSelectedImage(i)}
     />
   ));
   return (
-    <>
-      <div>
+    <div className="flex">
+      <div className="w-[150px]">
         <VerticalEmblaCarousel options={OPTIONS}>
-          {imagesNode}
+          {verticalImages}
         </VerticalEmblaCarousel>
       </div>
-      <div>
-        {/* <Image
-          src={selectedImage ? selectedImage : images[0]}
-          alt=""
-          className=""
-          width={300}
-          height={350}
-        /> */}
+      <div className="relative w-[500px]">
+        <SliderCustom
+          slides={horizontalImages}
+          options={{ loop: true }}
+          slideStyle=""
+          autoPlay={false}
+          selectedSlide={selectedImage}
+        ></SliderCustom>
       </div>
-    </>
+    </div>
   );
 };
 

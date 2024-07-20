@@ -39,6 +39,7 @@ const WelcomeCard = ({
           slides={slides}
           options={{ loop: true }}
           slideStyle=""
+          autoPlay={true}
         ></SliderCustom>
 
         <CardFooter className="absolute bg-white/30 bottom-0  border-zinc-100/50 z-0 justify-between rounded-none">
