@@ -40,6 +40,12 @@
   .card {
     @apply w-24 h-32 flex bg-fuchsia-200 items-center justify-center opacity-0;
   }
+  .verticalTopSliderButton {
+    @apply absolute left-1/2 transform -translate-x-1/2  bg-slate-50 w-full opacity-30 hover:opacity-100 top-0;
+  }
+  .verticalBottomSliderButton {
+    @apply absolute left-1/2 transform -translate-x-1/2  bg-slate-50 w-full opacity-30 hover:opacity-100 bottom-0;
+  }
   .content-container {
     height: calc(100vh - 4rem);
   }

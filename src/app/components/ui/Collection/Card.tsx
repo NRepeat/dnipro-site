@@ -37,7 +37,6 @@ const divideIntoThreeParts = (number: number, stepK: number) => {
 };
 
 const CollectionCard: FC<CollectionCardProps> = ({ product }) => {
-  console.log("🚀 ~ product:", product);
   const [images, setImages] = useState<string[]>([
     product.thumbnail,
     ...product.images,

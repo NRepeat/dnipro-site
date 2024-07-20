@@ -4,7 +4,7 @@ import { EmblaOptionsType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import "@/app/styles/slider.css";
-type PropType = {
+type SliderPropType = {
   slides?: any[];
   options?: EmblaOptionsType;
   delay: number;
@@ -13,7 +13,7 @@ type PropType = {
   playOnInit?: boolean;
 };
 
-const SliderCustom: React.FC<PropType> = (props) => {
+const SliderCustom: React.FC<SliderPropType> = (props) => {
   const {
     slides,
     options,
