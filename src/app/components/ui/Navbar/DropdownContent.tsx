@@ -7,10 +7,12 @@ const DropdownContent = ({
   hoveredButton,
   prevButtonState,
   pageSlug,
+  mouseLeave,
 }: {
   hoveredButton: string | null;
   prevButtonState: string | null;
   pageSlug: string | null;
+  mouseLeave: boolean;
 }) => {
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const dropdownContentRef = useRef<HTMLDivElement | null>(null);
@@ -28,12 +30,17 @@ const DropdownContent = ({
             duration: 0.5,
           }
         );
-
-        // gsap.fromTo(
-        //   dropdownContentRef.current,
-        //   { opacity: 0 },
-        //   { opacity: 0, delay: 0.1, duration: 0.5 }
-        // );
+      } else if (prevButtonState && hoveredButton) {
+        gsap.fromTo(
+          dropdownRef.current,
+          {
+            autoAlpha: 0,
+          },
+          {
+            autoAlpha: 1,
+            duration: 0.5,
+          }
+        );
       } else if (!prevButtonState && !hoveredButton) {
         gsap.fromTo(
           dropdownRef.current,
@@ -45,7 +52,7 @@ const DropdownContent = ({
             duration: 0.5,
           }
         );
-      } else if (!hoveredButton) {
+      } else if (mouseLeave) {
         gsap.fromTo(
           dropdownRef.current,
           {
@@ -58,42 +65,46 @@ const DropdownContent = ({
         );
       }
     }
-  }, [hoveredButton, prevButtonState]);
+  }, [hoveredButton, prevButtonState, mouseLeave]);
 
   const pageData = navBardData.pages.find((page) => page.slug === pageSlug);
   const pageCategoryData =
     pageData && pageData.categories?.map((categories) => categories);
 
   return (
-    <div
-      ref={dropdownRef}
-      className="dropdown-menu absolute w-full  left-0 top-[65px]  border-t-2 border-b-2 border-violet-500 bg-slate-700 opacity-0"
-    >
-      {hoveredButton}
-      <div
-        ref={dropdownContentRef}
-        className="dropdown-wrapper  text-black flex w-full  justify-center  bg-slate-50   border-black border-2   overflow-auto max-h-[500px]"
-      >
-        <div className="flex py-8 gap-28 flex-wrap justify-evenly  ">
-          {pageCategoryData &&
-            pageCategoryData.map((category) => (
-              <div key={category.label} className="flex flex-col">
-                <p className="text-left pb-2 capitalize text-[0.8rem] font-bold">
-                  {category.label.toUpperCase()}
-                </p>
-                {category?.data.map((d) => (
-                  <p
-                    className="pt-4 pl-2 text-left capitalize text-[0.6rem] font-light"
-                    key={d.label}
-                  >
-                    {d.label.toUpperCase()}
-                  </p>
+    <>
+      {
+        <div
+          ref={dropdownRef}
+          className={`dropdown-menu absolute w-full  left-0 top-[65px]  border-t-2 border-b-2 border-violet-500 bg-slate-700  `}
+        >
+          {hoveredButton}
+          <div
+            ref={dropdownContentRef}
+            className="dropdown-wrapper  text-black flex w-full  justify-center  bg-slate-50   border-black border-2   overflow-auto max-h-[500px]"
+          >
+            <div className="flex py-8 gap-28 flex-wrap justify-evenly  ">
+              {pageCategoryData &&
+                pageCategoryData.map((category) => (
+                  <div key={category.label} className="flex flex-col">
+                    <p className="text-left pb-2 capitalize text-[0.8rem] font-bold">
+                      {category.label.toUpperCase()}
+                    </p>
+                    {category?.data.map((d) => (
+                      <p
+                        className="pt-4 pl-2 text-left capitalize text-[0.6rem] font-light"
+                        key={d.label}
+                      >
+                        {d.label.toUpperCase()}
+                      </p>
+                    ))}
+                  </div>
                 ))}
-              </div>
-            ))}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      }
+    </>
   );
 };
 

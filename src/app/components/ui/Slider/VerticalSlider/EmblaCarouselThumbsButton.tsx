@@ -14,12 +14,12 @@ export const Thumb: React.FC<PropType> = (props) => {
 
   return (
     <div
-      className={"embla-thumbs__slide".concat(
-        selected ? " embla-thumbs__slide--selected" : ""
-      )}
+      className={`embla-thumbs__slide ${
+        selected ? "border-1 border-black" : ""
+      }`}
     >
       <div onClick={onClick} className="w-[150px] flex ">
-        {image}
+        {image ? image : <div className="min-w-[150px] min-h-[150px]"></div>}
       </div>
     </div>
   );

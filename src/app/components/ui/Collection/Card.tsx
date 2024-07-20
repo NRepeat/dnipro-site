@@ -63,7 +63,7 @@ const CollectionCard: FC<CollectionCardProps> = ({ product }) => {
   };
 
   return (
-    <Link href={`/product/${product.id}`}>
+    <Link href={`/product/${product.id}`} prefetch>
       <Card
         onMouseMove={handleMouseMove}
         onMouseLeave={() => setImageIndex(0)}

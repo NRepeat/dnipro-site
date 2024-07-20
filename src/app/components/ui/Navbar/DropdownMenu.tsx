@@ -9,8 +9,18 @@ import { useGSAP } from "@gsap/react";
 
 const NavButtonWithDropdownMenuWrapper = () => {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
+  console.log(
+    "🚀 ~ NavButtonWithDropdownMenuWrapper ~ hoveredButton:",
+    hoveredButton
+  );
+  const [mouseLeave, setMouseLeave] = useState<boolean>(true);
+  console.log("🚀 ~ NavButtonWithDropdownMenuWrapper ~ mouseLeav:", mouseLeave);
 
   const prevHoveredButtonRef = useRef<string | null>(null);
+  console.log(
+    "🚀 ~ NavButtonWithDropdownMenuWrapper ~ prevHoveredButtonRef :",
+    prevHoveredButtonRef
+  );
 
   useEffect(() => {
     prevHoveredButtonRef.current = hoveredButton;
@@ -23,27 +33,19 @@ const NavButtonWithDropdownMenuWrapper = () => {
 
     if (buttonKey) {
       setHoveredButton(buttonKey);
+      setMouseLeave(false);
     }
   };
-  useGSAP(() => {
-    if (!hoveredButton) {
-      gsap.fromTo(
-        ".dropdown-menu",
-        {
-          opacity: 1,
-        },
-        {
-          opacity: 0,
-          duration: 0.5,
-        }
-      );
-    }
-  }, [hoveredButton]);
+  const handleOnMouseLeave = async () => {
+    setMouseLeave(true);
+    setHoveredButton(null);
+  };
+
   return (
     <NavbarContent>
       <div
         className="w-full flex h-full"
-        onMouseLeave={() => setHoveredButton(null)}
+        onMouseLeave={() => handleOnMouseLeave()}
       >
         <Buttons
           handleDropDownTrigger={handleDropDownTrigger}
@@ -51,6 +53,7 @@ const NavButtonWithDropdownMenuWrapper = () => {
         />
         {
           <DropdownContent
+            mouseLeave={mouseLeave}
             pageSlug={hoveredButton}
             hoveredButton={hoveredButton}
             prevButtonState={prevHoveredButtonRef.current}

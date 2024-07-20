@@ -32,7 +32,7 @@ export const getFilteredProducts = async (filter: string) => {
 export const getProduct = async (id: string) => {
   try {
     const url = `https://dummyjson.com/products/${id}`;
-
+    await new Promise((reslove) => setTimeout(reslove, 1000));
     const response = await fetch(url);
     const data = await response.json();
     return data;
