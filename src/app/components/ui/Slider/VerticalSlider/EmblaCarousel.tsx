@@ -1,14 +1,12 @@
 "use client";
-import React from "react";
-import { EmblaOptionsType } from "embla-carousel";
-import { DotButton, useDotButton } from "./EmblaCarouselDotButton";
-import {
-  PrevButton,
-  NextButton,
-  usePrevNextButtons,
-} from "./EmblaCarouselArrowButtons";
-import useEmblaCarousel from "embla-carousel-react";
 import "@/app/styles/verticalSlider.css";
+
+import React, { useState, useEffect, useCallback } from "react";
+import { EmblaOptionsType } from "embla-carousel";
+import useEmblaCarousel from "embla-carousel-react";
+import { Thumb } from "./EmblaCarouselThumbsButton";
+import { NextButton, PrevButton } from "./EmblaCarouselArrowButtons";
+import { usePrevNextButtons } from "../Buttons";
 
 type VerticalSliderPropType = {
   slides?: any[];
@@ -20,58 +18,74 @@ type VerticalSliderPropType = {
 };
 
 const EmblaCarousel: React.FC<VerticalSliderPropType> = (props) => {
-  const { slides, options, children, slideStyle } = props;
-  const [emblaRef, emblaApi] = useEmblaCarousel(options);
-
-  const { selectedIndex, scrollSnaps, onDotButtonClick } =
-    useDotButton(emblaApi);
-
+  const { slides, options } = props;
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [emblaMainRef, emblaMainApi] = useEmblaCarousel(options);
+  const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel({
+    containScroll: "keepSnaps",
+    dragFree: true,
+    axis: "y",
+  });
   const {
     prevBtnDisabled,
     nextBtnDisabled,
     onPrevButtonClick,
     onNextButtonClick,
-  } = usePrevNextButtons(emblaApi);
+  } = usePrevNextButtons(emblaThumbsApi);
+  const onThumbClick = useCallback(
+    (index: number) => {
+      if (!emblaMainApi || !emblaThumbsApi) return;
+      emblaMainApi.scrollTo(index);
+    },
+    [emblaMainApi, emblaThumbsApi]
+  );
+
+  const onSelect = useCallback(() => {
+    if (!emblaMainApi || !emblaThumbsApi) return;
+    setSelectedIndex(emblaMainApi.selectedScrollSnap());
+    emblaThumbsApi.scrollTo(emblaMainApi.selectedScrollSnap());
+  }, [emblaMainApi, emblaThumbsApi, setSelectedIndex]);
+
+  useEffect(() => {
+    if (!emblaMainApi) return;
+    onSelect();
+
+    emblaMainApi.on("select", onSelect).on("reInit", onSelect);
+  }, [emblaMainApi, onSelect]);
 
   return (
-    <section className="embla_v relative">
-      {!prevBtnDisabled && (
-        <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
-      )}
-
-      <div className="embla_v__viewport" ref={emblaRef}>
-        <div className="embla_v__container">
-          {children
-            ? children
-            : slides?.map((slide) => (
-                <div className="embla_v__slide " key={slide}>
-                  <div className={`${slideStyle} max-w-[100px]`}>
-                    {children ? children : slide}
-                  </div>
-                </div>
-              ))}
+    <div className="embla flex ">
+      <div className="embla-thumbs relative">
+        {!prevBtnDisabled && (
+          <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
+        )}
+        {!nextBtnDisabled && (
+          <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
+        )}
+        <div className="embla-thumbs__viewport " ref={emblaThumbsRef}>
+          <div className="embla-thumbs__container h-[300px]">
+            {slides?.map((slide, index) => (
+              <Thumb
+                key={index}
+                onClick={() => onThumbClick(index)}
+                selected={index === selectedIndex}
+                index={index}
+                image={slide}
+              />
+            ))}
+          </div>
         </div>
       </div>
-      {!nextBtnDisabled && (
-        <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
-      )}
-
-      <div className="embla_v__controls">
-        <div className="embla_v__buttons"></div>
-
-        {/* <div className="embla_v__dots">
-          {scrollSnaps.map((_, index) => (
-            <DotButton
-              key={index}
-              onClick={() => onDotButtonClick(index)}
-              className={"embla_v__dot".concat(
-                index === selectedIndex ? " embla_v__dot--selected" : ""
-              )}
-            />
+      <div className="embla__viewport" ref={emblaMainRef}>
+        <div className="embla__container w-[300px]">
+          {slides?.map((slide, index) => (
+            <div className="embla__slide" key={index}>
+              <div>{slide}</div>
+            </div>
           ))}
-        </div> */}
+        </div>
       </div>
-    </section>
+    </div>
   );
 };
 

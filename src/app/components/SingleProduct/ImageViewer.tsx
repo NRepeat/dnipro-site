@@ -7,7 +7,7 @@ import SliderCustom from "../ui/Slider/EmblaCarousel";
 const ImageViewer = ({ images }: { images: string[] }) => {
   const [selectedImage, setSelectedImage] = useState<number>();
 
-  const OPTIONS: EmblaOptionsType = { axis: "y" };
+  const OPTIONS: EmblaOptionsType = {};
   const verticalImages = images.map((image, i) => (
     <Image
       key={i + "v"}
@@ -28,12 +28,13 @@ const ImageViewer = ({ images }: { images: string[] }) => {
   ));
   return (
     <div className="flex">
-      <div className="w-[150px]">
-        <VerticalEmblaCarousel options={OPTIONS}>
-          {verticalImages}
-        </VerticalEmblaCarousel>
+      <div className=" w-[500px]">
+        <VerticalEmblaCarousel
+          options={OPTIONS}
+          slides={verticalImages}
+        ></VerticalEmblaCarousel>
       </div>
-      <div className="relative w-[500px]">
+      {/* <div className="relative w-[500px] h-full">
         <SliderCustom
           slides={horizontalImages}
           options={{ loop: true }}
@@ -41,7 +42,7 @@ const ImageViewer = ({ images }: { images: string[] }) => {
           autoPlay={false}
           selectedSlide={selectedImage}
         ></SliderCustom>
-      </div>
+      </div> */}
     </div>
   );
 };
