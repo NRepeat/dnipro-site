@@ -5,6 +5,7 @@ import { Cinzel } from "@next/font/google";
 import { Providers } from "./providers/providers";
 import CustomFooter from "./components/Footer/Footer";
 import NavBar from "./components/ui/Navbar/Navbar";
+import BreadcrumbsCustom from "./components/ui/BreadcrumbsCustom/BreadcrumCustome";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -28,6 +29,7 @@ export default function RootLayout({
       >
         <Providers>
           <NavBar />
+
           {children}
           <CustomFooter />
         </Providers>

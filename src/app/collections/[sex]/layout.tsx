@@ -1,4 +1,5 @@
 import Filter from "@/app/components/Filter/Filter";
+import BreadcrumbsCustom from "@/app/components/ui/BreadcrumbsCustom/BreadcrumCustome";
 
 export default function RootLayout({
   children,

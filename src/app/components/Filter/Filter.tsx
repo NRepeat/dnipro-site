@@ -22,9 +22,6 @@ type FilterProps = {
 };
 
 const Filter: FC<FilterProps> = ({ children }) => {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const router = useRouter();
   const dispatch = useDispatch();
   const filter = useSelector(
     (state: { filter: FilterStateType }) => state.filter

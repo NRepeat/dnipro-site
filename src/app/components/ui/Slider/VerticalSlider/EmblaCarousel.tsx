@@ -55,7 +55,7 @@ const EmblaCarousel: React.FC<VerticalSliderPropType> = (props) => {
 
   return (
     <div className="embla flex ">
-      <div className="embla-thumbs relative">
+      <div className="embla-thumbs relative ">
         {!prevBtnDisabled && (
           <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
         )}
@@ -79,7 +79,7 @@ const EmblaCarousel: React.FC<VerticalSliderPropType> = (props) => {
       <div className="embla__viewport" ref={emblaMainRef}>
         <div className="embla__container ">
           {slides?.map((slide, index) => (
-            <div className="embla__slide " key={index}>
+            <div className="embla__slide" key={index}>
               {slide}
             </div>
           ))}

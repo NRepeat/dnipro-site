@@ -40,6 +40,10 @@
   .card {
     @apply w-24 h-32 flex bg-fuchsia-200 items-center justify-center opacity-0;
   }
+  .padding-x-0 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
   .verticalTopSliderButton {
     @apply absolute left-1/2 transform -translate-x-1/2  bg-slate-50 w-full opacity-30 hover:opacity-100 top-0;
   }

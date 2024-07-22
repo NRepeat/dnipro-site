@@ -56,18 +56,23 @@ const SliderCustom: React.FC<SliderPropType> = (props) => {
     }
   }, [selectedSlide, emblaApi]);
   return (
-    <div className="embla h-full w-full">
+    <div className="embla h-full w-full relative">
       <div className="embla__viewport h-full" ref={emblaRef}>
         <div className="embla__container h-full">
-          {children
-            ? children
-            : slides?.map((slide, i) => (
-                <div className="embla__slide h-full" key={i + "slide"}>
-                  <div className={`${slideStyle} h-full`}>
-                    {children ? children : slide}
-                  </div>
+          {children ? (
+            <div className="embla__slide h-full">{children}</div>
+          ) : (
+            slides?.map((slide, i) => (
+              <div
+                className="embla__slide h-full flex justify-center"
+                key={i + "slide"}
+              >
+                <div className={`${slideStyle} h-full flex`}>
+                  {children ? children : slide}
                 </div>
-              ))}
+              </div>
+            ))
+          )}
         </div>
       </div>
       <button

@@ -36,12 +36,6 @@ export const navBardData = {
         { label: "Нові надходження", data: newArrivals },
         { label: "Одежа", data: womanClothing },
         { label: "Взуття", data: womanShoes },
-        { label: "Взуття", data: womanShoes },
-        { label: "Взуття", data: womanShoes },
-        { label: "Взуття", data: womanShoes },
-        { label: "Взуття", data: womanShoes },
-        { label: "Взуття", data: womanShoes },
-        { label: "Взуття", data: womanShoes },
       ],
     },
     {

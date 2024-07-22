@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import filterReducer, { setFlipState } from "./slice/filterSlice";
+import filterReducer from "./slice/filterSlice";
+import productReducer from "./slice/productSlice";
 export const store = configureStore({
   reducer: {
     filter: filterReducer,
+    product: productReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -1,3 +1,5 @@
+import BreadcrumbsCustom from "@/app/components/ui/BreadcrumbsCustom/BreadcrumCustome";
+
 export default function RootLayout({
   children,
   params,
@@ -10,7 +12,8 @@ export default function RootLayout({
 }>) {
   return (
     <main className="w-full flex justify-center">
-      <div className="max-w-[1524px] flex flex-col justify-start w-full px-6">
+      <div className="max-w-[1524px] flex flex-col justify-start w-full py-6">
+        <BreadcrumbsCustom />
         {children}
       </div>
     </main>

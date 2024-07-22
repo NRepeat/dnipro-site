@@ -9,18 +9,10 @@ import { useGSAP } from "@gsap/react";
 
 const NavButtonWithDropdownMenuWrapper = () => {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
-  console.log(
-    "🚀 ~ NavButtonWithDropdownMenuWrapper ~ hoveredButton:",
-    hoveredButton
-  );
+
   const [mouseLeave, setMouseLeave] = useState<boolean>(true);
-  console.log("🚀 ~ NavButtonWithDropdownMenuWrapper ~ mouseLeav:", mouseLeave);
 
   const prevHoveredButtonRef = useRef<string | null>(null);
-  console.log(
-    "🚀 ~ NavButtonWithDropdownMenuWrapper ~ prevHoveredButtonRef :",
-    prevHoveredButtonRef
-  );
 
   useEffect(() => {
     prevHoveredButtonRef.current = hoveredButton;

@@ -14,7 +14,7 @@ export const Thumb: React.FC<PropType> = (props) => {
 
   return (
     <div
-      className={`embla-thumbs__slide ${
+      className={`embla-thumbs__slide border-1 ${
         selected ? "border-1 border-black" : ""
       }`}
     >

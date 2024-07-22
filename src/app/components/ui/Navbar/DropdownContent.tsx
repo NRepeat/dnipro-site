@@ -31,38 +31,27 @@ const DropdownContent = ({
           }
         );
       } else if (prevButtonState && hoveredButton) {
-        gsap.fromTo(
-          dropdownRef.current,
-          {
-            autoAlpha: 0,
-          },
-          {
-            autoAlpha: 1,
-            duration: 0.5,
-          }
-        );
-      } else if (!prevButtonState && !hoveredButton) {
-        gsap.fromTo(
-          dropdownRef.current,
-          {
-            autoAlpha: 0,
-          },
-          {
-            autoAlpha: 0,
-            duration: 0.5,
-          }
-        );
+        gsap.from(dropdownRef.current, {
+          autoAlpha: 1,
+        });
+        gsap.from(dropdownContentRef.current, {
+          autoAlpha: 0,
+          duration: 0.5,
+        });
+        gsap.to(dropdownRef.current, {
+          autoAlpha: 1,
+        });
       } else if (mouseLeave) {
-        gsap.fromTo(
-          dropdownRef.current,
-          {
-            autoAlpha: 1,
-          },
-          {
-            autoAlpha: 0,
-            duration: 0.5,
-          }
-        );
+        // gsap.fromTo(
+        //   dropdownRef.current,
+        //   {
+        //     autoAlpha: 1,
+        //   },
+        //   {
+        //     autoAlpha: 1,
+        //     duration: 0.5,
+        //   }
+        // );
       }
     }
   }, [hoveredButton, prevButtonState, mouseLeave]);
@@ -73,10 +62,10 @@ const DropdownContent = ({
 
   return (
     <>
-      {
+      {pageCategoryData && (
         <div
           ref={dropdownRef}
-          className={`dropdown-menu absolute w-full  left-0 top-[65px]  border-t-2 border-b-2 border-violet-500 bg-slate-700  `}
+          className={`dropdown-menu absolute w-full  left-0 top-[65px]  border-t-2 border-b-2 border-violet-500 bg-slate-700  opacity-0`}
         >
           {hoveredButton}
           <div
@@ -85,6 +74,7 @@ const DropdownContent = ({
           >
             <div className="flex py-8 gap-28 flex-wrap justify-evenly  ">
               {pageCategoryData &&
+                pageCategoryData?.length > 0 &&
                 pageCategoryData.map((category) => (
                   <div key={category.label} className="flex flex-col">
                     <p className="text-left pb-2 capitalize text-[0.8rem] font-bold">
@@ -103,7 +93,7 @@ const DropdownContent = ({
             </div>
           </div>
         </div>
-      }
+      )}
     </>
   );
 };

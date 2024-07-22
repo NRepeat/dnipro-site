@@ -1,4 +1,5 @@
 import Filter from "@/app/components/Filter/Filter";
+import BreadcrumbsCustom from "@/app/components/ui/BreadcrumbsCustom/BreadcrumCustome";
 
 export default function RootLayout({
   children,
@@ -9,5 +10,10 @@ export default function RootLayout({
     filters: string[];
   };
 }>) {
-  return <>{children}</>;
+  return (
+    <div className="flex flex-col">
+      <BreadcrumbsCustom />
+      {children}
+    </div>
+  );
 }
