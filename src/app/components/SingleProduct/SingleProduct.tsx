@@ -40,7 +40,6 @@ const SingleProduct: FC<ProductType> = async ({ id }) => {
         title="SIMILAR PRODUCTS"
         titleMargin={12}
       />
-      <AlsoLike />
     </div>
   );
 };

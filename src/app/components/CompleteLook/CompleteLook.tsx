@@ -21,7 +21,7 @@ const ProductsCarousel: FC<ProductsCarousel> = ({
   let chunkedArr = [];
   let start = 0;
   let count = 0;
-  const size = 3;
+  const size = 5;
   while (count < cashedArr.length) {
     const removedItems = products.splice(start, size);
     count += size;
@@ -34,7 +34,13 @@ const ProductsCarousel: FC<ProductsCarousel> = ({
 
   return (
     <div>
-      <p className={`${titleMargin ? "mb-" + titleMargin : ""} `}>{title}</p>
+      <p
+        className={`${
+          titleMargin ? `mb-${titleMargin}` : ""
+        } text-center font-bold text-xl`}
+      >
+        {title}
+      </p>
       <SliderCustom slides={chunkedArr}></SliderCustom>
       <div className="inline-flex gap-2"></div>
     </div>
