@@ -1,5 +1,9 @@
 "use client";
-import { BagStateType, setProductInBag } from "@/app/store/slice/bagSlice";
+import {
+  BagStateType,
+  setIsBuyRightNowModalOpen,
+  setProductInBag,
+} from "@/app/store/slice/bagSlice";
 import { ProductStateType } from "@/app/store/slice/productSlice";
 import { Button } from "@nextui-org/react";
 import React, { useState } from "react";
@@ -25,6 +29,14 @@ const BuyButtons = () => {
       : [product];
     dispatch(setProductInBag(newProducts));
   };
+  const handleBuy = () => {
+    dispatch(
+      setIsBuyRightNowModalOpen({
+        isOpen: !bagState.isBuyRightNowModalOpen,
+        product: product,
+      })
+    );
+  };
   return (
     <>
       {error ? (
@@ -44,6 +56,7 @@ const BuyButtons = () => {
           color="primary"
           className="w-full"
           onMouseOver={handleBuyButtonHover}
+          onClick={handleBuy}
         >
           Buy right now
         </Button>

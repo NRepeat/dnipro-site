@@ -13,16 +13,31 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@nextui-org/react";
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductBagCard from "./ProductBagCard";
 import EmptyCartInfo from "./EmpryCartInfo";
 import BagModalContent from "./BagModalContent";
 import Info from "../SingleProduct/Info";
+import { getUsers } from "@/app/actions/getProducts";
 
-const BuyRightNowModal = ({ product }: { product: any }) => {
+const BuyRightNowModal = () => {
+  const [products, setProducts] = useState<any[]>();
+
   const dispatch = useDispatch();
   const bagState = useSelector((state: { bag: BagStateType }) => state.bag);
+  const getProducts = useCallback(async () => {
+    if (bagState.productsToBuy && bagState.productsToBuy.length > 0) {
+      const products = await getUsers(bagState.productsToBuy.length, 0);
+      setProducts(products);
+    } else {
+      setProducts([]);
+    }
+  }, [bagState.productsToBuy]);
+
+  useEffect(() => {
+    getProducts();
+  }, [bagState, getProducts]);
 
   const { onOpenChange } = useDisclosure();
   return (
@@ -36,7 +51,9 @@ const BuyRightNowModal = ({ product }: { product: any }) => {
           const handleClose = () => {
             onClose();
             dispatch(
-              setIsBuyRightNowModalOpen(!bagState.isBuyRightNowModalOpen)
+              setIsBuyRightNowModalOpen({
+                isOpen: !bagState.isBuyRightNowModalOpen,
+              })
             );
           };
           return (
@@ -45,7 +62,8 @@ const BuyRightNowModal = ({ product }: { product: any }) => {
                 You have 1 item in your Shopping Bag
               </ModalHeader>
               {/* <BagModalContent bagState={bagState} /> */}
-              <Info product={product} />
+              {products?.length && <Info product={products[0]} />}
+
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={handleClose}>
                   Close
