@@ -34,7 +34,7 @@ const Info = ({ product }: { product: any }) => {
               <Divider />
               <ColorPicker product={product} />
               <Divider />
-              <SizePicker sizes={[20, 30, 40]} />
+              <SizePicker sizes={[20, 30, 40]} productId={product.id} />
               <BuyButtons />
             </>
           ) : (

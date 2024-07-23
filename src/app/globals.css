@@ -44,6 +44,14 @@
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
+  .margin-0 {
+    margin: 0 !important;
+  }
+  .align-items-none {
+    align-items: normal !important;
+    padding-top: 64px;
+    padding-right: 1rem;
+  }
   .verticalTopSliderButton {
     @apply absolute left-1/2 transform -translate-x-1/2  bg-slate-50 w-full opacity-30 hover:opacity-100 top-0;
   }

@@ -1,5 +1,9 @@
 "use client";
-import { ProductStateType, setSize } from "@/app/store/slice/productSlice";
+import {
+  ProductStateType,
+  setProductId,
+  setSize,
+} from "@/app/store/slice/productSlice";
 import {
   Button,
   Modal,
@@ -12,7 +16,13 @@ import {
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-const SizePicker = ({ sizes }: { sizes: any[] }) => {
+const SizePicker = ({
+  sizes,
+  productId,
+}: {
+  sizes: any[];
+  productId: number;
+}) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const dispatch = useDispatch();
   const product = useSelector(
@@ -20,6 +30,7 @@ const SizePicker = ({ sizes }: { sizes: any[] }) => {
   );
   const handleSetSize = (size: string | number) => {
     dispatch(setSize(size));
+    dispatch(setProductId(productId));
   };
   return (
     <div className="py-4">
