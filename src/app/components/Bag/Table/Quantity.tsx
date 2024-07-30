@@ -1,12 +1,13 @@
 "use client";
+import { addBulkProducts } from "@/app/actions/products";
 import { Button, Input } from "@nextui-org/react";
 import React, { useState } from "react";
 
 const Quantity = ({ quantityInit }: { quantityInit: number }) => {
   const [quantity, setQuantity] = useState<number>(quantityInit);
 
-  const increment = () => {
-    setQuantity((prev) => prev + 1);
+  const increment = async () => {
+    // addBulkProducts();
   };
 
   const decrement = () => {
@@ -14,18 +15,26 @@ const Quantity = ({ quantityInit }: { quantityInit: number }) => {
   };
 
   return (
-    <td className="px-6 py-4 whitespace-nowrap">
+    <td className="px-6 py-4 whitespace-nowrap w-[250px]">
       <Input
         type="text"
         value={`${quantity}`}
         onChange={(e) => setQuantity(Number(e.target.value))}
         startContent={
-          <Button variant="light" onClick={increment}>
+          <Button
+            variant="light"
+            onClick={increment}
+            className="w-[50px] p-0 min-w-0"
+          >
             +
           </Button>
         }
         endContent={
-          <Button variant="light" onClick={decrement}>
+          <Button
+            variant="light"
+            onClick={decrement}
+            className="w-[50px] p-0 min-w-0"
+          >
             -
           </Button>
         }

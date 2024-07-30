@@ -19,7 +19,7 @@ import ProductBagCard from "./ProductBagCard";
 import EmptyCartInfo from "./EmpryCartInfo";
 import BagModalContent from "./BagModalContent";
 import Info from "../SingleProduct/Info";
-import { getUsers } from "@/app/actions/getProducts";
+import { getUsers } from "@/app/actions/products";
 
 const BuyRightNowModal = () => {
   const [products, setProducts] = useState<any[]>();

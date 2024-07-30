@@ -1,9 +1,11 @@
 import { Button } from "@nextui-org/react";
+import { useRouter } from "next/router";
 import React from "react";
+import Buttons from "./Buttons";
 
 const Check = () => {
   return (
-    <div className="bg-gray-200 min-w-[300px]">
+    <div className="bg-gray-200 w-[400px]">
       <div className="inline-flex w-full justify-between">
         <span>Subtotal</span>
         <span>€ 1.988</span>
@@ -16,19 +18,15 @@ const Check = () => {
           <span>€ 9</span>
         </div>
         <p>
-          By clicking on "Proceed" you can log in or create your account and
-          enjoy shopping without costs on orders over € 150
+          By clicking on Proceed you can log in or create your account and enjoy
+          shopping without costs on orders over € 150
         </p>
         <div className="inline-flex w-full justify-between">
           <p>Total</p>
           <span>€ 1.988</span>
         </div>
       </div>
-      <div className="flex flex-col py-8 gap-4">
-        <Button>Proceed to purchase</Button>
-        or
-        <Button>Paypal</Button>
-      </div>
+      <Buttons />
     </div>
   );
 };

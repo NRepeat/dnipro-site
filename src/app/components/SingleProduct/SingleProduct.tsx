@@ -2,10 +2,10 @@ import React, { FC, Suspense } from "react";
 import ImageViewer from "./ImageViewer";
 import Info from "./Info";
 import AlsoLike from "../AlsoLike/AlsoLike";
-import { getProduct, getUsers } from "@/app/actions/getProducts";
 import BreadcrumbsCustom from "../ui/BreadcrumbsCustom/BreadcrumCustome";
 import CompleteLook from "../CompleteLook/CompleteLook";
 import ProductsCarousel from "../CompleteLook/CompleteLook";
+import { getProduct, getUsers } from "@/app/actions/products";
 
 type ProductType = {
   // product: {

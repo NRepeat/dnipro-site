@@ -1,9 +1,9 @@
-import { getUsers } from "@/app/actions/getProducts";
 import { ModalBody } from "@nextui-org/react";
 import React, { useCallback, useEffect, useState } from "react";
 import ProductBagCard from "./ProductBagCard";
 import { BagStateType } from "@/app/store/slice/bagSlice";
 import EmptyCartInfo from "./EmpryCartInfo";
+import { getUsers } from "@/app/actions/products";
 
 const BagModalContent = ({ bagState }: { bagState: BagStateType }) => {
   const [products, setProducts] = useState<any[]>();

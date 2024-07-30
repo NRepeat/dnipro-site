@@ -1,6 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import prisma from "../utils/prisma";
+import { products } from "../../../prisma/data";
 
 export const getUsers = async (limit: number, skip: number) => {
   try {
@@ -40,4 +42,10 @@ export const getProduct = async (id: string) => {
     console.log(error);
     throw new Error(`An error happened: ${error}`);
   }
+};
+
+export const addBulkProducts = async () => {
+  try {
+    await prisma.product.createMany({ data: products });
+  } catch (error) {}
 };

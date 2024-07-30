@@ -1,4 +1,4 @@
-import { getUsers } from "@/app/actions/getProducts";
+import { getUsers } from "@/app/actions/products";
 import Check from "@/app/components/Bag/Table/Check";
 import Quantity from "@/app/components/Bag/Table/Quantity";
 import { Button, Image, Input } from "@nextui-org/react";
@@ -8,6 +8,7 @@ const Bag = async ({ params }: { params: { step: string } }) => {
   const { step } = params;
   const products = await getUsers(3, 0);
 
+  // const response = await handler();
   return (
     <div className="flex flex-col">
       <p>YOU HAVE 3 ITEMS IN YOUR SHOPPING BAG</p>
@@ -26,6 +27,9 @@ const Bag = async ({ params }: { params: { step: string } }) => {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Price
                 </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y- divide-gray-200">
@@ -33,7 +37,7 @@ const Bag = async ({ params }: { params: { step: string } }) => {
                 <>
                   <tr key={p.id}>
                     <td className="px-6 py-4 whitespace-nowrap flex gap-4">
-                      <div className="max-w-[150px]">
+                      <div className="w-[150px]">
                         <Image
                           alt="Card example background"
                           className="z-0 h-full object-cover  transition-all rounded-none jus w-full flex"
@@ -50,10 +54,10 @@ const Bag = async ({ params }: { params: { step: string } }) => {
                     </td>
                     <Quantity quantityInit={1} />
                     <td className="px-6 py-4 whitespace-nowrap ">{p.price}</td>
-                  </tr>
-                  <tr className="px-6 py-4 whitespace-nowrap flex w-full gap-4 flex-col">
-                    <p>Remove</p>
-                    <p>To wish list</p>
+                    <td className="px-6 py-4 whitespace-nowrap  w-full gap-4 flex-col">
+                      <p>Remove</p>
+                      <p>To wish list</p>
+                    </td>
                   </tr>
                 </>
               ))}

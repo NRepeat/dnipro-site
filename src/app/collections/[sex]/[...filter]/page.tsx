@@ -1,4 +1,4 @@
-import { getFilteredProducts, getUsers } from "@/app/actions/getProducts";
+import { getFilteredProducts } from "@/app/actions/products";
 import GridWrapper from "@/app/components/ui/Collection/GridWrapper";
 import React from "react";
 
