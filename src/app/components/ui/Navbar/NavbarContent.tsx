@@ -1,14 +1,7 @@
 "use client";
 import { BagStateType, setIsModalOpen } from "@/app/store/slice/bagSlice";
 import { setFilterShouldStick } from "@/app/store/slice/filterSlice";
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarItem,
-  Button,
-  Input,
-  NavbarContent,
-} from "@nextui-org/react";
+
 import Link from "next/link";
 import React, { useLayoutEffect } from "react";
 import { IoSearchCircleOutline, IoBag } from "react-icons/io5";
@@ -18,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import NavButtonWithDropdownMenuWrapper from "./DropdownMenu";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
+import { Input } from "@/components/ui/input";
 
 const NavbarCustomContent = () => {
   const dispatch = useDispatch();
@@ -49,44 +43,28 @@ const NavbarCustomContent = () => {
     dispatch(setIsModalOpen(!bagState.isOpenModule));
   };
   return (
-    <Navbar className="text-black  max-navbar-w-disable w-full" isBordered>
-      <NavbarBrand>
-        <Link href="/">Brand</Link>
-      </NavbarBrand>
+    <div className="text-black  max-navbar-w-disable w-full flex items-center justify-between px-4">
+      <div className="w-1/3">
+        <Link href="/" className="text-xl ">
+          NNSHOP
+        </Link>
+      </div>
       <NavButtonWithDropdownMenuWrapper />
-      <NavbarContent justify="end">
-        <NavbarItem>
-          <Input
-            classNames={{
-              base: "max-w-full sm:max-w-[10rem] h-10 min-w-[300px]",
-              mainWrapper: "h-full",
-              input: "text-small",
-              inputWrapper:
-                "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
-            }}
-            placeholder="Type to search..."
-            size="sm"
-            startContent={<IoSearchCircleOutline size={18} />}
-            type="search"
-          />
-        </NavbarItem>
-        <NavbarItem>
-          <Button isIconOnly variant="light">
-            <RiAccountBoxFill className="w-4 h-4" />
-          </Button>
-        </NavbarItem>
-        <NavbarItem className="hidden lg:flex">
-          <Button isIconOnly variant="light">
-            <MdFavoriteBorder className="w-4 h-4" />
-          </Button>
-        </NavbarItem>
-        <NavbarItem>
-          <Button isIconOnly variant="light" onClick={handleOpenModal}>
-            <IoBag className="w-4 h-4" />
-          </Button>
-        </NavbarItem>
-      </NavbarContent>
-    </Navbar>
+      <div className="w-1/3 flex gap-6 justify-end">
+        <Input placeholder="Type to search..." type="search" className="w-48" />
+        <div className="flex gap-4">
+          <button>
+            <RiAccountBoxFill className="w-5 h-5" />
+          </button>
+          <button>
+            <MdFavoriteBorder className="w-5 h-5" />
+          </button>
+          <button onClick={handleOpenModal}>
+            <IoBag className="w-5 h-5" />
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 

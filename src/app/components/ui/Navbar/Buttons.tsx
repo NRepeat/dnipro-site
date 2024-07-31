@@ -1,29 +1,31 @@
-import { NavbarItem } from "@nextui-org/react";
 import Link from "next/link";
 import { navBardData } from "./data";
+import {
+  NavigationMenuItem,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+import { NavigationMenuContent } from "@radix-ui/react-navigation-menu";
+import DropdownContent from "./DropdownContent";
 
-const Buttons = ({
-  handleDropDownTrigger,
-  hoveredButton,
-}: {
-  handleDropDownTrigger: (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-  ) => void;
-  hoveredButton: string | null;
-}) =>
-  navBardData.pages.map((page, i) => (
-    <NavbarItem key={i} className="w-full ">
-      <Link
-        href={page.link}
-        key={page.slug}
-        data-key={page.slug}
-        onMouseEnter={(e) => handleDropDownTrigger(e)}
-        className={`border-b-4 h-full w-full flex justify-center items-center font-bold hover:border-b-4 hover:border-b-green-500 transition-colors duration-200 ${
-          page.slug === hoveredButton && "border-b-green-500"
-        }`}
-      >
-        <p>{page.label}</p>
-      </Link>
-    </NavbarItem>
+const Buttons = () => {
+  const navMenu = navBardData.pages.map((page, i) => (
+    <NavigationMenuItem key={i}>
+      <NavigationMenuTrigger>
+        <Link
+          href={page.link}
+          key={page.slug}
+          data-key={page.slug}
+          className={`border-b-4 font-thin text-lg h-full w-full flex justify-center items-center  
+          }`}
+        >
+          <p>{page.label}</p>
+        </Link>
+      </NavigationMenuTrigger>
+      <DropdownContent pageSlug={page.slug} />
+    </NavigationMenuItem>
   ));
+  return navMenu;
+};
+
 export default Buttons;

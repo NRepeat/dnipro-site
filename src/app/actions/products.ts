@@ -2,7 +2,6 @@
 
 import { revalidatePath } from "next/cache";
 import prisma from "../utils/prisma";
-import { products } from "../../../prisma/data";
 
 export const getUsers = async (limit: number, skip: number) => {
   try {
@@ -45,7 +44,8 @@ export const getProduct = async (id: string) => {
 };
 
 export const addBulkProducts = async () => {
+  ``;
   try {
-    await prisma.product.createMany({ data: products });
+    // await prisma.product.createMany({ data: products });
   } catch (error) {}
 };
