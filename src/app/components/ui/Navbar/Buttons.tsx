@@ -3,9 +3,7 @@ import { navBardData } from "./data";
 import {
   NavigationMenuItem,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { NavigationMenuContent } from "@radix-ui/react-navigation-menu";
 import DropdownContent from "./DropdownContent";
 
 const Buttons = () => {

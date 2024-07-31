@@ -33,9 +33,9 @@ export const navBardData = {
       label: "Жіноче",
       slug: "woman",
       categories: [
-        { label: "Нові надходження", data: newArrivals },
-        { label: "Одежа", data: womanClothing },
-        { label: "Взуття", data: womanShoes },
+        { label: "Нові надходження", link: "/woman", data: newArrivals },
+        { label: "Одежа", link: "/woman", data: womanClothing },
+        { label: "Взуття", link: "/woman", data: womanShoes },
       ],
     },
     {
@@ -43,10 +43,22 @@ export const navBardData = {
       label: "Чоловіче",
       slug: "man",
       categories: [
-        { label: "Нові надходження", data: newArrivals },
-        { label: "Одежа", data: manClothing },
+        { label: "Нові надходження", link: "/woman", data: newArrivals },
+        { label: "Одежа", link: "/woman", data: manClothing },
       ],
     },
-    { link: "/about", slug: "about", label: "Про нас" },
+    {
+      link: "/about",
+      slug: "about",
+      label: "Про нас",
+      categories: [
+        {
+          link: "/woman",
+          label:
+            " Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, blanditiis animi neque consequuntur eum voluptates harum nobis voluptate aliquam itaque minima vero sunt, officiis debitis, nesciunt quidem? Quaerat, iure at.",
+          data: [],
+        },
+      ],
+    },
   ],
 };
