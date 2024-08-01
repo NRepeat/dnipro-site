@@ -1,17 +1,7 @@
-"use client";
-import { useGSAP } from "@gsap/react";
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  Image,
-  usePagination,
-} from "@nextui-org/react";
-import gsap from "gsap/all";
 import React, { FC, useRef, useState } from "react";
 import Pag from "./Pag";
 import Link from "next/link";
+import Image from "next/image";
 
 type CollectionCardProps = {
   product: {
@@ -37,55 +27,54 @@ const divideIntoThreeParts = (number: number, stepK: number) => {
 };
 
 const CollectionCard: FC<CollectionCardProps> = ({ product }) => {
-  const [images, setImages] = useState<string[]>([
-    product.thumbnail,
-    ...product.images,
-  ]);
-  const [imageIndex, setImageIndex] = useState<number>(0);
-  const imageRefs = useRef<HTMLImageElement | null>(null);
+  // const [images, setImages] = useState<string[]>([
+  //   product.thumbnail,
+  //   ...product.images,
+  // ]);
+  // const [imageIndex, setImageIndex] = useState<number>(0);
+  // const imageRefs = useRef<HTMLImageElement | null>(null);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const target = e.currentTarget;
-    const mouseX = e.nativeEvent.offsetX;
+  // const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  //   const target = e.currentTarget;
+  //   const mouseX = e.nativeEvent.offsetX;
 
-    const targetWidth = target.clientWidth;
-    const targetRange = divideIntoThreeParts(targetWidth, images.length);
+  //   const targetWidth = target.clientWidth;
+  //   const targetRange = divideIntoThreeParts(targetWidth, images.length);
 
-    for (let i = 0; i < targetRange.length; i++) {
-      const rangeStart = targetRange[i][0];
-      const rangeEnd = targetRange[i][1];
+  //   for (let i = 0; i < targetRange.length; i++) {
+  //     const rangeStart = targetRange[i][0];
+  //     const rangeEnd = targetRange[i][1];
 
-      if (mouseX >= rangeStart && mouseX < rangeEnd) {
-        setImageIndex(i);
-        break;
-      }
-    }
-  };
+  //     if (mouseX >= rangeStart && mouseX < rangeEnd) {
+  //       break;
+  //     }
+  //   }
+  // };
 
+  const images = product.images;
   return (
     <Link href={`/product/${product.id}`} prefetch>
-      <Card
-        onMouseMove={handleMouseMove}
-        onMouseLeave={() => setImageIndex(0)}
+      <div
         className={`container  transition-transform-background-disable w-full rounded-none cursor-pointer  border-1 hover:border-black`}
       >
-        <CardHeader>
+        {/* <div>
           {images.length > 0 && (
             <Pag total={images.length} index={imageIndex} />
           )}
-        </CardHeader>
-        <CardBody className="flex w-full items-center justify-center overflow-hidden min-h-[300px]">
+        </div> */}
+        <div className="flex w-full items-center justify-center overflow-hidden min-h-[300px]">
           <Image
-            ref={imageRefs}
-            src={images[imageIndex] ? images[imageIndex] : images[0]}
+            width={300}
+            height={300}
+            src={images[0]}
             alt="image"
             className={`w-full h-auto object-cover rounded-none  `}
           />
-        </CardBody>
-        <CardFooter className="justify-between">
+        </div>
+        <div className="justify-between">
           <p className="text-medium">{product.title}</p>
-        </CardFooter>
-      </Card>
+        </div>
+      </div>
     </Link>
   );
 };

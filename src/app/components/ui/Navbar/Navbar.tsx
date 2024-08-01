@@ -15,7 +15,14 @@ const NavBar = () => {
 
   useLayoutEffect(() => {
     const handleOnScrollPositionChange = (direction: number) => {
-      direction === -1 ? showAnim.play() : showAnim.reverse();
+      console.log("Scroll direction:", direction);
+      if (direction === -1) {
+        console.log("Playing animation");
+        showAnim.play();
+      } else {
+        console.log("Reversing animation");
+        showAnim.reverse();
+      }
       dispatch(setFilterShouldStick(direction === -1 ? false : true));
     };
 
@@ -32,6 +39,10 @@ const NavBar = () => {
       end: "max",
       onUpdate: (self) => handleOnScrollPositionChange(self.direction),
     });
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
   }, [dispatch]);
   return (
     <div ref={ref} className="main-tool-bar  w-full  ">

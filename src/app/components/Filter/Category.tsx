@@ -1,11 +1,12 @@
-import {
-  Accordion,
-  AccordionItem,
-  Checkbox,
-  CheckboxGroup,
-} from "@nextui-org/react";
 import React, { FC } from "react";
 import PriceRange from "./PriceRange";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Checkbox } from "@/components/ui/checkbox";
 
 type CategoryProps = {
   category: { properties: string[]; name: string; price?: boolean }[];
@@ -14,24 +15,26 @@ type CategoryProps = {
 const Category: FC<CategoryProps> = ({ category }) => {
   const Properties = category.map((category) => {
     const options = category.properties.map((property) => (
-      <Checkbox key={property}>{property}</Checkbox>
+      <div key={property} className="flex gap-2 items-center">
+        <Checkbox id={property} />
+        <p className="text-lg">{property}</p>
+      </div>
     ));
     return (
-      <AccordionItem
-        key={category.name}
-        title={category.name}
-        className="overflow-hidden"
-      >
-        {category.price ? (
-          <PriceRange />
-        ) : (
-          <CheckboxGroup>{options}</CheckboxGroup>
-        )}
+      <AccordionItem value={category.name} key={category.name}>
+        <AccordionTrigger>{category.name.toUpperCase()}</AccordionTrigger>
+        <AccordionContent>
+          {category.price ? <PriceRange /> : <div>{options}</div>}
+        </AccordionContent>
       </AccordionItem>
     );
   });
 
-  return <Accordion>{Properties}</Accordion>;
+  return (
+    <Accordion type="single" collapsible className="w-full">
+      {Properties}
+    </Accordion>
+  );
 };
 
 export default Category;

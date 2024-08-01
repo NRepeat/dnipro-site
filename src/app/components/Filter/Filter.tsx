@@ -10,12 +10,20 @@ import {
   setFilterIsOpen,
   setFlipState,
 } from "@/app/store/slice/filterSlice";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Button } from "@nextui-org/react";
-import { useGSAP } from "@gsap/react";
+
 import gsap from "gsap";
 import { Flip } from "gsap/all";
 import Category from "./Category";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type FilterProps = {
   children: React.ReactNode;
@@ -39,7 +47,7 @@ const Filter: FC<FilterProps> = ({ children }) => {
       });
       gsap.to(filterBodyRef.current, {
         top: 60,
-        duration: 0.5,
+        duration: 0.2,
         delay: 0.2,
         ease: "power1.out",
       });
@@ -64,7 +72,7 @@ const Filter: FC<FilterProps> = ({ children }) => {
       gsap.fromTo(
         "#filter-body",
         { autoAlpha: 0, x: -300 },
-        { autoAlpha: 1, x: 0, duration: 1, display: "block" }
+        { autoAlpha: 1, x: 0, duration: 0.5, display: "block" }
       );
     } else {
       gsap.fromTo(
@@ -73,7 +81,7 @@ const Filter: FC<FilterProps> = ({ children }) => {
         {
           autoAlpha: 1,
           x: -300,
-          duration: 1,
+          duration: 0.5,
         }
       );
     }
@@ -92,21 +100,30 @@ const Filter: FC<FilterProps> = ({ children }) => {
   return (
     <div className="flex gap-3 flex-col w-full ">
       <div
-        className={`flex justify-between px-4  items-center sticky ${
-          filter.filterShouldStick ? "top-0 " : "top-[60px] "
-        } left-0 bg-blue-100 z-30 backdrop-blur-sm h-[50px] w-full `}
+        className={`flex justify-between   items-center sticky ${
+          filter.filterShouldStick ? "top-0 shadow-lg" : "top-[60px] border-t-2"
+        } left-0 z-30 backdrop-blur-md h-[50px] w-full `}
         ref={filterRef}
       >
-        <Button onClick={handleShowFilter}>
-          <p>Show filters</p>
+        <Button variant={"outline"} onClick={handleShowFilter}>
+          <p>{!filter.filterIsOpen ? "Show filters" : "Close filters"}</p>
         </Button>
-        <div className="flex">
-          <p>Order by: recommendation</p>
-          <p>Grid layout</p>
-        </div>
+        <Select>
+          <SelectTrigger className="w-[280px] flex ">
+            <div className="flex gap-2">
+              Order by:
+              <SelectValue placeholder="Rating" />
+            </div>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="rating">Rating</SelectItem>
+              <SelectItem value="cost">Cost</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
       </div>
-
-      <div className="flex w-full">
+      <div className={`flex w-full  transition-all`}>
         <div
           className={`sticky ${
             filter.filterIsOpen ? "top-[120px] " : "top-[50px]  opacity-0 "
@@ -116,7 +133,7 @@ const Filter: FC<FilterProps> = ({ children }) => {
           <div
             className={`flex flex-col gap-4 min-h-full invisible   ${
               filter.filterIsOpen ? "w-[350px]" : "absolute w-[240px] "
-            }`}
+            } pr-4`}
             id="filter-body"
           >
             {filter.isChanged && (
@@ -124,7 +141,7 @@ const Filter: FC<FilterProps> = ({ children }) => {
             )}
             <Category
               category={[
-                { name: "test", properties: ["1", "2"] },
+                { name: "Lorem", properties: ["lorem", "lorem"] },
                 { name: "Price", properties: [""], price: true },
               ]}
             />

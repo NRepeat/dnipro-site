@@ -8,8 +8,8 @@ import { Input } from "@/components/ui/input";
 const NavbarCustomContent = () => {
   return (
     <div className="text-black  max-navbar-w-disable w-full flex items-center justify-between px-4">
-      <div className="w-1/3">
-        <Link href="/" className="text-xl ">
+      <div className="w-1/3 flex">
+        <Link href="/" className="text-xl text-left w-full pl-2">
           NNSHOP
         </Link>
       </div>

@@ -1,16 +1,29 @@
-"use client";
-import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
-import React from "react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 const BreadcrumbsCustom = () => {
   return (
-    <Breadcrumbs>
-      <BreadcrumbItem>Home</BreadcrumbItem>
-      <BreadcrumbItem>Music</BreadcrumbItem>
-      <BreadcrumbItem>Artist</BreadcrumbItem>
-      <BreadcrumbItem>Album</BreadcrumbItem>
-      <BreadcrumbItem>Song</BreadcrumbItem>
-    </Breadcrumbs>
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/components">Components</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
   );
 };
 

@@ -1,19 +1,21 @@
 "use client";
 
-import { Input, Slider } from "@nextui-org/react";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setPrice } from "../../store/slice/filterSlice";
+import { Input } from "@/components/ui/input";
+import { Slider } from "@/components/ui/slider";
 const PriceRange = () => {
   const filter = useSelector(
     (state: { filter: { price: [number, number] } }) => state.filter
   );
   const dispatch = useDispatch();
 
-  const handleSetValue = (data: number | number[]) => {
-    if (Array.isArray(data)) {
-      dispatch(setPrice(data));
-    }
+  const handleSetValue = (e: React.FormEvent<HTMLDivElement>) => {
+    console.log("🚀 ~ handleSetValue ~ e:", e);
+    // if (Array.isArray(data)) {
+    //   dispatch(setPrice(data));
+    // }
   };
   const handleInput = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -28,13 +30,12 @@ const PriceRange = () => {
   };
 
   return (
-    <div className="flex flex-col gap-2  items-center w-full overflow-hidden px-2 py-2">
-      <div className="flex gap-2">
+    <div className="flex flex-col gap-2  items-center  ">
+      <div className="flex gap-2 w-full ">
         <Input
           type="number"
           color="default"
           className="text-black text-bold  "
-          variant="underlined"
           value={`${filter.price[0]}`}
           max={1000}
           onChange={(e) => handleInput(e, true)}
@@ -43,22 +44,17 @@ const PriceRange = () => {
           type="number"
           color="default"
           className="text-black text-bold  "
-          variant="underlined"
           value={`${filter.price[1]}`}
           max={1000}
           onChange={(e) => handleInput(e, true)}
         />
       </div>
       <Slider
-        label=""
-        formatOptions={{ style: "currency", currency: "UAH" }}
-        step={10}
-        maxValue={1000}
-        minValue={100}
-        color="primary"
-        value={filter.price}
-        size="sm"
-        onChange={handleSetValue}
+        defaultValue={[33]}
+        max={100}
+        step={1}
+        // value={filter.price}
+        // onChange={(e) => handleSetValue(e)}
       />
     </div>
   );
