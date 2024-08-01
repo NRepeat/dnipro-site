@@ -98,7 +98,7 @@ const Filter: FC<FilterProps> = ({ children }) => {
   };
 
   return (
-    <div className="flex gap-3 flex-col w-full ">
+    <div className="flex  flex-col w-full ">
       <div
         className={`flex justify-between   items-center sticky ${
           filter.filterShouldStick ? "top-0 shadow-lg" : "top-[60px] border-t-2"
@@ -109,7 +109,7 @@ const Filter: FC<FilterProps> = ({ children }) => {
           <p>{!filter.filterIsOpen ? "Show filters" : "Close filters"}</p>
         </Button>
         <Select>
-          <SelectTrigger className="w-[280px] flex ">
+          <SelectTrigger className="w-[180px] flex ">
             <div className="flex gap-2">
               Order by:
               <SelectValue placeholder="Rating" />

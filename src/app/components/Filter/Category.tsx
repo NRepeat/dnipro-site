@@ -31,7 +31,7 @@ const Category: FC<CategoryProps> = ({ category }) => {
   });
 
   return (
-    <Accordion type="single" collapsible className="w-full">
+    <Accordion type="single" collapsible className="w-full pl-1">
       {Properties}
     </Accordion>
   );

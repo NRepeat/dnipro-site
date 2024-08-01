@@ -9,7 +9,7 @@ import {
 
 const BreadcrumbsCustom = () => {
   return (
-    <Breadcrumb>
+    <Breadcrumb className="py-1 pl-1">
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink href="/">Home</BreadcrumbLink>

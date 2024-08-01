@@ -1,4 +1,3 @@
-import { getProduct } from "@/app/actions/getProducts";
 import SingleProduct from "@/app/components/SingleProduct/SingleProduct";
 import React, { Suspense } from "react";
 

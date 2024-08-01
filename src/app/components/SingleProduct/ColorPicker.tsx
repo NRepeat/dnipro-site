@@ -1,6 +1,6 @@
 "use client";
 import { ProductStateType, setColor } from "@/app/store/slice/productSlice";
-import { Image } from "@nextui-org/react";
+import Image from "next/image";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -25,6 +25,8 @@ const ColorPicker = ({ product }: { product: any }) => {
             }`}
             src={image}
             key={image}
+            width={300}
+            height={300}
             alt=""
           />
         ))}

@@ -1,9 +1,6 @@
 import React, { FC, Suspense } from "react";
 import ImageViewer from "./ImageViewer";
 import Info from "./Info";
-import AlsoLike from "../AlsoLike/AlsoLike";
-import BreadcrumbsCustom from "../ui/BreadcrumbsCustom/BreadcrumCustome";
-import CompleteLook from "../CompleteLook/CompleteLook";
 import ProductsCarousel from "../CompleteLook/CompleteLook";
 import { getProduct, getUsers } from "@/app/actions/products";
 
@@ -26,18 +23,13 @@ const SingleProduct: FC<ProductType> = async ({ id }) => {
 
   return (
     <div className="flex w-full flex-col ">
-      <div className="flex gap-8 justify-between pr-32 pb-12">
+      <div className="flex gap-8 justify-between  pb-12">
         <ImageViewer images={images} />
         <Info product={product} />
       </div>
       <ProductsCarousel
         products={products}
         title="COMPLETE THE LOOK"
-        titleMargin={12}
-      />
-      <ProductsCarousel
-        products={products}
-        title="SIMILAR PRODUCTS"
         titleMargin={12}
       />
     </div>

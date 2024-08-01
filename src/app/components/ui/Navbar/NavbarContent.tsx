@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 
 const NavbarCustomContent = () => {
   return (
-    <div className="text-black  max-navbar-w-disable w-full flex items-center justify-between px-4">
+    <div className="text-black  max-navbar-w-disable w-full flex items-center justify-between px-4 ">
       <div className="w-1/3 flex">
         <Link href="/" className="text-xl text-left w-full pl-2">
           NNSHOP
@@ -23,7 +23,11 @@ const NavbarCustomContent = () => {
           <Link href={"/favorite"} className="flex justify-center items-center">
             <MdFavoriteBorder className="w-5 h-5" />
           </Link>
-          <Link href={"/bag"} className="flex justify-center items-center">
+          <Link
+            href={"/bag/preview"}
+            className="flex justify-center items-center"
+            prefetch
+          >
             <IoBag className="w-5 h-5" />
           </Link>
         </div>

@@ -55,7 +55,7 @@ const CollectionCard: FC<CollectionCardProps> = ({ product }) => {
   return (
     <Link href={`/product/${product.id}`} prefetch>
       <div
-        className={`container  transition-transform-background-disable w-full rounded-none cursor-pointer  border-1 hover:border-black`}
+        className={`container  transition-transform-background-disable w-full rounded-none cursor-pointer  border-1 hover:border-black border-b-2`}
       >
         {/* <div>
           {images.length > 0 && (

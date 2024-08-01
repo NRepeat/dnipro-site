@@ -5,7 +5,7 @@ import {
   setProductInBag,
 } from "@/app/store/slice/bagSlice";
 import { ProductStateType } from "@/app/store/slice/productSlice";
-import { Button } from "@nextui-org/react";
+import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 

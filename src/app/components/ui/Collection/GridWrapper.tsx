@@ -62,7 +62,7 @@ const GridWrapper = ({
   return (
     <main className="flex flex-col">
       <div
-        className={`grid ${
+        className={`grid  gap-1 ${
           filter.filterIsOpen ? "grid-cols-3" : "grid-cols-4"
         }`}
       >

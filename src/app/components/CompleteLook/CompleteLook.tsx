@@ -1,7 +1,7 @@
-import { Image } from "@nextui-org/react";
 import Link from "next/link";
 import React, { FC } from "react";
 import SliderCustom from "../ui/Slider/EmblaCarousel";
+import Image from "next/image";
 
 type ProductsCarousel = {
   products: any[];
@@ -42,7 +42,6 @@ const ProductsCarousel: FC<ProductsCarousel> = ({
         {title}
       </p>
       <SliderCustom slides={chunkedArr}></SliderCustom>
-      <div className="inline-flex gap-2"></div>
     </div>
   );
 };
@@ -51,10 +50,12 @@ export default ProductsCarousel;
 const CompleteLookCard = ({ product }: { product: any }) => {
   return (
     <Link href={`/product/${product.id}`}>
-      <div>
+      <div className="w-full">
         <Image
+          width={300}
+          height={300}
           alt="Card example background"
-          className="z-0 h-full object-cover  transition-all rounded-none"
+          className="z-0 h-auto w-full object-cover  transition-all rounded-none"
           src={product.thumbnail}
         />
         <p>brand</p>

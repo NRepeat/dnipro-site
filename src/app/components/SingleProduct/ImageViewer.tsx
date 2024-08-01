@@ -2,13 +2,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import VerticalEmblaCarousel from "../ui/Slider/VerticalSlider/EmblaCarousel";
 import { EmblaOptionsType } from "embla-carousel";
-import { Image, Slider, Spinner } from "@nextui-org/react";
 import SliderCustom from "../ui/Slider/EmblaCarousel";
 import { ProductStateType } from "@/app/store/slice/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { FilterStateType } from "@/app/store/slice/filterSlice";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import Image from "next/image";
 
 const ImageViewer = ({ images }: { images: string[] }) => {
   const [selectedImage, setSelectedImage] = useState<number>();
@@ -50,6 +50,8 @@ const ImageViewer = ({ images }: { images: string[] }) => {
   const verticalImages = images.map((image, i) => (
     <Image
       key={i + "v"}
+      width={1300}
+      height={1300}
       alt="Card example background"
       className="z-0 h-full object-cover  transition-all rounded-none"
       src={image}
