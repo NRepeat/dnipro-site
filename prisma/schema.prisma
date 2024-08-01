@@ -11,6 +11,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+    directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model User {
@@ -18,16 +19,17 @@ model User {
   uid   String  @unique
   email String  @unique
   name  String?
-  bags  Bag[]
+  bag  Bag?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Product {
   id           Int     @id @default(autoincrement())
-  uid          String
+  uid          String @unique
   title        String
   slug         String?
   description  String?
-  price        String?
   category     Json?
   manufacturer String?
   model        String?
@@ -35,20 +37,31 @@ model Product {
   status       Boolean
   images       Json?
   thumbnail    String
-  size         Json?
   parameters   Json?
   sales        Int?
   rating       Int     @default(0)
   reviews      Json?
   bags         BagProduct[]
+    createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
+model ProductItem {
+  id           Int     @id @default(autoincrement())
+  uid          String @unique
+  size         Json?
+  price        String?
 
+}
 model Bag {
   id           Int          @id @default(autoincrement())
   uid          String
-  userId       Int
-  user         User         @relation(fields: [userId], references: [id])
+  userId       Int @unique
+  user         User?         @relation(fields: [userId], references: [id])
+  totalAmount Int @default(0)
+  token String
   products     BagProduct[]
+    createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model BagProduct {
@@ -58,4 +71,6 @@ model BagProduct {
   bag       Bag      @relation(fields: [bagId], references: [id])
   product   Product  @relation(fields: [productId], references: [id])
   quantity  Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

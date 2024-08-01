@@ -79,7 +79,7 @@ const SliderCustom: React.FC<SliderPropType> = (props) => {
               )}
             </div>
           </div>
-          <div>
+          {/* <div>
             {slides && slides?.length >= 2 && (
               <>
                 <button
@@ -96,7 +96,7 @@ const SliderCustom: React.FC<SliderPropType> = (props) => {
                 </button>
               </>
             )}
-          </div>
+          </div> */}
         </div>
       ) : (
         <div className="flex w-full justify-center">{slides}</div>
