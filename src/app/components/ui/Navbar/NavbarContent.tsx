@@ -4,6 +4,7 @@ import { MdFavoriteBorder } from "react-icons/md";
 import { RiAccountBoxFill } from "react-icons/ri";
 import NavButtonWithDropdownMenuWrapper from "./DropdownMenu";
 import { Input } from "@/components/ui/input";
+import SearchInput from "../SearchInput/SearchInput";
 
 const NavbarCustomContent = () => {
   return (
@@ -15,7 +16,7 @@ const NavbarCustomContent = () => {
       </div>
       <NavButtonWithDropdownMenuWrapper />
       <div className="w-1/3 flex gap-6 justify-end">
-        <Input placeholder="Type to search..." type="search" className="w-48" />
+        <SearchInput />
         <div className="flex gap-4">
           <Link href={"/account"} className="flex justify-center items-center">
             <RiAccountBoxFill className="w-5 h-5" />

@@ -1,14 +1,5 @@
 import type { Metadata } from "next";
-import {
-  Advent_Pro,
-  Cinzel,
-  Cormorant,
-  Inter,
-  Old_Standard_TT,
-  Playfair,
-  Playfair_Display,
-  Poiret_One,
-} from "next/font/google";
+import { Advent_Pro, Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers/providers";
 import CustomFooter from "./components/Footer/Footer";
@@ -16,6 +7,7 @@ import NavBar from "./components/ui/Navbar/Navbar";
 import NavbarCustomContent from "./components/ui/Navbar/NavbarContent";
 import BagModal from "./components/Bag/BagModal";
 import BuyRightNowModal from "./components/Bag/BuyRightNowModal";
+import SearchInput from "./components/ui/SearchInput/SearchInput";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,7 +34,6 @@ export default function RootLayout({
       >
         <Providers>
           <NavBar />
-
           {children}
           <CustomFooter />
         </Providers>
