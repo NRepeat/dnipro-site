@@ -17,17 +17,18 @@ import { useInView } from "react-intersection-observer";
 import { useDispatch, useSelector } from "react-redux";
 import CollectionCard from "./Card";
 import { Spinner } from "@nextui-org/react";
+import productsAPIactions, { FullProduct } from "@/app/services/products";
 
 const GridWrapper = ({
   children,
   productsInitialData,
 }: {
   children?: React.ReactNode;
-  productsInitialData: any[];
+  productsInitialData: FullProduct[];
 }) => {
   const NUMBER_OF_USERS_TO_FETCH = 12;
   const [offset, setOffset] = useState(NUMBER_OF_USERS_TO_FETCH);
-  const [products, setUsers] = useState<any[]>(productsInitialData);
+  const [products, setProducts] = useState<FullProduct[]>(productsInitialData);
   const { ref, inView } = useInView();
   const filter = useSelector(
     (state: { filter: FilterStateType }) => state.filter
@@ -35,9 +36,12 @@ const GridWrapper = ({
   const state = React.useRef<any>();
 
   const loadMoreUsers = useCallback(async () => {
-    const apiProducts = await getUsers(NUMBER_OF_USERS_TO_FETCH, offset);
+    const apiProducts = await productsAPIactions.getAllProducts({
+      limit: 12,
+      skip: 0,
+    });
 
-    setUsers([...products, ...apiProducts]);
+    setProducts([...products, ...apiProducts.data]);
     setOffset(offset + NUMBER_OF_USERS_TO_FETCH);
   }, [offset, products]);
   useEffect(() => {

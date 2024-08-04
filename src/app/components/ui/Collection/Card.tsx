@@ -2,16 +2,10 @@ import React, { FC, useRef, useState } from "react";
 import Pag from "./Pag";
 import Link from "next/link";
 import Image from "next/image";
+import { FullProduct } from "@/app/services/products";
 
 type CollectionCardProps = {
-  product: {
-    title: string;
-    price: string;
-    discount: string;
-    thumbnail: string;
-    images: string[];
-    id: string;
-  };
+  product: FullProduct;
 };
 const divideIntoThreeParts = (number: number, stepK: number) => {
   const step = Math.ceil(number / stepK);
@@ -51,7 +45,9 @@ const CollectionCard: FC<CollectionCardProps> = ({ product }) => {
   //   }
   // };
 
-  const images = product.images;
+  const images: string[] = product.variants.flatMap(
+    (variant) => variant.images as string
+  );
   return (
     <Link href={`/product/${product.id}`} prefetch>
       <div

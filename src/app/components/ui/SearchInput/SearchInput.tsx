@@ -67,7 +67,7 @@ const SearchInput: FC<SearchInputProps> = ({ className }) => {
                 <Link
                   onClick={handleOnProductClick}
                   key={product.uid}
-                  href={product.uid}
+                  href={"/product/" + product.uid}
                   prefetch
                 >
                   {product.title}

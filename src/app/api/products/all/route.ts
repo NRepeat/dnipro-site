@@ -3,16 +3,15 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
-    const query = req.nextUrl.searchParams.get("query" || "");
+    const limit = parseInt(req.nextUrl.searchParams.get("limit") || "10", 10);
+    const skip = parseInt(req.nextUrl.searchParams.get("skip") || "0", 10);
+
     const products = await prisma.product.findMany({
-      where: {
-        title: {
-          contains: query || "",
-          mode: "insensitive",
-        },
-      },
-      take: 5,
+      take: limit,
+      skip: skip,
+      include: { manufacturer: true, variants: true, category: true },
     });
+
     return NextResponse.json(products);
   } catch (error) {
     throw new Error("Error while search products");
