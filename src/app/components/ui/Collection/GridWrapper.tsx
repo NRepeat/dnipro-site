@@ -17,7 +17,6 @@ import { useInView } from "react-intersection-observer";
 import { useDispatch, useSelector } from "react-redux";
 import CollectionCard from "./Card";
 import { Spinner } from "@nextui-org/react";
-import { getUsers } from "@/app/actions/products";
 
 const GridWrapper = ({
   children,

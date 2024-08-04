@@ -43,8 +43,8 @@ const NavBar = () => {
   return (
     <div className="main-tool-bar  w-full  ">
       <NavbarCustomContent />
-      <BagModal />
-      <BuyRightNowModal />
+      {/* <BagModal /> */}
+      {/* <BuyRightNowModal /> */}
     </div>
   );
 };

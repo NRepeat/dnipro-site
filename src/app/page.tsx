@@ -8,12 +8,12 @@ import BrandSlide from "./components/BrandSlide/BrandSlide";
 export default function Home() {
   return (
     <main className="bg-gradient-to-r h-full from-slate-300 to-slate-500 flex flex-col">
-      <Welcome />
+      {/* <Welcome /> */}
       {/* <ScrollSection /> */}
-      <SliderCustom delay={5000} options={{ loop: true }} playOnInit>
+      {/* <SliderCustom delay={5000} options={{ loop: true }} playOnInit>
         <BrandSlide />
         <BrandSlide />
-      </SliderCustom>
+      </SliderCustom> */}
     </main>
   );
 }
