@@ -1,8 +1,5 @@
 "use client";
-import PriceRange from "./PriceRange";
-import Brand from "./Brand";
-import Color from "./Color";
-import Material from "./Material";
+
 import React, { FC, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -10,10 +7,8 @@ import {
   setFilterIsOpen,
   setFlipState,
 } from "@/app/store/slice/filterSlice";
-
 import gsap from "gsap";
 import { Flip } from "gsap/all";
-import Category from "./Category";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -24,12 +19,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  CheckboxFiltersGroup,
+  Item,
+} from "../ui/CustomCheckboxGroup/CustomCheckboxGroup";
+import FilterCategory from "./Category";
+import { Category, Manufacturer } from "@prisma/client";
 
 type FilterProps = {
   children: React.ReactNode;
+  brands: Category[];
+  manufactures: Manufacturer[];
 };
 
-const Filter: FC<FilterProps> = ({ children }) => {
+const Filter: FC<FilterProps> = ({ children, brands, manufactures }) => {
   const dispatch = useDispatch();
   const filter = useSelector(
     (state: { filter: FilterStateType }) => state.filter
@@ -96,7 +99,16 @@ const Filter: FC<FilterProps> = ({ children }) => {
   const handleFilterFormSubmit = () => {
     // Add filter form submit logic here
   };
-
+  const brandItems: Item[] = brands.map((brand) => ({
+    value: brand.slug,
+    slug: brand.slug,
+    text: brand.name,
+  }));
+  const manufactureItems: Item[] = manufactures.map((brand) => ({
+    value: brand.slug,
+    slug: brand.slug,
+    text: brand.name,
+  }));
   return (
     <div className="flex  flex-col w-full ">
       <div
@@ -139,10 +151,17 @@ const Filter: FC<FilterProps> = ({ children }) => {
             {filter.isChanged && (
               <Button onClick={handleFilterFormSubmit}>Apply filter</Button>
             )}
-            <Category
-              category={[
-                { name: "Lorem", properties: ["lorem", "lorem"] },
-                { name: "Price", properties: [""], price: true },
+            <FilterCategory
+              categories={[
+                { name: "Brand", properties: brandItems },
+                { name: "Category", properties: manufactureItems },
+                {
+                  name: "Price",
+                  properties: [
+                    { slug: "price", text: "price", value: "price" },
+                  ],
+                  price: true,
+                },
               ]}
             />
             {/* <PriceRange />

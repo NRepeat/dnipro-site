@@ -1,20 +1,11 @@
 "use client";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
+import { Command, CommandGroup, CommandList } from "@/components/ui/command";
 import { useDebounce } from "react-use";
 import { useClickAway } from "@uidotdev/usehooks";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useState } from "react";
 import Api from "@/app/services/api-client";
 import { Product } from "@prisma/client";
-import { AxiosResponse } from "axios";
 import Link from "next/link";
 
 type SearchInputProps = {
@@ -31,9 +22,11 @@ const SearchInput: FC<SearchInputProps> = ({ className }) => {
 
   useDebounce(
     () => {
-      Api.productsAPIactions
-        .searchProducts(searchInputValue)
-        .then((products) => setProducts(products.data));
+      if (searchInputValue) {
+        Api.productsAPIactions
+          .searchProducts(searchInputValue)
+          .then((products) => setProducts(products.data));
+      }
     },
     200,
     [searchInputValue]
@@ -78,24 +71,6 @@ const SearchInput: FC<SearchInputProps> = ({ className }) => {
         )}
       </Command>
     </div>
-
-    // <div className="relative">
-    //   <Input
-    //     onFocus={() => setOnFocus(true)}
-    //     placeholder="Type to search..."
-    //     type="search"
-    //     className="w-48 "
-    //   />
-    //   {focus && (
-    //     <div className={cn("flex bg-white absolute bottom-[-20px] left-0  ")}>
-    //       <div>1.Product</div>
-    //       <DropdownMenu open>
-    //         <DropdownMenuContent className="w-56"></DropdownMenuContent>
-    //         <DropdownMenuItem>test</DropdownMenuItem>
-    //       </DropdownMenu>
-    //     </div>
-    //   )}
-    // </div>
   );
 };
 

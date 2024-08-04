@@ -33,7 +33,7 @@ const GridWrapper = ({
   const filter = useSelector(
     (state: { filter: FilterStateType }) => state.filter
   );
-  const state = React.useRef<any>();
+  const state = useRef<any>();
 
   const loadMoreUsers = useCallback(async () => {
     const apiProducts = await productsAPIactions.getAllProducts({
@@ -44,11 +44,11 @@ const GridWrapper = ({
     setProducts([...products, ...apiProducts.data]);
     setOffset(offset + NUMBER_OF_USERS_TO_FETCH);
   }, [offset, products]);
-  useEffect(() => {
-    if (inView) {
-      loadMoreUsers();
-    }
-  }, [inView, loadMoreUsers, filter]);
+  // useEffect(() => {
+  //   if (inView) {
+  //     loadMoreUsers();
+  //   }
+  // }, [inView, loadMoreUsers, filter]);
   gsap.registerPlugin(Flip);
 
   state.current = filter.flipRef;

@@ -6,35 +6,45 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Checkbox } from "@/components/ui/checkbox";
+import {
+  CheckboxFiltersGroup,
+  Item,
+} from "../ui/CustomCheckboxGroup/CustomCheckboxGroup";
 
-type CategoryProps = {
-  category: { properties: string[]; name: string; price?: boolean }[];
+type PropertiesProp = {
+  category: { properties: Item[]; name: string; price?: boolean };
 };
 
-const Category: FC<CategoryProps> = ({ category }) => {
-  const Properties = category.map((category) => {
-    const options = category.properties.map((property) => (
-      <div key={property} className="flex gap-2 items-center">
-        <Checkbox id={property} />
-        <p className="text-lg">{property}</p>
-      </div>
-    ));
-    return (
-      <AccordionItem value={category.name} key={category.name}>
-        <AccordionTrigger>{category.name.toUpperCase()}</AccordionTrigger>
-        <AccordionContent>
-          {category.price ? <PriceRange /> : <div>{options}</div>}
-        </AccordionContent>
-      </AccordionItem>
-    );
-  });
+type FilterCategoryProps = {
+  categories: { properties: Item[]; name: string; price?: boolean }[];
+};
 
+const FilterCategory: FC<FilterCategoryProps> = ({ categories }) => {
   return (
     <Accordion type="single" collapsible className="w-full pl-1">
-      {Properties}
+      {categories.map((category) => (
+        <Properties key={category.name} category={category} />
+      ))}
     </Accordion>
   );
 };
 
-export default Category;
+export default FilterCategory;
+
+export const Properties: FC<PropertiesProp> = ({ category }) => {
+  const options = (
+    <CheckboxFiltersGroup
+      limit={6}
+      defaultItems={category.properties}
+      items={category.properties}
+    />
+  );
+  return (
+    <AccordionItem value={category.name} key={category.name}>
+      <AccordionTrigger>{category.name.toUpperCase()}</AccordionTrigger>
+      <AccordionContent>
+        {category.price ? <PriceRange /> : <div>{options}</div>}
+      </AccordionContent>
+    </AccordionItem>
+  );
+};

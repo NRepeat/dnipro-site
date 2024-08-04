@@ -1,53 +1,38 @@
-import React from "react";
-import { useCheckbox, Chip, VisuallyHidden, tv } from "@nextui-org/react";
-import { CheckIcon } from "./CheckIcon";
+import { Checkbox } from "@/components/ui/checkbox";
+import React, { ButtonHTMLAttributes } from "react";
 
-const checkbox = tv({
-  slots: {
-    base: "border-default hover:bg-default-200",
-    content: "text-default-500",
-  },
-  variants: {
-    isSelected: {
-      true: {
-        base: "border-primary bg-primary hover:bg-primary-500 hover:border-primary-500",
-        content: "text-primary-foreground pl-1",
-      },
-    },
-    isFocusVisible: {
-      true: {
-        base: "outline-none ring-2 ring-focus ring-offset-2 ring-offset-background",
-      },
-    },
-  },
-});
+export interface FilterCheckboxProps {
+  text: string;
+  slug?: string;
+  value: string;
+  endAdornment?: React.ReactNode;
+  onCheckedChange?: (checked: boolean) => void;
+  checked?: boolean;
+}
 
-export const CustomCheckbox = (props: any) => {
-  const {
-    children,
-    isSelected,
-    isFocusVisible,
-    getBaseProps,
-    getLabelProps,
-    getInputProps,
-  } = useCheckbox({
-    ...props,
-  });
-
-  const styles = checkbox({ isSelected, isFocusVisible });
-
+export const FilterCheckbox: React.FC<FilterCheckboxProps> = ({
+  text,
+  value,
+  endAdornment,
+  onCheckedChange,
+  checked,
+}) => {
   return (
-    <label {...getBaseProps()}>
-      <VisuallyHidden>
-        <input {...getInputProps()} />
-      </VisuallyHidden>
-      <Chip
-        color="primary"
-        startContent={isSelected ? <CheckIcon className="ml-1" /> : null}
-        variant="faded"
+    <div className="flex items-center space-x-2">
+      <Checkbox
+        onCheckedChange={onCheckedChange}
+        checked={checked}
+        value={value}
+        className="rounded-[8px] w-6 h-6"
+        id={`checkbox-${String(value)}`}
+      />
+      <label
+        htmlFor={`checkbox-${String(value)}`}
+        className="leading-none cursor-pointer flex-1"
       >
-        {children ? children : isSelected ? "Enabled" : "Disabled"}
-      </Chip>
-    </label>
+        {text}
+      </label>
+      {endAdornment}
+    </div>
   );
 };
