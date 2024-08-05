@@ -41,8 +41,10 @@ const NavBar = () => {
   //   };
   // }, [dispatch]);
   return (
-    <div className="main-tool-bar  w-full  ">
-      <NavbarCustomContent />
+    <div className="main-tool-bar  w-full ">
+      <div className="max-w-[1524px]   flex justify-between w-full">
+        <NavbarCustomContent />
+      </div>
       {/* <BagModal /> */}
       {/* <BuyRightNowModal /> */}
     </div>

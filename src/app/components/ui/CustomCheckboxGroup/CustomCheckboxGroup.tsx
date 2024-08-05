@@ -1,19 +1,17 @@
 "use client";
-
-import React, { useEffect } from "react";
-import { useSet } from "react-use";
+import React, { FC, useEffect, useState } from "react";
 import {
   FilterCheckbox,
   FilterCheckboxProps,
 } from "../CustomCheckbox/CustomCheckbox";
 import { Input } from "@/components/ui/input";
-import { useSelector } from "react-redux";
-import { FilterStateType, setFilterState } from "@/app/store/slice/filterSlice";
+import { Actions } from "react-use/lib/useSet";
 
 export type Item = FilterCheckboxProps;
 
 interface Props {
   items: Item[];
+  filterSet: [Set<string>, Actions<string>];
   defaultItems?: Item[];
   limit?: number;
   searchInputPlaceholder?: string;
@@ -22,7 +20,7 @@ interface Props {
   defaultValue?: string[];
 }
 
-export const CheckboxFiltersGroup: React.FC<Props> = ({
+export const CheckboxFiltersGroup: FC<Props> = ({
   items,
   defaultItems,
   limit = 5,
@@ -30,14 +28,12 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
   className,
   onChange,
   defaultValue,
+  filterSet,
 }) => {
-  const [showAll, setShowAll] = React.useState(false);
-  const [selected, { add, toggle }] = useSet<string>(new Set([]));
-  const filter = useSelector(
-    (state: { filter: FilterStateType }) => state.filter
-  );
+  const [showAll, setShowAll] = useState(false);
+  const [selected, { add, toggle }] = filterSet;
   const onCheckedChange = (value: string) => {
-    setFilterState({ categories: value });
+    toggle(value);
   };
 
   useEffect(() => {
@@ -69,6 +65,7 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
             key={String(item.value)}
             value={item.value}
             text={item.text}
+            slug={item.slug}
             endAdornment={item.endAdornment}
           />
         ))}

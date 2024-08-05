@@ -4,32 +4,34 @@ export type FilterStateSetVariables = {
   brands: Set<string>;
   categories: Set<string>;
 };
+export type PriseRangeState = {
+  priceFrom: number;
+  priceTo: number;
+};
+
 export type FilterStateType = {
-  price: number[];
+  price: PriseRangeState;
   isChanged: boolean;
   filterIsOpen: boolean;
   filterShouldStick: boolean;
   flipRef: Flip.FlipState | null;
-  filterState: FilterStateSetVariables;
+  selected: Set<string>;
 };
 const initialState: FilterStateType = {
-  price: [100, 300],
+  price: { priceFrom: 0, priceTo: 1000 },
   isChanged: false,
   filterIsOpen: false,
   filterShouldStick: false,
   flipRef: null,
-  filterState: {
-    brands: new Set(),
-    categories: new Set(),
-  },
+  selected: new Set(),
 };
 
 const filterSlice = createSlice({
   name: "filter",
   initialState,
   reducers: {
-    setPrice: (state, action: PayloadAction<number[]>) => {
-      state.price = action.payload;
+    setPrice: (state, action: PayloadAction<{ [x: string]: number }>) => {
+      state.price = { ...state.price, ...action.payload };
       state.isChanged = true;
     },
     setIsFilterChanged: (state, action: PayloadAction<boolean>) => {
@@ -45,20 +47,19 @@ const filterSlice = createSlice({
       //@ts-ignore
       state.flipRef = action.payload;
     },
-    setFilterState: (
-      state,
-      action: PayloadAction<Partial<FilterStateSetVariables>>
-    ) => {
-      const { brands, categories } = action.payload;
-      if (brands !== undefined) {
-        state.filterState.brands = toggleItem(state.filterState.brands, brands);
-      }
-      if (categories !== undefined) {
-        state.filterState.categories = toggleItem(
-          state.filterState.categories,
-          categories
-        );
-      }
+    setFilterState: (state, action: PayloadAction<Set<string>>) => {
+      // const { brands, categories } = action.payload;
+      // if (brands !== undefined) {
+      //   state.filterState.brands = toggleItem(state.filterState.brands, brands);
+      // }
+      // if (categories !== undefined) {
+      //   state.filterState.categories = toggleItem(
+      //     state.filterState.categories,
+      //     categories
+      //   );
+      // }
+
+      state.selected = action.payload;
     },
   },
 });

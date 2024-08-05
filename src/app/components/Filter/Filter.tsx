@@ -25,6 +25,8 @@ import {
 } from "../ui/CustomCheckboxGroup/CustomCheckboxGroup";
 import FilterCategory from "./Category";
 import { Category, Manufacturer } from "@prisma/client";
+import { useSet } from "react-use";
+import PriceRange from "./PriceRange";
 
 type FilterProps = {
   children: React.ReactNode;
@@ -34,6 +36,10 @@ type FilterProps = {
 
 const Filter: FC<FilterProps> = ({ children, brands, manufactures }) => {
   const dispatch = useDispatch();
+  const manufactureItemsFilterSet = useSet<string>(new Set([]));
+  const brandItemsFilterSet = useSet<string>(new Set([]));
+  const [brandSetItemsValues] = brandItemsFilterSet;
+  const [manufactureSetItemsValues] = manufactureItemsFilterSet;
   const filter = useSelector(
     (state: { filter: FilterStateType }) => state.filter
   );
@@ -90,6 +96,16 @@ const Filter: FC<FilterProps> = ({ children, brands, manufactures }) => {
     }
   }, [filter.filterIsOpen]);
 
+  // useEffect(()=>{
+
+  const filters = {
+    ...filter.price,
+    brand: Array.from(brandSetItemsValues),
+    manufacture: Array.from(manufactureSetItemsValues),
+  };
+
+  // },[])
+
   const handleShowFilter = () => {
     const data = Flip.getState(".container");
     dispatch(setFlipState(data));
@@ -109,6 +125,7 @@ const Filter: FC<FilterProps> = ({ children, brands, manufactures }) => {
     slug: brand.slug,
     text: brand.name,
   }));
+
   return (
     <div className="flex  flex-col w-full ">
       <div
@@ -151,23 +168,21 @@ const Filter: FC<FilterProps> = ({ children, brands, manufactures }) => {
             {filter.isChanged && (
               <Button onClick={handleFilterFormSubmit}>Apply filter</Button>
             )}
+            <PriceRange />
             <FilterCategory
               categories={[
-                { name: "Brand", properties: brandItems },
-                { name: "Category", properties: manufactureItems },
                 {
-                  name: "Price",
-                  properties: [
-                    { slug: "price", text: "price", value: "price" },
-                  ],
-                  price: true,
+                  name: "Brand",
+                  properties: brandItems,
+                  filterSet: brandItemsFilterSet,
+                },
+                {
+                  name: "Manufacture",
+                  properties: manufactureItems,
+                  filterSet: manufactureItemsFilterSet,
                 },
               ]}
             />
-            {/* <PriceRange />
-            <Brand />
-            <Color />
-            <Material /> */}
           </div>
         </div>
         <div className="w-full flex justify-center items-center">

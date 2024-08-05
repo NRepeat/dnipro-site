@@ -2,31 +2,17 @@
 
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setPrice } from "../../store/slice/filterSlice";
+import { PriseRangeState, setPrice } from "../../store/slice/filterSlice";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
+
 const PriceRange = () => {
   const filter = useSelector(
-    (state: { filter: { price: [number, number] } }) => state.filter
+    (state: { filter: { price: PriseRangeState } }) => state.filter
   );
   const dispatch = useDispatch();
-
-  const handleSetValue = (e: React.FormEvent<HTMLDivElement>) => {
-    console.log("🚀 ~ handleSetValue ~ e:", e);
-    // if (Array.isArray(data)) {
-    //   dispatch(setPrice(data));
-    // }
-  };
-  const handleInput = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    start: boolean
-  ) => {
-    const newRangeValue = e.target.value ? parseInt(e.target.value) : 100;
-    if (start) {
-      dispatch(setPrice([newRangeValue, filter.price[1]]));
-    } else {
-      dispatch(setPrice([filter.price[0], newRangeValue]));
-    }
+  const handleInput = (name: keyof PriseRangeState, value: number) => {
+    dispatch(setPrice({ [name]: value }));
   };
 
   return (
@@ -35,26 +21,32 @@ const PriceRange = () => {
         <Input
           type="number"
           color="default"
-          className="text-black text-bold  "
-          value={`${filter.price[0]}`}
-          max={1000}
-          onChange={(e) => handleInput(e, true)}
+          className="text-black text-bold"
+          min={0}
+          placeholder="0"
+          value={String(filter.price.priceFrom)}
+          max={10000}
+          onChange={(e) => handleInput("priceFrom", Number(e.target.value))}
         />
         <Input
           type="number"
           color="default"
-          className="text-black text-bold  "
-          value={`${filter.price[1]}`}
-          max={1000}
-          onChange={(e) => handleInput(e, true)}
+          className="text-black text-bold"
+          min={0}
+          placeholder="0"
+          value={String(filter.price.priceTo)}
+          max={10000}
+          onChange={(e) => handleInput("priceTo", Number(e.target.value))}
         />
       </div>
       <Slider
-        defaultValue={[33]}
-        max={100}
-        step={1}
-        // value={filter.price}
-        // onChange={(e) => handleSetValue(e)}
+        max={10000}
+        min={0}
+        step={10}
+        value={[filter.price.priceFrom, filter.price.priceTo]}
+        onValueChange={([priceFrom, priceTo]) =>
+          dispatch(setPrice({ priceFrom, priceTo }))
+        }
       />
     </div>
   );
