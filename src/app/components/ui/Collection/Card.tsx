@@ -49,7 +49,7 @@ const CollectionCard: FC<CollectionCardProps> = ({ product }) => {
     (variant) => variant.images as string
   );
   return (
-    <Link href={`/product/${product.id}`} prefetch>
+    <Link href={`/product/${product.uid}`} prefetch>
       <div
         className={`container  transition-transform-background-disable w-full rounded-none cursor-pointer  border-1 hover:border-black border-b-2`}
       >

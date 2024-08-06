@@ -1,18 +1,23 @@
 "use client";
 
-import React from "react";
+import React, { FC } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { PriseRangeState, setPrice } from "../../store/slice/filterSlice";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 
-const PriceRange = () => {
+type PriceRangeProps = {
+  setPrice: React.Dispatch<React.SetStateAction<PriseRangeState>>;
+  price: PriseRangeState;
+};
+
+const PriceRange: FC<PriceRangeProps> = ({ price, setPrice }) => {
   const filter = useSelector(
     (state: { filter: { price: PriseRangeState } }) => state.filter
   );
   const dispatch = useDispatch();
   const handleInput = (name: keyof PriseRangeState, value: number) => {
-    dispatch(setPrice({ [name]: value }));
+    setPrice({ [name]: value });
   };
 
   return (
@@ -24,7 +29,7 @@ const PriceRange = () => {
           className="text-black text-bold"
           min={0}
           placeholder="0"
-          value={String(filter.price.priceFrom)}
+          value={String(price.priceFrom)}
           max={10000}
           onChange={(e) => handleInput("priceFrom", Number(e.target.value))}
         />
@@ -33,8 +38,8 @@ const PriceRange = () => {
           color="default"
           className="text-black text-bold"
           min={0}
-          placeholder="0"
-          value={String(filter.price.priceTo)}
+          placeholder="10000"
+          value={String(price.priceTo)}
           max={10000}
           onChange={(e) => handleInput("priceTo", Number(e.target.value))}
         />
@@ -43,9 +48,9 @@ const PriceRange = () => {
         max={10000}
         min={0}
         step={10}
-        value={[filter.price.priceFrom, filter.price.priceTo]}
+        value={[price.priceFrom || 0, price.priceTo || 10000]}
         onValueChange={([priceFrom, priceTo]) =>
-          dispatch(setPrice({ priceFrom, priceTo }))
+          setPrice({ priceFrom, priceTo })
         }
       />
     </div>

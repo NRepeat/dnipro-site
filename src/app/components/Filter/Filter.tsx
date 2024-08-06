@@ -1,9 +1,10 @@
 "use client";
 
-import React, { FC, useRef, useEffect } from "react";
+import React, { FC, useRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   FilterStateType,
+  PriseRangeState,
   setFilterIsOpen,
   setFlipState,
 } from "@/app/store/slice/filterSlice";
@@ -15,29 +16,46 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  CheckboxFiltersGroup,
-  Item,
-} from "../ui/CustomCheckboxGroup/CustomCheckboxGroup";
+import { Item } from "../ui/CustomCheckboxGroup/CustomCheckboxGroup";
 import FilterCategory from "./Category";
 import { Category, Manufacturer } from "@prisma/client";
 import { useSet } from "react-use";
 import PriceRange from "./PriceRange";
-
+import { useRouter, useSearchParams } from "next/navigation";
+import qs from "qs";
 type FilterProps = {
   children: React.ReactNode;
   brands: Category[];
   manufactures: Manufacturer[];
 };
 
+interface QueryFilters extends PriseRangeState {
+  brand: string;
+  manufacture: string;
+}
+
 const Filter: FC<FilterProps> = ({ children, brands, manufactures }) => {
   const dispatch = useDispatch();
-  const manufactureItemsFilterSet = useSet<string>(new Set([]));
-  const brandItemsFilterSet = useSet<string>(new Set([]));
+  const params = useSearchParams() as unknown as Map<
+    keyof QueryFilters,
+    string
+  >;
+  const router = useRouter();
+  const manufactureItemsFilterSet = useSet<string>(
+    new Set(
+      params.has("manufacture") ? params.get("manufacture")?.split(",") : []
+    )
+  );
+  const brandItemsFilterSet = useSet<string>(
+    new Set(params.has("brand") ? params.get("brand")?.split(",") : [])
+  );
+  const [price, setPrice] = useState<PriseRangeState>({
+    priceFrom: Number(params.get("priceFrom")) || undefined,
+    priceTo: Number(params.get("priceTo")) || undefined,
+  });
   const [brandSetItemsValues] = brandItemsFilterSet;
   const [manufactureSetItemsValues] = manufactureItemsFilterSet;
   const filter = useSelector(
@@ -45,7 +63,6 @@ const Filter: FC<FilterProps> = ({ children, brands, manufactures }) => {
   );
   const filterRef = useRef<HTMLDivElement>(null);
   const filterBodyRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     if (filter.filterShouldStick) {
       gsap.to(filterRef.current, {
@@ -96,15 +113,15 @@ const Filter: FC<FilterProps> = ({ children, brands, manufactures }) => {
     }
   }, [filter.filterIsOpen]);
 
-  // useEffect(()=>{
-
-  const filters = {
-    ...filter.price,
-    brand: Array.from(brandSetItemsValues),
-    manufacture: Array.from(manufactureSetItemsValues),
-  };
-
-  // },[])
+  useEffect(() => {
+    const filters = {
+      ...price,
+      brand: Array.from(brandSetItemsValues),
+      manufacture: Array.from(manufactureSetItemsValues),
+    };
+    const query = qs.stringify(filters, { arrayFormat: "comma" });
+    router.push(`?${query}`, { scroll: false });
+  }, [router, price, brandSetItemsValues, manufactureSetItemsValues]);
 
   const handleShowFilter = () => {
     const data = Flip.getState(".container");
@@ -112,9 +129,6 @@ const Filter: FC<FilterProps> = ({ children, brands, manufactures }) => {
     dispatch(setFilterIsOpen(!filter.filterIsOpen));
   };
 
-  const handleFilterFormSubmit = () => {
-    // Add filter form submit logic here
-  };
   const brandItems: Item[] = brands.map((brand) => ({
     value: brand.slug,
     slug: brand.slug,
@@ -165,10 +179,7 @@ const Filter: FC<FilterProps> = ({ children, brands, manufactures }) => {
             } pr-4`}
             id="filter-body"
           >
-            {filter.isChanged && (
-              <Button onClick={handleFilterFormSubmit}>Apply filter</Button>
-            )}
-            <PriceRange />
+            <PriceRange price={price} setPrice={setPrice} />
             <FilterCategory
               categories={[
                 {

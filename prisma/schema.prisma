@@ -47,6 +47,7 @@ model Product {
   categoryId   Int
   manufacturer Manufacturer @relation(fields: [manufacturerId], references: [id])
   manufacturerId Int  
+  thumbnail String
   model        String @unique 
   status       Boolean
   variants ProductItem[]

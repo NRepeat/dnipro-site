@@ -5,8 +5,8 @@ export type FilterStateSetVariables = {
   categories: Set<string>;
 };
 export type PriseRangeState = {
-  priceFrom: number;
-  priceTo: number;
+  priceFrom?: number;
+  priceTo?: number;
 };
 
 export type FilterStateType = {
@@ -18,7 +18,7 @@ export type FilterStateType = {
   selected: Set<string>;
 };
 const initialState: FilterStateType = {
-  price: { priceFrom: 0, priceTo: 1000 },
+  price: {},
   isChanged: false,
   filterIsOpen: false,
   filterShouldStick: false,
@@ -48,34 +48,11 @@ const filterSlice = createSlice({
       state.flipRef = action.payload;
     },
     setFilterState: (state, action: PayloadAction<Set<string>>) => {
-      // const { brands, categories } = action.payload;
-      // if (brands !== undefined) {
-      //   state.filterState.brands = toggleItem(state.filterState.brands, brands);
-      // }
-      // if (categories !== undefined) {
-      //   state.filterState.categories = toggleItem(
-      //     state.filterState.categories,
-      //     categories
-      //   );
-      // }
-
       state.selected = action.payload;
     },
   },
 });
-function toggleItem(set: Set<string>, items: Set<string> | null): Set<string> {
-  const newSet = new Set(set);
-  if (items) {
-    items.forEach((item) => {
-      if (newSet.has(item)) {
-        newSet.delete(item);
-      } else {
-        newSet.add(item);
-      }
-    });
-  }
-  return newSet;
-}
+
 export const {
   setPrice,
   setIsFilterChanged,

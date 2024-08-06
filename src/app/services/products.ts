@@ -28,10 +28,22 @@ const getAllProducts = async ({
 }: {
   limit: number;
   skip: number;
-}) => {
-  return axiosInstance.get<FullProduct[]>(ApiRoutesPath.ALL_PRODUCTS);
+}): Promise<AxiosResponse<FullProduct[]>> => {
+  return axiosInstance.get<FullProduct[]>(ApiRoutesPath.ALL_PRODUCTS, {
+    params: { limit, skip },
+  });
 };
 
-const productsAPIactions = { searchProducts, getAllProducts };
+const getProduct = async ({
+  id,
+}: {
+  id: string;
+}): Promise<AxiosResponse<FullProduct>> => {
+  return axiosInstance.get<FullProduct>(ApiRoutesPath.PRODUCT_BY_ID, {
+    params: { id },
+  });
+};
+
+const productsAPIactions = { searchProducts, getAllProducts, getProduct };
 
 export default productsAPIactions;

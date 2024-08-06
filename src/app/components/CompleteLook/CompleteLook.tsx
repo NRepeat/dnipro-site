@@ -2,6 +2,7 @@ import Link from "next/link";
 import React, { FC } from "react";
 import SliderCustom from "../ui/Slider/EmblaCarousel";
 import Image from "next/image";
+import { Product } from "@prisma/client";
 
 type ProductsCarousel = {
   products: any[];
@@ -47,7 +48,8 @@ const ProductsCarousel: FC<ProductsCarousel> = ({
 };
 export default ProductsCarousel;
 
-const CompleteLookCard = ({ product }: { product: any }) => {
+const CompleteLookCard = ({ product }: { product: Product }) => {
+  console.log("🚀 ~ CompleteLookCard ~ product:", product.thumbnail);
   return (
     <Link href={`/product/${product.id}`}>
       <div className="w-full">

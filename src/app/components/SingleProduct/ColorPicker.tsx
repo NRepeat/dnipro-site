@@ -17,7 +17,7 @@ const ColorPicker = ({ product }: { product: any }) => {
     <div className="py-4 pb-6">
       <p className="text-sm pb-2">CHOOSE COLOR</p>
       <div className="flex gap-1 flex-wrap w-full">
-        {product.images.map((image: string) => (
+        {product.variants[0].images.map((image: string) => (
           <Image
             onClick={() => handleSelectColor(image)}
             className={`w-[100px] hover:border-1 border-1 transition-all duration-500 hover:border-sky-400 ${
