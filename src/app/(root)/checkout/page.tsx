@@ -1,6 +1,6 @@
 "use client";
+import { handler } from "@/app/actions/payments/liqPay/liqPay";
 import { useState } from "react";
-import handler from "../actions/payments/liqPay/liqPay";
 
 const CheckoutPage = () => {
   const [formHtml, setFormHtml] = useState("");
@@ -8,9 +8,8 @@ const CheckoutPage = () => {
   const fetchCheckoutForm = async () => {
     try {
       const response = await handler();
-      console.log("🚀 ~ fetchCheckoutForm ~ response:", response);
 
-      setFormHtml(response);
+      setFormHtml(response!);
     } catch (error) {
       console.error("Error fetching checkout form:", error);
     }

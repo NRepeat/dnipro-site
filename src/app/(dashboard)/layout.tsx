@@ -1,9 +1,5 @@
 import type { Metadata } from "next";
 import { Advent_Pro, Inter } from "next/font/google";
-import "./globals.css";
-import { Providers } from "./providers/providers";
-import NavBar from "./components/ui/Navbar/Navbar";
-import CustomFooter from "./components/Footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,12 +20,10 @@ export default function RootLayout({
   params: any;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${inter.className} ${cormorant.className} ${cormorant.variable} `}
-      >
-        <Providers>{children}</Providers>
-      </body>
-    </html>
+    <div
+      className={`${inter.className} ${cormorant.className} ${cormorant.variable} `}
+    >
+      {children}
+    </div>
   );
 }

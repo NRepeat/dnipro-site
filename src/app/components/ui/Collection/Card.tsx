@@ -3,6 +3,7 @@ import Pag from "./Pag";
 import Link from "next/link";
 import Image from "next/image";
 import { FullProduct } from "@/app/services/products";
+import { Button } from "@/components/ui/button";
 
 type CollectionCardProps = {
   product: FullProduct;
@@ -67,8 +68,12 @@ const CollectionCard: FC<CollectionCardProps> = ({ product }) => {
             className={`w-full h-auto object-cover rounded-none  `}
           />
         </div>
-        <div className="justify-between">
+        <div className="justify-between flex">
           <p className="text-medium">{product.title}</p>
+          <div>
+            <Button>Add to cart</Button>
+            <Button>Buy now</Button>
+          </div>
         </div>
       </div>
     </Link>

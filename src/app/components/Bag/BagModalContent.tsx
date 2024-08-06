@@ -7,19 +7,6 @@ import EmptyCartInfo from "./EmpryCartInfo";
 const BagModalContent = ({ bagState }: { bagState: BagStateType }) => {
   const [products, setProducts] = useState<any[]>();
 
-  const getProducts = useCallback(async () => {
-    if (bagState.products && bagState.products.length > 0) {
-      const products = await getUsers(bagState.products.length, 0);
-      setProducts(products);
-    } else {
-      setProducts([]);
-    }
-  }, [bagState.products]);
-
-  useEffect(() => {
-    getProducts();
-  }, [bagState, getProducts]);
-
   return (
     <ModalBody className="overflow-auto">
       {products && products.length > 0 ? (
