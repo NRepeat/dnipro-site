@@ -4,7 +4,7 @@ import Image from "next/image";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-const ColorPicker = ({ product }: { product: any }) => {
+const ColorPicker = ({ variants }: { variants: any }) => {
   const dispatch = useDispatch();
   const productState = useSelector(
     (state: { product: ProductStateType }) => state.product
@@ -17,7 +17,7 @@ const ColorPicker = ({ product }: { product: any }) => {
     <div className="py-4 pb-6">
       <p className="text-sm pb-2">CHOOSE COLOR</p>
       <div className="flex gap-1 flex-wrap w-full">
-        {product.variants[0].images.map((image: string) => (
+        {variants[0].images.map((image: string) => (
           <Image
             onClick={() => handleSelectColor(image)}
             className={`w-[100px] hover:border-1 border-1 transition-all duration-500 hover:border-sky-400 ${
