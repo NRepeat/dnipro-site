@@ -1,26 +1,22 @@
 import { cn } from "@/lib/utils";
+import { type Prisma } from "@prisma/client";
 import Image from "next/image";
 import React, { FC } from "react";
 
 type ProductImageProps = {
-  imageUrl: string;
-  size: 30 | 40 | 50;
+  imageUrl: Prisma.JsonValue;
+  size?: 30 | 40 | 50;
   className?: string;
 };
 
 const ProductImage: FC<ProductImageProps> = ({ className, imageUrl, size }) => {
   return (
-    <div
-      className={cn(
-        "flex items-center justify-center flex-1 relative w-full",
-        className
-      )}
-    >
+    <div className={cn("flex   object-cover ", className)}>
       <Image
-        src={imageUrl}
+        src={imageUrl as string}
         alt="Logo"
-        width={300}
-        height={300}
+        width={400}
+        height={450}
         className={cn("relative transition-all  duration-300 z-10", {
           "w-[300px] h-[300px]": size === 30,
           "w-[400px] h-[400px]": size === 40,

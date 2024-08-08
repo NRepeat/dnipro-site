@@ -31,6 +31,7 @@ const WelcomeCard = ({
           <p className="text-2xl text-white text-left pl-4">PRODUCT</p>
         </div>
         <SliderCustom
+          slidePerView={1}
           delay={3000}
           slides={slides}
           options={{ loop: true }}

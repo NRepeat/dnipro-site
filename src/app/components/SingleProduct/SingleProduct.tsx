@@ -4,38 +4,43 @@ import Info from "./Info";
 import ProductsCarousel from "../CompleteLook/CompleteLook";
 import productsAPIactions from "@/app/services/products";
 import { notFound } from "next/navigation";
+import prisma from "@/app/utils/prisma";
 
 type ProductType = {
-  // product: {
-  //   title: string;
-  //   price: string;
-  //   discount: string;
-  //   thumbnail: string;
-  //   images: string[];
-  //   id: string;
-  // };
   id: string;
+  property?: string;
 };
 
-const SingleProduct: FC<ProductType> = async ({ id }) => {
-  const product = await productsAPIactions.getProduct({ id });
+const SingleProduct: FC<ProductType> = async ({ id, property }) => {
+  console.log("🚀 ~ constSingleProduct:FC<ProductType>= ~ property:", property);
+  const product = await prisma.product.findUnique({
+    where: { uid: id },
+    include: { category: true, manufacturer: true, variants: true },
+  });
   if (!product) {
     return notFound();
   }
-  console.log("🚀 ~ constSingleProduct:FC<ProductType>= ~ product:", product);
   const products = await productsAPIactions.getAllProducts({
     limit: 5,
     skip: 0,
   });
-  const images: string[] = [
-    ...product.data.variants.flatMap((variant) => variant.images as string[]),
-  ];
 
+  const selectedProduct = product.variants.find(
+    (variant) => variant.color === property
+  );
+
+  const images: string[] = [
+    ...product.variants.flatMap((variant) => variant.images as string[]),
+  ];
   return (
     <div className="flex w-full flex-col ">
       <div className="flex gap-8 justify-between  pb-12">
-        <ImageViewer images={images} />
-        <Info product={product.data} />
+        <ImageViewer
+          images={
+            selectedProduct ? (selectedProduct.images as string[]) : images
+          }
+        />
+        <Info product={selectedProduct ? selectedProduct : product} />
       </div>
       <ProductsCarousel
         products={products.data}

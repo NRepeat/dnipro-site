@@ -49,6 +49,7 @@ const CollectionCard: FC<CollectionCardProps> = ({ product }) => {
   const images: string[] = product.variants.flatMap(
     (variant) => variant.images as string
   );
+  console.log("🚀 ~ images:", images);
   return (
     <Link href={`/product/${product.uid}`} prefetch>
       <div
@@ -70,10 +71,6 @@ const CollectionCard: FC<CollectionCardProps> = ({ product }) => {
         </div>
         <div className="justify-between flex">
           <p className="text-medium">{product.title}</p>
-          <div>
-            <Button>Add to cart</Button>
-            <Button>Buy now</Button>
-          </div>
         </div>
       </div>
     </Link>

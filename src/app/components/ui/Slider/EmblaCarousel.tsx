@@ -4,6 +4,7 @@ import { EmblaOptionsType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import "@/app/styles/slider.css";
+import { cn } from "@/lib/utils";
 type SliderPropType = {
   slides?: any[];
   options?: EmblaOptionsType;
@@ -13,6 +14,7 @@ type SliderPropType = {
   playOnInit?: boolean;
   autoPlay?: boolean;
   selectedSlide?: number;
+  slidePerView: 1 | 2 | 3;
 };
 
 const SliderCustom: React.FC<SliderPropType> = (props) => {
@@ -25,6 +27,7 @@ const SliderCustom: React.FC<SliderPropType> = (props) => {
     delay,
     selectedSlide,
     autoPlay,
+    slidePerView,
   } = props;
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
@@ -58,15 +61,25 @@ const SliderCustom: React.FC<SliderPropType> = (props) => {
   return (
     <>
       {slides && slides?.length > 1 ? (
-        <div className="embla h-full w-full relative">
+        <div className="embla h-full  relative">
           <div className="embla__viewport h-full" ref={emblaRef}>
-            <div className="embla__container h-full">
+            <div className="embla__container h-full gap-4">
               {children ? (
-                <div className="embla__slide h-full">{children}</div>
+                <div
+                  className={cn("embla__slide h-full", slideStyle)}
+                  style={{
+                    flex: `0 0 ${100 / slidePerView}%`,
+                  }}
+                >
+                  {children}
+                </div>
               ) : (
                 slides?.map((slide, i) => (
                   <div
-                    className="embla__slide h-full flex justify-center"
+                    className={cn("embla__slide h-full", slideStyle)}
+                    style={{
+                      flex: `0 0 ${100 / slidePerView}%`,
+                    }}
                     key={i + "slide"}
                   >
                     <div

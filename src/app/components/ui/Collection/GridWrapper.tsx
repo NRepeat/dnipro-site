@@ -29,6 +29,7 @@ const GridWrapper = ({
   const NUMBER_OF_USERS_TO_FETCH = 12;
   const [offset, setOffset] = useState(NUMBER_OF_USERS_TO_FETCH);
   const [products, setProducts] = useState<FullProduct[]>(productsInitialData);
+  console.log("🚀 ~ products:", products);
   const { ref, inView } = useInView();
   const filter = useSelector(
     (state: { filter: FilterStateType }) => state.filter
