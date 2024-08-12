@@ -112,7 +112,7 @@ const SliderCustom: React.FC<SliderPropType> = (props) => {
           </div> */}
         </div>
       ) : (
-        <div className="flex w-full justify-center">{slides}</div>
+        <div className="flex w-full justify-center gap-4">{slides}</div>
       )}
     </>
   );

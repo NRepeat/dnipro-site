@@ -29,7 +29,7 @@ const manClothing = [
 export const navBardData = {
   pages: [
     {
-      link: "/woman",
+      link: "/collections/women",
       label: "Жіноче",
       slug: "woman",
       categories: [

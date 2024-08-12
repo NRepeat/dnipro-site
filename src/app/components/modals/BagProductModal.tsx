@@ -30,7 +30,7 @@ const BagProductModal: FC<BagProductModal> = ({ product, className }) => {
       <DialogContent
         className={cn(
           className,
-          "w-[300px] sm:w-[450px] lg:w-[1024px] xl:w-[75%] max-w-[1524px] max-h-[700px] lg:max-h-full"
+          "w-[300px] sm:w-[450px] lg:w-[1024px] xl:w-[75%] max-w-[1524px] max-h-[700px] lg:max-h-[550px]"
         )}
         title={product.title}
       >

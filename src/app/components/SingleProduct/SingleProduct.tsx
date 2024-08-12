@@ -34,13 +34,15 @@ const SingleProduct: FC<ProductType> = async ({ id, property }) => {
   ];
   return (
     <div className="flex w-full flex-col ">
-      <div className="flex gap-8 justify-between  pb-12">
+      <div className="flex  pb-32">
         <ImageViewer
           images={
             selectedProduct ? (selectedProduct.images as string[]) : images
           }
         />
-        <Info product={selectedProduct ? selectedProduct : product} />
+        <div className="w-full flex justify-center">
+          <Info product={selectedProduct ? selectedProduct : product} />
+        </div>
       </div>
       <ProductsCarousel
         products={products.data}

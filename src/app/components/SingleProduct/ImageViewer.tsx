@@ -75,7 +75,7 @@ const ImageViewer = ({ images }: { images: string[] }) => {
       )} */}
         {
           <div
-            className={`w-[700px] ${
+            className={`w-[600px] ${
               loadedImages >= 1 ? "opacity-100" : "opacity-0"
             } transition-opacity duration-500 `}
           >

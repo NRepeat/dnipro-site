@@ -62,8 +62,8 @@ const EmblaCarousel: React.FC<VerticalSliderPropType> = (props) => {
         {!nextBtnDisabled && (
           <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
         )}
-        <div className="embla-thumbs__viewport " ref={emblaThumbsRef}>
-          <div className="embla-thumbs__container ">
+        <div className="embla-thumbs__viewport max-h-svh" ref={emblaThumbsRef}>
+          <div className="embla-thumbs__container pr-4 max-h-svh">
             {slides?.map((slide, index) => (
               <Thumb
                 key={index}
@@ -79,7 +79,7 @@ const EmblaCarousel: React.FC<VerticalSliderPropType> = (props) => {
       <div className="embla__viewport" ref={emblaMainRef}>
         <div className="embla__container ">
           {slides?.map((slide, index) => (
-            <div className="embla__slide" key={index}>
+            <div className="embla__slide max-w-[500px]" key={index}>
               {slide}
             </div>
           ))}

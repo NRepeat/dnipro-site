@@ -15,9 +15,6 @@ const ProductsCarousel: FC<ProductsCarousel> = ({
   title,
   titleMargin,
 }) => {
-  let slides = products.map((product) => (
-    <CompleteLookCard product={product} key={product.id} />
-  ));
   let cashedArr = products.slice();
   let chunkedArr = [];
   let start = 0;
@@ -42,17 +39,20 @@ const ProductsCarousel: FC<ProductsCarousel> = ({
       >
         {title}
       </p>
-      <SliderCustom slides={chunkedArr}></SliderCustom>
+      <SliderCustom
+        slidePerView={1}
+        slideStyle="pl-2"
+        slides={chunkedArr}
+      ></SliderCustom>
     </div>
   );
 };
 export default ProductsCarousel;
 
 const CompleteLookCard = ({ product }: { product: Product }) => {
-  console.log("🚀 ~ CompleteLookCard ~ product:", product.thumbnail);
   return (
     <Link href={`/product/${product.id}`}>
-      <div className="w-full">
+      <div className="w-full max-w-[200px]">
         <Image
           width={300}
           height={300}
