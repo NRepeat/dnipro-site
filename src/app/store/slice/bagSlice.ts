@@ -1,44 +1,41 @@
-// store/filterSlice.js
+import { FullProduct } from "@/app/services/products";
 import { PayloadAction, createSlice, original } from "@reduxjs/toolkit";
 
+type CartItem ={
+  id:number,
+  quantity:number,
+  name:string,
+  imageUrl:string,
+  price:number
+}
+type CreateCatItem ={}
+
 export type BagStateType = {
-  isOpenModule: boolean;
-  products: any[] | null;
-  isBuyRightNowModalOpen: boolean;
-  productsToBuy: any[] | null;
+loading:boolean
+error:boolean,
+totalAmount:number,
+items:CartItem[],
+fetchCartItems:()=> Promise<void>
+updateItemQuantity:(id:number,quantity:number) => Promise<void>;
+addCartItem:(values:CreateCatItemValues) =>  Promise<void>
+removeCartItem:(id:number) => Promise<void>
 };
 const initialState: BagStateType = {
-  isOpenModule: false,
-  isBuyRightNowModalOpen: false,
-  products: null,
-  productsToBuy: null,
+addCartItem: ()=> void,
+error:false,
+items:[],
+loading:false,
+totalAmount:0,
+
+
 };
 
 const bagSlice = createSlice({
   name: "bag",
   initialState,
-  reducers: {
-    setIsModalOpen: (state, action: PayloadAction<boolean>) => {
-      state.isOpenModule = action.payload;
-    },
-    setProductInBag: (state, action: PayloadAction<any[]>) => {
-      state.products = action.payload;
-    },
-
-    setIsBuyRightNowModalOpen: (
-      state,
-      action: PayloadAction<{ isOpen: boolean; product?: any }>
-    ) => {
-      state.isBuyRightNowModalOpen = action.payload.isOpen;
-      state.productsToBuy =
-        state.productsToBuy && action.payload.product
-          ? [action.payload.product, ...state.productsToBuy]
-          : [action.payload.product];
-    },
-  },
+  reducers: {},
 });
 
-export const { setProductInBag, setIsModalOpen, setIsBuyRightNowModalOpen } =
-  bagSlice.actions;
+export const {} = bagSlice.actions;
 
 export default bagSlice.reducer;

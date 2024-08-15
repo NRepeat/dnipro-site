@@ -132,7 +132,6 @@
     width: 100%;
     left: 0;
     top: 0;
-    z-index: 1000;
     transition: ease 0.4s;
     &--scrolled {
       height: 60px;
@@ -149,7 +148,6 @@
     transition-duration: unset !important;
   }
   .max-navbar-w-disable > header {
-    z-index: 1001;
     max-width: none !important;
   }
   .orange {

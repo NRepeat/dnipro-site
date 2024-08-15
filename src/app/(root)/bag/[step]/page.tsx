@@ -1,12 +1,12 @@
-import { getUsers } from "@/app/actions/products";
 import Check from "@/app/components/Bag/Table/Check";
 import Quantity from "@/app/components/Bag/Table/Quantity";
+import prisma from "@/app/utils/prisma";
 import { Button, Image, Input } from "@nextui-org/react";
 import React from "react";
 
 const Bag = async ({ params }: { params: { step: string } }) => {
   const { step } = params;
-  const products = await getUsers(3, 0);
+  const products = await prisma.product.findMany()
 
   // const response = await handler();
   return (
@@ -33,16 +33,16 @@ const Bag = async ({ params }: { params: { step: string } }) => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y- divide-gray-200">
-              {products.map((p: any) => (
+              {products!.map((p: any) => (
                 <>
                   <tr key={p.id}>
                     <td className="px-6 py-4 whitespace-nowrap flex gap-4">
                       <div className="w-[150px]">
-                        <Image
+                        {/* <Image
                           alt="Card example background"
                           className="z-0 h-full object-cover  transition-all rounded-none jus w-full flex"
                           src={p.images[0]}
-                        />
+                        /> */}
                       </div>
 
                       <div className="flex flex-col gap-1">

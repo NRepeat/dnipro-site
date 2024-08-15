@@ -5,6 +5,8 @@ import { RiAccountBoxFill } from "react-icons/ri";
 import NavButtonWithDropdownMenuWrapper from "./DropdownMenu";
 import { Input } from "@/components/ui/input";
 import SearchInput from "../SearchInput/SearchInput";
+import CartButton from "../../CartButton/CartButton";
+import CartDriver from "../../CartDriver/CartDriver";
 
 const NavbarCustomContent = () => {
   return (
@@ -24,13 +26,9 @@ const NavbarCustomContent = () => {
           <Link href={"/favorite"} className="flex justify-center items-center">
             <MdFavoriteBorder className="w-5 h-5" />
           </Link>
-          <Link
-            href={"/bag/preview"}
-            className="flex justify-center items-center"
-            prefetch
-          >
-            <IoBag className="w-5 h-5" />
-          </Link>
+          <CartDriver>
+            <CartButton />
+          </CartDriver>
         </div>
       </div>
     </div>
