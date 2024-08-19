@@ -1,0 +1,23 @@
+import { Cart } from "@prisma/client";
+import { CartStateItem } from "../store/slice/cartSlice";
+import { CartDto } from "../services/dto/cart";
+import { calcCartTotalPrice } from "./calc-cart-item-price";
+
+interface ReturnProps {
+  items: CartStateItem[];
+  totalAmount: number;
+}
+
+export const getCartDetails = (data: CartDto): ReturnProps => {
+  const items: CartStateItem[] = data.items.map((item) => ({
+    id: item.id,
+    quantity: item.quantity,
+    name: item.productItem.product.title,
+    imageUrl: item.productItem.images as string[],
+    price: calcCartTotalPrice(item),
+  }));
+  return {
+    items,
+    totalAmount: data.totalAmount,
+  };
+};

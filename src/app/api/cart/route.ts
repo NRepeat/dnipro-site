@@ -3,7 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
-    const token = req.cookies.get("cartToken")?.value;
+    const token = req.cookies.get("cart")?.value;
+    console.log("🚀 ~ GET ~ token:", token);
     if (!token) {
       return NextResponse.json({ totalAmount: 0, items: [] });
     }

@@ -4,4 +4,5 @@ export enum ApiRoutesPath {
   ALL_BRANDS = "http://localhost:3001/api/filters/brands/all",
   ALL_PRODUCTS = "http://localhost:3001/api/products/all",
   PRODUCT_BY_ID = "http://localhost:3001/api/product/id",
+  CART = "http://localhost:3001/api/cart/",
 }

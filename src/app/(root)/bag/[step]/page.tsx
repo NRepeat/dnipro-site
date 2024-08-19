@@ -6,13 +6,12 @@ import React from "react";
 
 const Bag = async ({ params }: { params: { step: string } }) => {
   const { step } = params;
-  const products = await prisma.product.findMany()
+  const products = await prisma.product.findMany();
 
   // const response = await handler();
   return (
     <div className="flex flex-col">
       <p>YOU HAVE 3 ITEMS IN YOUR SHOPPING BAG</p>
-
       {step === "preview" ? (
         <div className="flex ">
           <table className=" divide-y divide-gray-200">

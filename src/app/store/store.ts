@@ -1,7 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import filterReducer from "./slice/filterSlice";
 import productReducer from "./slice/productSlice";
-import bagReducer from "./slice/bagSlice";
+import bagReducer from "./slice/cartSlice";
+import { useDispatch } from "react-redux";
 export const store = configureStore({
   reducer: {
     filter: filterReducer,
@@ -13,5 +14,6 @@ export const store = configureStore({
       serializableCheck: false,
     }),
 });
-
+export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch: () => AppDispatch = useDispatch;
 export default store;
