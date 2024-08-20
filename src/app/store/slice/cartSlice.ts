@@ -1,6 +1,6 @@
 import { getCartDetails } from "@/app/lib/get-cart-details";
 import cartAPIactions from "@/app/services/cart";
-import { CartDto } from "@/app/services/dto/cart";
+import { CartDto, CartItemDto } from "@/app/services/dto/cart";
 import { FullProduct } from "@/app/services/products";
 import {
   PayloadAction,
@@ -30,12 +30,12 @@ const initialState: BagStateType = {
   loading: false,
   totalAmount: 0,
 };
-export const fetchCart = createAsyncThunk<{ items: CartDto }, { state: any }>(
+export const fetchCart = createAsyncThunk<CartDto, { state: any }>(
   "cart/fetchCart",
   async (_, thunkAPI) => {
     const response = await cartAPIactions.fetchCart();
     console.log("🚀 ~ response:", response);
-    return { items: response.data.items };
+    return response.data;
   }
 );
 const bagSlice = createSlice({
