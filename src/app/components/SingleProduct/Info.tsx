@@ -1,45 +1,77 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { CiShare2 } from "react-icons/ci";
 import FavButtons from "./Buttons/FavButtons";
-import ColorPicker from "./ColorPicker";
+import ColorPicker, { ImageVariant } from "./ColorPicker";
 import SizePicker from "./SizePicker";
 import BuyButtons from "./Buttons/BuyButtons";
-import { Button, Divider } from "@nextui-org/react";
 import ShippingInfo from "./Shipping";
+import { useAppDispatch } from "@/app/store/store";
+import cartThunk from "@/app/store/thunk/cartThunk";
+import { FullProduct } from "@/app/services/products";
+import { Button } from "@/components/ui/button";
+import { Divider } from "@nextui-org/react";
+import { CartItem, ProductItem } from "@prisma/client";
 
-const Info = ({ product }: { product: any }) => {
+const Info = ({
+  product,
+  setSelectedVariant,
+  variant,
+}: {
+  product: FullProduct;
+  setSelectedVariant: (item: ProductItem) => void;
+  variant: ProductItem;
+}) => {
+  const dispatch = useAppDispatch();
+
+  const onAddProduct = (id: number) => {
+    dispatch(
+      cartThunk.thunk.createCartItem({ productItemId: id, quantity: 1 })
+    );
+  };
+
   return (
-    <section className="flex flex-col w-full max-w-[450px]">
+    <section className=" flex-col max-w-[450px] w-full flex justify-center">
       <div className="inline-flex justify-between items-center min-w-[300px]">
         <p className="capitalize text-sm font-light py-4">
-          {product.brand && product.brand.toUpperCase()}
+          {product.manufacturer.name}
         </p>
         <div className="flex">
-          <Button isIconOnly variant="light">
+          <Button variant={"outline"}>
             <CiShare2 className="w-4 h-4" />
           </Button>
           <FavButtons />
         </div>
       </div>
       <div className="flex pb-8 pt-1 gap-4 flex-wrap">
-        <p className="w-full font-semibold">{product.title}</p>
+        <p className="w-full font-semibold">
+          {variant?.name ? variant.name : product.variants[0].name}
+        </p>
         <p className="pr-4">
-          <span>$</span> {product.price}
+          {variant?.price ? variant.price : product.variants[0].price}{" "}
+          <span>$</span>
         </p>
       </div>
       <div>
         <div className="pb-8">
-          {product ? (
-            <>
-              <Divider />
-              {/* <ColorPicker product={product} /> */}
-              <Divider />
-              <SizePicker sizes={[20, 30, 40]} productId={product.id} />
-              <BuyButtons />
-            </>
-          ) : (
-            <p>THIS ITEM IS SOLD OUT</p>
-          )}
+          <>
+            <Divider />
+            <ColorPicker
+              variants={product.variants}
+              setSelectedVariant={(item) => setSelectedVariant(item)}
+              selectedImageVariant={variant ? variant : product.variants[0]}
+            />
+            <Divider />
+            <SizePicker sizes={[20, 30, 40]} productId={product.id} />
+            <Button className="w-[150px]">Buy it now</Button>
+            <Button
+              className="w-[150px]"
+              variant={"outline"}
+              onClick={() => onAddProduct(variant.id)}
+            >
+              Add to cart
+            </Button>
+          </>
         </div>
         <Divider />
         <div>

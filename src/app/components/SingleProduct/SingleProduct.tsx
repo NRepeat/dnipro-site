@@ -1,54 +1,53 @@
-import React, { FC, Suspense } from "react";
+"use client";
+import React, { FC, useEffect, useState } from "react";
 import ImageViewer from "./ImageViewer";
 import Info from "./Info";
-import ProductsCarousel from "../CompleteLook/CompleteLook";
-import productsAPIactions from "@/app/services/products";
-import { notFound } from "next/navigation";
-import prisma from "@/app/utils/prisma";
+import { type FullProduct } from "@/app/services/products";
+import { ProductItem } from "@prisma/client";
 
 type ProductType = {
-  id: string;
-  property?: string;
+  product: FullProduct;
+  variantId?: string;
 };
 
-const SingleProduct: FC<ProductType> = async ({ id, property }) => {
-  console.log("🚀 ~ constSingleProduct:FC<ProductType>= ~ property:", property);
-  const product = await prisma.product.findUnique({
-    where: { uid: id },
-    include: { category: true, manufacturer: true, variants: true },
-  });
-  if (!product) {
-    return notFound();
-  }
-  const products = await productsAPIactions.getAllProducts({
-    limit: 5,
-    skip: 0,
-  });
-
-  const selectedProduct = product.variants.find(
-    (variant) => variant.color === property
+const SingleProduct: FC<ProductType> = ({ product, variantId }) => {
+  const [selectedVariant, setSelectedVariant] = useState<ProductItem>(
+    product.variants[0]
   );
+  const [selectedImages, setSelectedImages] = useState<string[]>([]);
 
-  const images: string[] = [
-    ...product.variants.flatMap((variant) => variant.images as string[]),
-  ];
+  useEffect(() => {
+    if (variantId) {
+      const productVariant = product.variants.find(
+        (variant) => variant.id === Number(variantId)
+      );
+      if (productVariant) {
+        setSelectedVariant(productVariant);
+        setSelectedImages(productVariant.images as string[]);
+      }
+    }
+  }, [variantId, product.variants]);
+  useEffect(() => {
+    if (selectedVariant) {
+      setSelectedImages(selectedVariant?.images as string[]);
+    }
+  }, [selectedVariant]);
+
   return (
     <div className="flex w-full flex-col ">
-      <div className="flex  pb-32">
-        <ImageViewer
-          images={
-            selectedProduct ? (selectedProduct.images as string[]) : images
-          }
+      <div className="flex  pb-32 gap-12 justify-between px-4">
+        <ImageViewer images={selectedImages} />
+        <Info
+          product={product}
+          variant={selectedVariant}
+          setSelectedVariant={setSelectedVariant}
         />
-        <div className="w-full flex justify-center">
-          <Info product={selectedProduct ? selectedProduct : product} />
-        </div>
       </div>
-      <ProductsCarousel
+      {/* <ProductsCarousel
         products={products.data}
         title="COMPLETE THE LOOK"
         titleMargin={12}
-      />
+      /> */}
     </div>
   );
 };

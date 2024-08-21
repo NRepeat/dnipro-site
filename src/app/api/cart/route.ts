@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
   try {
     const token = req.cookies.get("cart")?.value;
     if (!token) {
-      return NextResponse.json({ totalAmount: 0, items: [] });
+      return NextResponse.json({ cart: { totalAmount: 0, products: [] } });
     }
     const userCart = await prisma.cart.findFirst({
       where: { OR: [{ token }] },
@@ -67,6 +67,6 @@ export async function POST(req: NextRequest) {
     response.cookies.set("cart", token);
     return response;
   } catch (error) {
-    return NextResponse.json({ message: "Error create cart" });
+    return NextResponse.json({ message: "Error create cart", error: error });
   }
 }

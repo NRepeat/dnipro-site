@@ -2,31 +2,41 @@
 import { ProductItem } from "@prisma/client";
 import { cx } from "class-variance-authority";
 import Image from "next/image";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import SliderCustom from "../ui/Slider/EmblaCarousel";
 
 export type ImageVariant = {
   imageUrl: string;
-  uid: string;
+  id: number;
   color: string;
 };
 type ColorPickerProps = {
-  imageVariants: ImageVariant[];
-  selectedImageVariant: string;
-  selectImageId: React.Dispatch<React.SetStateAction<string>>;
+  variants: ProductItem[];
+  selectedImageVariant: ProductItem;
+  setSelectedVariant: (item: ProductItem) => void;
 };
 const ColorPicker: FC<ColorPickerProps> = ({
-  imageVariants,
-  selectImageId,
+  variants,
+  setSelectedVariant,
   selectedImageVariant,
 }) => {
-  const handleSelectColor = (uid: string) => {
-    selectImageId(uid);
+  const variantData = variants.map((variant) => {
+    const variantImageThumbnail = variant.images as string[];
+    const imageVariants: ImageVariant = {
+      imageUrl: variantImageThumbnail[0],
+      id: variant.id,
+      color: variant.color,
+    };
+    return imageVariants;
+  });
+  const handleSelectColor = (variant: ProductItem) => {
+    setSelectedVariant(variant);
   };
-  const slides = imageVariants.map((variant) => (
-    <div key={variant.uid}>
+
+  const slides = variantData.map((variant, i) => (
+    <div key={variant.id}>
       <Image
-        onClick={() => handleSelectColor(variant.uid)}
+        onClick={() => handleSelectColor(variants[i])}
         className={cx(`transition-all  border-2`)}
         src={variant.imageUrl}
         width={300}
@@ -35,7 +45,7 @@ const ColorPicker: FC<ColorPickerProps> = ({
       />
       <p
         className={cx("border-t-2 border-t-white", {
-          "border-t-2 border-t-black": variant.uid === selectedImageVariant,
+          "border-t-2 border-t-black": variant.id === selectedImageVariant.id,
         })}
       >
         {variant.color}

@@ -16,6 +16,10 @@ import ColorPicker, { ImageVariant } from "../SingleProduct/ColorPicker";
 import { FullProduct } from "@/app/services/products";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { CartStateType } from "@/app/store/slice/cartSlice";
+import { useAppDispatch } from "@/app/store/store";
+import cartThunk from "@/app/store/thunk/cartThunk";
+import { useSelector } from "react-redux";
 
 type BagProductModal = {
   product: FullProduct;
@@ -62,20 +66,26 @@ export const BagModalForm: FC<BagModalFormProps> = ({
   brand,
   uid,
 }) => {
-  const [selectedVariantId, setVariantId] = useState<string>(variants[0].uid);
+  const [selectedVariantId, setVariantId] = useState<number>(variants[0].id);
+  const dispatch = useAppDispatch();
   const variantsData = variants.map((variant) => {
     const variantImageThumbnail = variant.images as string[];
     const imageVariants: ImageVariant = {
       imageUrl: variantImageThumbnail[0],
-      uid: variant.uid,
+      id: variant.id,
       color: variant.color,
     };
     return imageVariants;
   });
   const selectedVariant = variants.find(
-    (variant) => variant.uid === selectedVariantId
+    (variant) => variant.id === selectedVariantId
   );
   const selectedImage = selectedVariant && (selectedVariant.images as string[]);
+  const onAddProduct = (id: number) => {
+    dispatch(
+      cartThunk.thunk.createCartItem({ productItemId: id, quantity: 1 })
+    );
+  };
   return (
     <>
       {selectedVariant && (
@@ -109,19 +119,23 @@ export const BagModalForm: FC<BagModalFormProps> = ({
 
               <p className="pb-8">${selectedVariant.price} USD</p>
             </div>
-            <ColorPicker
+            {/* <ColorPicker
               imageVariants={variantsData}
               selectImageId={setVariantId}
               selectedImageVariant={selectedVariantId}
-            />
+            /> */}
             <div className="flex gap-12">
               <Button className="w-[150px]">Buy it now</Button>
-              <Button className="w-[150px]" variant={"outline"}>
+              <Button
+                className="w-[150px]"
+                variant={"outline"}
+                onClick={() => onAddProduct(selectedVariantId)}
+              >
                 Add to cart
               </Button>
             </div>
             <Link
-              href={`/product/${uid}/color/${selectedVariant.color}`}
+              href={`/product/${uid}/${selectedVariant.id}`}
               className="pt-4 underline cursor-pointer"
             >
               View full information

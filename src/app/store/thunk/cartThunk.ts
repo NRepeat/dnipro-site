@@ -1,5 +1,5 @@
 import cartAPIactions from "@/app/services/cart";
-import { CartDto } from "@/app/services/dto/cart";
+import { CartDto, CreateCartItem } from "@/app/services/dto/cart";
 import { createAsyncThunk, ActionReducerMapBuilder } from "@reduxjs/toolkit";
 import { CartStateType } from "../slice/cartSlice";
 import { getCartDetails } from "@/app/lib/get-cart-details";
@@ -29,6 +29,16 @@ const deleteCart = createAsyncThunk<CartDto, { id: number }>(
   }
 );
 
+const createCartItem = createAsyncThunk<CartDto, CreateCartItem>(
+  "cart/createCartItem",
+  async ({ productItemId, quantity }, thunkAPI) => {
+    const response = await cartAPIactions.createCartItem({
+      productItemId,
+      quantity,
+    });
+    return response.data.cart;
+  }
+);
 const cartCase = (
   builder: ActionReducerMapBuilder<CartStateType>,
   thunk: any
@@ -53,7 +63,8 @@ const extraReducers = (builder: ActionReducerMapBuilder<CartStateType>) => {
   cartCase(builder, updateCartQuantity);
   cartCase(builder, fetchCart);
   cartCase(builder, deleteCart);
+  cartCase(builder, createCartItem);
 };
-const thunk = { fetchCart, updateCartQuantity, deleteCart };
+const thunk = { fetchCart, updateCartQuantity, deleteCart, createCartItem };
 const cartThunk = { thunk, extraReducers };
 export default cartThunk;

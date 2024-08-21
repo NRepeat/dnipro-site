@@ -30,7 +30,7 @@ model User {
   uid              String           @unique
   email            String           @unique
   name             String?
-  cart             Cart?
+  cart             Cart[]
   role             UserRole         @default(CUSTOMER)
   provider         String?
   providerId       String?
@@ -90,7 +90,7 @@ model ProductItem {
 
 model Cart {
   id          Int        @id @default(autoincrement())
-  userId      Int        @unique
+  userId      Int?
   user        User?      @relation(fields: [userId], references: [id])
   orders      Order[]
   totalAmount Int        @default(0)

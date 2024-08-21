@@ -1,7 +1,7 @@
 import { Cart, Manufacturer } from "@prisma/client";
 import axios, { AxiosResponse } from "axios";
 import { ApiRoutesPath } from "./constants";
-import { CartDto } from "./dto/cart";
+import { CartDto, CreateCartItem } from "./dto/cart";
 
 const fetchCart = async (): Promise<AxiosResponse<{ cart: CartDto }>> => {
   return axios.get<{ cart: CartDto }>(ApiRoutesPath.CART);
@@ -22,6 +22,21 @@ const deleteCart = async ({
 }): Promise<AxiosResponse<{ cart: CartDto }>> => {
   return axios.delete<{ cart: CartDto }>(ApiRoutesPath.CART + id);
 };
-const cartAPIactions = { fetchCart, updateCartQuantity, deleteCart };
+const createCartItem = async ({
+  productItemId,
+  quantity,
+}: CreateCartItem): Promise<AxiosResponse<{ cart: CartDto }>> => {
+  return axios.post<{ cart: CartDto }>(ApiRoutesPath.CART, {
+    productItemId,
+    quantity,
+  });
+};
+
+const cartAPIactions = {
+  fetchCart,
+  updateCartQuantity,
+  deleteCart,
+  createCartItem,
+};
 
 export default cartAPIactions;
