@@ -10,5 +10,8 @@ export const findOrCreateCart = async (token: string) => {
         data: { token },
       });
     }
-  } catch (error) {}
+    return userCart;
+  } catch (error) {
+    throw new Error("Error create cart");
+  }
 };
