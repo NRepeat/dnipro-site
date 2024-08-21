@@ -9,7 +9,6 @@ interface ReturnProps {
 }
 
 export const getCartDetails = (data: CartDto): ReturnProps => {
-  console.log("🚀 ~ getCartDetails ~ data:", data);
   const items: CartStateItem[] = data.products.map((item) => ({
     id: item.id,
     quantity: item.quantity,

@@ -9,7 +9,7 @@ interface Props {
   className?: string;
   onClick: (type: "plus" | "minus") => void;
 }
-const CountButton: FC<Props> = ({ className, onClick, value = 1 }) => {
+const CountButton: FC<Props> = ({ className, onClick, value = 2 }) => {
   return (
     <div
       className={cn(

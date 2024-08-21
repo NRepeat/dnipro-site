@@ -14,8 +14,9 @@ import { Button } from "@/components/ui/button";
 import CartItem from "../CartItem/CartItem";
 import CartDriverItem from "./CartDriverItem";
 import { useAppDispatch } from "@/app/store/store";
-import { CartStateType, fetchCart } from "@/app/store/slice/cartSlice";
+import { CartStateType } from "@/app/store/slice/cartSlice";
 import { useSelector } from "react-redux";
+import cartThunk from "@/app/store/thunk/cartThunk";
 
 type Props = {
   children: React.ReactNode;
@@ -26,19 +27,19 @@ const CartDriver: FC<Props> = ({ children, className }) => {
   const cartState = useSelector((state: { cart: CartStateType }) => state.cart);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(fetchCart());
+    dispatch(cartThunk.thunk.fetchCart());
   }, [dispatch]);
   return (
     <Sheet>
       <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent className="flex pb-0 bg-gray-200 flex-col justify-between">
         <SheetTitle>
-          In cart <span className="font-bold">3 items</span>
+          <span>In cart</span>
+          <span className="font-bold">{cartState.items.length} items</span>
         </SheetTitle>
         <div className="-mx-6 mt-5 overflow-auto scrollbar flex-1 gap-2 flex flex-col">
           <CartDriverItem items={cartState.items} />
         </div>
-
         <SheetFooter className="-mx-6 bg-white p-8">
           <div className="w-full flex">
             <div className="flex mb-4">Total</div>

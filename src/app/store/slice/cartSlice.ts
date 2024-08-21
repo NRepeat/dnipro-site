@@ -8,6 +8,7 @@ import {
   createSlice,
   original,
 } from "@reduxjs/toolkit";
+import cartThunk from "../thunk/cartThunk";
 
 export type CartStateItem = {
   id: number;
@@ -30,34 +31,12 @@ const initialState: CartStateType = {
   loading: false,
   totalAmount: 0,
 };
-export const fetchCart = createAsyncThunk<CartDto>(
-  "cart/fetchCart",
-  async (_, thunkAPI) => {
-    const response = await cartAPIactions.fetchCart();
-    return response.data.cart;
-  }
-);
+
 const cartSlice = createSlice({
   name: "cart",
   initialState,
-  reducers: {
-    fetchCartItems: (state, action) => {},
-  },
-  extraReducers: (builder) => {
-    builder.addCase(fetchCart.fulfilled, (state, action) => {
-      const { items, totalAmount } = getCartDetails(action.payload);
-      state.items = items;
-      state.totalAmount = totalAmount;
-      state.loading = false;
-      console.log("🚀 ~ builder.addCase ~  state:", state);
-    });
-    builder.addCase(fetchCart.rejected, (state, action) => {
-      state.error = true;
-    });
-    builder.addCase(fetchCart.pending, (state, action) => {
-      state.loading = true;
-    });
-  },
+  reducers: {},
+  extraReducers: cartThunk.extraReducers,
 });
 
 export const {} = cartSlice.actions;

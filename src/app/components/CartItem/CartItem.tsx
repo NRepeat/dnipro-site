@@ -18,6 +18,12 @@ export interface CartItemProps {
 }
 
 interface Props extends CartItemProps {
+  onClickCountButton: (
+    id: number,
+    quantity: number,
+    type: "plus" | "minus"
+  ) => void;
+  onClickDeleteButton: (id: number) => void;
   className?: string;
 }
 const CartItem: FC<Props> = ({
@@ -28,6 +34,8 @@ const CartItem: FC<Props> = ({
   name,
   price,
   quantity,
+  onClickCountButton,
+  onClickDeleteButton,
 }) => {
   return (
     <div className={cn("flex bg-white p-5 gap-6", className)}>
@@ -35,10 +43,16 @@ const CartItem: FC<Props> = ({
       <div className="flex-1 flex flex-col">
         <Info color={details.color} name={details.name} size={details.size} />
         <div className="flex items-center justify-between ">
-          <CountButton onClick={(type) => console.log(type)} value={quantity} />
+          <CountButton
+            onClick={(type) => onClickCountButton(id, quantity, type)}
+            value={quantity}
+          />
           <div className="flex gap-3 items-center">
             <Price value={price} />
-            <MdDelete className="cursor-pointer" />
+            <MdDelete
+              className="cursor-pointer"
+              onClick={() => onClickDeleteButton(id)}
+            />
           </div>
         </div>
       </div>
