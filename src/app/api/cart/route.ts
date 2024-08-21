@@ -23,6 +23,6 @@ export async function GET(req: NextRequest) {
         },
       },
     });
-    return NextResponse.json({ items: userCart });
+    return NextResponse.json({ cart: userCart });
   } catch (error) {}
 }

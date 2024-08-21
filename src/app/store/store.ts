@@ -7,7 +7,7 @@ export const store = configureStore({
   reducer: {
     filter: filterReducer,
     product: productReducer,
-    bag: bagReducer,
+    cart: bagReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

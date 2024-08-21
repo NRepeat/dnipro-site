@@ -18,27 +18,26 @@ export type CartStateItem = {
 };
 type CreateCatItemValues = {};
 
-export type BagStateType = {
+export type CartStateType = {
   loading: boolean;
   error: boolean;
   totalAmount: number;
   items: CartStateItem[];
 };
-const initialState: BagStateType = {
+const initialState: CartStateType = {
   error: false,
   items: [],
   loading: false,
   totalAmount: 0,
 };
-export const fetchCart = createAsyncThunk<CartDto, { state: any }>(
+export const fetchCart = createAsyncThunk<CartDto>(
   "cart/fetchCart",
   async (_, thunkAPI) => {
     const response = await cartAPIactions.fetchCart();
-    console.log("🚀 ~ response:", response);
-    return response.data;
+    return response.data.cart;
   }
 );
-const bagSlice = createSlice({
+const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
@@ -46,14 +45,21 @@ const bagSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchCart.fulfilled, (state, action) => {
-      console.log("🚀 ~ builder.addCase ~  action:", action.payload.items);
-
-      const cartDetails = getCartDetails(action.payload.items);
-      console.log("🚀 ~ builder.addCase ~ cartDetails:", cartDetails);
+      const { items, totalAmount } = getCartDetails(action.payload);
+      state.items = items;
+      state.totalAmount = totalAmount;
+      state.loading = false;
+      console.log("🚀 ~ builder.addCase ~  state:", state);
+    });
+    builder.addCase(fetchCart.rejected, (state, action) => {
+      state.error = true;
+    });
+    builder.addCase(fetchCart.pending, (state, action) => {
+      state.loading = true;
     });
   },
 });
 
-export const {} = bagSlice.actions;
+export const {} = cartSlice.actions;
 
-export default bagSlice.reducer;
+export default cartSlice.reducer;
