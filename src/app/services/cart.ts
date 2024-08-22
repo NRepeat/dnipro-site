@@ -2,8 +2,21 @@ import { Cart, Manufacturer } from "@prisma/client";
 import axios, { AxiosResponse } from "axios";
 import { ApiRoutesPath } from "./constants";
 import { CartDto, CreateCartItem } from "./dto/cart";
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 
-const fetchCart = async (): Promise<AxiosResponse<{ cart: CartDto }>> => {
+const fetchCart = async ({
+  cartToken,
+}: {
+  cartToken?: string;
+}): Promise<AxiosResponse<{ cart: CartDto }>> => {
+  if (cartToken) {
+    return axios.get<{ cart: CartDto }>(ApiRoutesPath.CART, {
+      headers: {
+        Cookie: `cart=${cartToken}`,
+      },
+      withCredentials: true,
+    });
+  }
   return axios.get<{ cart: CartDto }>(ApiRoutesPath.CART);
 };
 const updateCartQuantity = async ({

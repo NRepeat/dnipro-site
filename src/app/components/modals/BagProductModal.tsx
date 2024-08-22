@@ -13,16 +13,16 @@ import { useRouter } from "next/navigation";
 import React, { FC, useState } from "react";
 import ProductImage from "../ui/ProductImage/ProductImage";
 import ColorPicker, { ImageVariant } from "../SingleProduct/ColorPicker";
-import { FullProduct } from "@/app/services/products";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { CartStateType } from "@/app/store/slice/cartSlice";
 import { useAppDispatch } from "@/app/store/store";
 import cartThunk from "@/app/store/thunk/cartThunk";
 import { useSelector } from "react-redux";
+import { FullProduct, FullProductItem } from "@/app/types/types";
 
 type BagProductModal = {
-  product: FullProduct;
+  product: FullProductItem;
   className?: string;
 };
 
@@ -34,15 +34,15 @@ const BagProductModal: FC<BagProductModal> = ({ product, className }) => {
       <DialogContent
         className={cn(
           className,
-          "w-[300px] sm:w-[450px] lg:w-[1024px] xl:w-[75%] max-w-[1524px] max-h-[700px] lg:max-h-[550px]"
+          "w-[300px] sm:w-[450px] lg:w-[1024px] xl:w-[75%] max-w-[1524px] max-h-[700px] lg:max-h-full"
         )}
-        title={product.title}
+        title={product.name}
       >
         <BagModalForm
-          details={product.description || "asd"}
+          details={product.product.description || "asd"}
           uid={product.uid}
-          brand={product.manufacturer.name}
-          variants={product.variants}
+          brand={product.product.manufacturer.name}
+          variants={product.product.variants}
         />
       </DialogContent>
     </Dialog>
@@ -125,17 +125,12 @@ export const BagModalForm: FC<BagModalFormProps> = ({
               selectedImageVariant={selectedVariantId}
             /> */}
             <div className="flex gap-12">
-              <Button className="w-[150px]">Buy it now</Button>
-              <Button
-                className="w-[150px]"
-                variant={"outline"}
-                onClick={() => onAddProduct(selectedVariantId)}
-              >
-                Add to cart
+              <Button variant={"outline"} className="w-[150px] bg-green-800">
+                Make order
               </Button>
             </div>
             <Link
-              href={`/product/${uid}/${selectedVariant.id}`}
+              href={`/product/${uid}/item/${selectedVariant.id}`}
               className="pt-4 underline cursor-pointer"
             >
               View full information

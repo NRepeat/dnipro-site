@@ -4,14 +4,9 @@ import { IoBag } from "react-icons/io5";
 
 const CartButton = () => {
   return (
-    // <Link
-    //   href={"/bag/preview"}
-    //   className="flex justify-center items-center"
-    //   prefetch
-    // >
-
-    // </Link>
-    <IoBag className="w-5 h-5" />
+    <div className="flex justify-center items-center">
+      <IoBag className="w-5 h-5" />
+    </div>
   );
 };
 

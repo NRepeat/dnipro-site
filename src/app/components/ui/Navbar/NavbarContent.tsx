@@ -12,7 +12,10 @@ const NavbarCustomContent = () => {
   return (
     <div className="text-black  max-navbar-w-disable w-full flex items-center justify-between px-4 ">
       <div className="w-1/3 flex">
-        <Link href="/" className="text-xl text-left w-full pl-2">
+        <Link
+          href="/"
+          className="text-xl text-left w-full pl-2 hover:underline"
+        >
           NNSHOP
         </Link>
       </div>

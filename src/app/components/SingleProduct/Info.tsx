@@ -11,6 +11,7 @@ import cartThunk from "@/app/store/thunk/cartThunk";
 import { Button } from "@/components/ui/button";
 import { Divider } from "@nextui-org/react";
 import { FullProductItem } from "@/app/types/types";
+import Link from "next/link";
 
 const Info = ({
   item,
@@ -57,7 +58,9 @@ const Info = ({
             />
             <Divider />
             <SizePicker sizes={[20, 30, 40]} productId={item.id} />
-            <Button className="w-[150px]">Buy it now</Button>
+            <Link href={`/product/buy/${item.id}`} className="w-[150px]">
+              Buy it now
+            </Link>
             <Button
               className="w-[150px]"
               variant={"outline"}
