@@ -29,6 +29,7 @@ const CartDriver: FC<Props> = ({ children, className }) => {
   useEffect(() => {
     dispatch(cartThunk.thunk.fetchCart());
   }, [dispatch]);
+
   return (
     <Sheet>
       <SheetTrigger asChild>{children}</SheetTrigger>

@@ -7,7 +7,7 @@ import { getCartDetails } from "@/app/lib/get-cart-details";
 const fetchCart = createAsyncThunk<CartDto>(
   "cart/fetchCart",
   async (_, thunkAPI) => {
-    const response = await cartAPIactions.fetchCart();
+    const response = await cartAPIactions.fetchCart({});
     return response.data.cart;
   }
 );

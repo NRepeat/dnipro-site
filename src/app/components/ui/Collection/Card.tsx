@@ -44,6 +44,12 @@ const CollectionCard: FC<CollectionCardProps> = ({ product }) => {
         </div>
         <div className="justify-between flex">
           <p className="text-medium">{product.title}</p>
+          <Link
+            href={`/buy/product/${product.id}/item/${product.variants[0].id}`}
+            className="w-[150px]"
+          >
+            Buy it now
+          </Link>
         </div>
       </div>
     </Link>

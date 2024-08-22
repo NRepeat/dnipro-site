@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { Product, ProductItem } from "@prisma/client";
 import { Title } from "@radix-ui/react-dialog";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import React, { FC, useState } from "react";
 import ProductImage from "../ui/ProductImage/ProductImage";
 import ColorPicker, { ImageVariant } from "../SingleProduct/ColorPicker";
@@ -68,6 +68,8 @@ export const BagModalForm: FC<BagModalFormProps> = ({
 }) => {
   const [selectedVariantId, setVariantId] = useState<number>(variants[0].id);
   const dispatch = useAppDispatch();
+  const nav = useRouter();
+
   const variantsData = variants.map((variant) => {
     const variantImageThumbnail = variant.images as string[];
     const imageVariants: ImageVariant = {
@@ -86,6 +88,7 @@ export const BagModalForm: FC<BagModalFormProps> = ({
       cartThunk.thunk.createCartItem({ productItemId: id, quantity: 1 })
     );
   };
+
   return (
     <>
       {selectedVariant && (
@@ -125,16 +128,10 @@ export const BagModalForm: FC<BagModalFormProps> = ({
               selectedImageVariant={selectedVariantId}
             /> */}
             <div className="flex gap-12">
-              <Button variant={"outline"} className="w-[150px] bg-green-800">
+              <Link href={"/checkout"} className="w-[150px] bg-green-800">
                 Make order
-              </Button>
+              </Link>
             </div>
-            <Link
-              href={`/product/${uid}/item/${selectedVariant.id}`}
-              className="pt-4 underline cursor-pointer"
-            >
-              View full information
-            </Link>
           </div>
         </div>
       )}

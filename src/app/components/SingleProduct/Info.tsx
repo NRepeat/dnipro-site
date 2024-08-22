@@ -58,7 +58,10 @@ const Info = ({
             />
             <Divider />
             <SizePicker sizes={[20, 30, 40]} productId={item.id} />
-            <Link href={`/product/buy/${item.id}`} className="w-[150px]">
+            <Link
+              href={`/buy/product/${item.product.id}/item/${item.id}`}
+              className="w-[150px]"
+            >
               Buy it now
             </Link>
             <Button
