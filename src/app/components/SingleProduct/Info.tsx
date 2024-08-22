@@ -8,19 +8,16 @@ import BuyButtons from "./Buttons/BuyButtons";
 import ShippingInfo from "./Shipping";
 import { useAppDispatch } from "@/app/store/store";
 import cartThunk from "@/app/store/thunk/cartThunk";
-import { FullProduct } from "@/app/services/products";
 import { Button } from "@/components/ui/button";
 import { Divider } from "@nextui-org/react";
-import { CartItem, ProductItem } from "@prisma/client";
+import { FullProductItem } from "@/app/types/types";
 
 const Info = ({
-  product,
-  setSelectedVariant,
-  variant,
+  item,
+  variantId,
 }: {
-  product: FullProduct;
-  setSelectedVariant: (item: ProductItem) => void;
-  variant: ProductItem;
+  item: FullProductItem;
+  variantId: number;
 }) => {
   const dispatch = useAppDispatch();
 
@@ -34,7 +31,7 @@ const Info = ({
     <section className=" flex-col max-w-[450px] w-full flex justify-center">
       <div className="inline-flex justify-between items-center min-w-[300px]">
         <p className="capitalize text-sm font-light py-4">
-          {product.manufacturer.name}
+          {item.product.manufacturer.slug}
         </p>
         <div className="flex">
           <Button variant={"outline"}>
@@ -44,11 +41,9 @@ const Info = ({
         </div>
       </div>
       <div className="flex pb-8 pt-1 gap-4 flex-wrap">
-        <p className="w-full font-semibold">
-          {variant?.name ? variant.name : product.variants[0].name}
-        </p>
+        <p className="w-full font-semibold">{item.name}</p>
         <p className="pr-4">
-          {variant?.price ? variant.price : product.variants[0].price}{" "}
+          {item.price}
           <span>$</span>
         </p>
       </div>
@@ -57,17 +52,16 @@ const Info = ({
           <>
             <Divider />
             <ColorPicker
-              variants={product.variants}
-              setSelectedVariant={(item) => setSelectedVariant(item)}
-              selectedImageVariant={variant ? variant : product.variants[0]}
+              variants={item.product.variants}
+              variantId={variantId}
             />
             <Divider />
-            <SizePicker sizes={[20, 30, 40]} productId={product.id} />
+            <SizePicker sizes={[20, 30, 40]} productId={item.id} />
             <Button className="w-[150px]">Buy it now</Button>
             <Button
               className="w-[150px]"
               variant={"outline"}
-              onClick={() => onAddProduct(variant.id)}
+              onClick={() => onAddProduct(item.id)}
             >
               Add to cart
             </Button>

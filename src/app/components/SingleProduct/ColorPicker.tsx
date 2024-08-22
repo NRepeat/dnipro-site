@@ -4,6 +4,8 @@ import { cx } from "class-variance-authority";
 import Image from "next/image";
 import React, { FC, useState } from "react";
 import SliderCustom from "../ui/Slider/EmblaCarousel";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 export type ImageVariant = {
   imageUrl: string;
@@ -12,14 +14,9 @@ export type ImageVariant = {
 };
 type ColorPickerProps = {
   variants: ProductItem[];
-  selectedImageVariant: ProductItem;
-  setSelectedVariant: (item: ProductItem) => void;
+  variantId: number;
 };
-const ColorPicker: FC<ColorPickerProps> = ({
-  variants,
-  setSelectedVariant,
-  selectedImageVariant,
-}) => {
+const ColorPicker: FC<ColorPickerProps> = ({ variants, variantId }) => {
   const variantData = variants.map((variant) => {
     const variantImageThumbnail = variant.images as string[];
     const imageVariants: ImageVariant = {
@@ -29,28 +26,28 @@ const ColorPicker: FC<ColorPickerProps> = ({
     };
     return imageVariants;
   });
-  const handleSelectColor = (variant: ProductItem) => {
-    setSelectedVariant(variant);
-  };
+  const handleSelectColor = (variant: ProductItem) => {};
 
   const slides = variantData.map((variant, i) => (
-    <div key={variant.id}>
+    <Link href={`${variant.id}`} key={variant.id}>
       <Image
         onClick={() => handleSelectColor(variants[i])}
-        className={cx(`transition-all  border-2`)}
+        className={cx("border-2  border-black", {
+          "border-t-2 border-blue-500": variant.id === variantId,
+        })}
         src={variant.imageUrl}
         width={300}
         height={300}
         alt="Image"
       />
       <p
-        className={cx("border-t-2 border-t-white", {
-          "border-t-2 border-t-black": variant.id === selectedImageVariant.id,
+        className={cx("border-t-2 border-t-white border-black", {
+          "border-t-2 border-black": variant.id === variantId,
         })}
       >
         {variant.color}
       </p>
-    </div>
+    </Link>
   ));
   return (
     <div className="py-4 pb-6 w-full border-t-2">
@@ -62,21 +59,6 @@ const ColorPicker: FC<ColorPickerProps> = ({
           options={{ slidesToScroll: "auto" }}
           slides={slides}
         />
-        {/* {imageVariants.map((variant) => (
-          <Image
-            onClick={() => handleSelectColor(variant.uid)}
-            className={cx(
-              `w-[150px]  transition-all  border-2
-            }`,
-              { "border-2 border-black": variant.uid === selectedImageVariant }
-            )}
-            src={variant.imageUrl}
-            key={variant.uid}
-            width={300}
-            height={300}
-            alt="Image"
-          />
-        ))} */}
       </div>
     </div>
   );

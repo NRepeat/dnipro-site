@@ -8,12 +8,8 @@ import {
 import { axiosInstance } from "./axios-instance";
 import { ApiRoutesPath } from "./constants";
 import { AxiosResponse } from "axios";
+import { FullProduct } from "../types/types";
 
-export type FullProduct = Product & {
-  manufacturer: Manufacturer;
-  variants: ProductItem[];
-  category: Category;
-};
 const searchProducts = async (
   query: string
 ): Promise<AxiosResponse<Product[]>> => {

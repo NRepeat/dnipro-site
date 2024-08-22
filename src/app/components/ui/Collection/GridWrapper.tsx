@@ -17,7 +17,8 @@ import { useInView } from "react-intersection-observer";
 import { useDispatch, useSelector } from "react-redux";
 import CollectionCard from "./Card";
 import { Spinner } from "@nextui-org/react";
-import productsAPIactions, { FullProduct } from "@/app/services/products";
+import { FullProduct } from "@/app/types/types";
+import productsAPIactions from "@/app/services/products";
 
 const GridWrapper = ({
   children,
@@ -26,10 +27,10 @@ const GridWrapper = ({
   children?: React.ReactNode;
   productsInitialData: FullProduct[];
 }) => {
+  gsap.registerPlugin(Flip);
   const NUMBER_OF_USERS_TO_FETCH = 12;
   const [offset, setOffset] = useState(NUMBER_OF_USERS_TO_FETCH);
   const [products, setProducts] = useState<FullProduct[]>(productsInitialData);
-  console.log("🚀 ~ products:", products);
   const { ref, inView } = useInView();
   const filter = useSelector(
     (state: { filter: FilterStateType }) => state.filter
@@ -50,7 +51,6 @@ const GridWrapper = ({
   //     loadMoreUsers();
   //   }
   // }, [inView, loadMoreUsers, filter]);
-  gsap.registerPlugin(Flip);
 
   state.current = filter.flipRef;
   useLayoutEffect(() => {
@@ -60,9 +60,11 @@ const GridWrapper = ({
       });
     }
   }, [filter.filterIsOpen]);
-  const mapCollectionCard = products.map((product, i) => {
-    return <CollectionCard key={i} product={product} />;
-  });
+  const MapCollectionCard = () => {
+    return products.map((product, i) => {
+      return <CollectionCard key={i} product={product} />;
+    });
+  };
   return (
     <main className="flex flex-col">
       <div
@@ -70,8 +72,7 @@ const GridWrapper = ({
           filter.filterIsOpen ? "grid-cols-3" : "grid-cols-4"
         }`}
       >
-        {mapCollectionCard}
-        {children}
+        <MapCollectionCard />
       </div>
       <div ref={ref} className="w-full justify-center flex py-4">
         <Spinner />

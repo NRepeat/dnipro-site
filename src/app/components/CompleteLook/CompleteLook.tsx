@@ -3,9 +3,10 @@ import React, { FC } from "react";
 import SliderCustom from "../ui/Slider/EmblaCarousel";
 import Image from "next/image";
 import { Product } from "@prisma/client";
+import { FullProduct } from "@/app/types/types";
 
 type ProductsCarousel = {
-  products: any[];
+  products: FullProduct[];
   title: string;
   titleMargin: number;
 };
@@ -58,7 +59,9 @@ const CompleteLookCard = ({ product }: { product: Product }) => {
           height={300}
           alt="Card example background"
           className="z-0 h-auto w-full object-cover  transition-all rounded-none"
-          src={product.thumbnail}
+          src={
+            "https://assets.vogue.com/photos/61b3d8f39a038660df952d9d/master/w_2240,c_limit/017-thierry-mugler-spring-1998-couture-detail-CN10057089.jpg"
+          }
         />
         <p>brand</p>
         <p>price</p>

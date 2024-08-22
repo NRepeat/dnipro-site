@@ -2,52 +2,23 @@
 import React, { FC, useEffect, useState } from "react";
 import ImageViewer from "./ImageViewer";
 import Info from "./Info";
-import { type FullProduct } from "@/app/services/products";
-import { ProductItem } from "@prisma/client";
+import { Product, ProductItem } from "@prisma/client";
+import { FullProduct, FullProductItem } from "@/app/types/types";
+import ProductsCarousel from "../CompleteLook/CompleteLook";
 
 type ProductType = {
-  product: FullProduct;
-  variantId?: string;
+  item: FullProductItem;
+  variantId: number;
 };
 
-const SingleProduct: FC<ProductType> = ({ product, variantId }) => {
-  const [selectedVariant, setSelectedVariant] = useState<ProductItem>(
-    product.variants[0]
-  );
-  const [selectedImages, setSelectedImages] = useState<string[]>([]);
-
-  useEffect(() => {
-    if (variantId) {
-      const productVariant = product.variants.find(
-        (variant) => variant.id === Number(variantId)
-      );
-      if (productVariant) {
-        setSelectedVariant(productVariant);
-        setSelectedImages(productVariant.images as string[]);
-      }
-    }
-  }, [variantId, product.variants]);
-  useEffect(() => {
-    if (selectedVariant) {
-      setSelectedImages(selectedVariant?.images as string[]);
-    }
-  }, [selectedVariant]);
-
+const SingleProduct: FC<ProductType> = ({ item, variantId }) => {
+  const images = item.images as string[];
   return (
     <div className="flex w-full flex-col ">
-      <div className="flex  pb-32 gap-12 justify-between px-4">
-        <ImageViewer images={selectedImages} />
-        <Info
-          product={product}
-          variant={selectedVariant}
-          setSelectedVariant={setSelectedVariant}
-        />
+      <div className="flex pb-32 gap-12 justify-between px-4">
+        <ImageViewer images={images} />
+        <Info item={item} variantId={variantId} />
       </div>
-      {/* <ProductsCarousel
-        products={products.data}
-        title="COMPLETE THE LOOK"
-        titleMargin={12}
-      /> */}
     </div>
   );
 };
