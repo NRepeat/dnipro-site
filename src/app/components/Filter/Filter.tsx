@@ -124,8 +124,6 @@ const Filter: FC<FilterProps> = ({ children, brands, manufactures }) => {
   }, [router, price, brandSetItemsValues, manufactureSetItemsValues]);
 
   const handleShowFilter = () => {
-    const data = Flip.getState(".container");
-    dispatch(setFlipState(data));
     dispatch(setFilterIsOpen(!filter.filterIsOpen));
   };
 

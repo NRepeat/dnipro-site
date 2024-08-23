@@ -26,13 +26,13 @@ const CollectionCard: FC<CollectionCardProps> = ({ product }) => {
     (variant) => variant.images as string
   );
   return (
-    <div className="flex flex-col">
+    <div className="container-card flex flex-col">
       <Link
         href={`/product/${product.uid}/item/${product.variants[0].id}`}
         prefetch
       >
         <div
-          className={`container  transition-transform-background-disable w-full rounded-none cursor-pointer  border-1 hover:border-black border-b-2`}
+          className={`  transition-transform-background-disable w-full rounded-none cursor-pointer  border-1 hover:border-black border-b-2`}
         >
           <div className="flex w-full items-center justify-center overflow-hidden min-h-[300px]">
             <Image

@@ -52,13 +52,15 @@ const GridWrapper = ({
   //   }
   // }, [inView, loadMoreUsers, filter]);
 
-  state.current = filter.flipRef;
   useLayoutEffect(() => {
-    if (state.current) {
-      Flip.from(state.current, {
-        ease: "sine.out",
-      });
-    }
+    const data = Flip.getState(".container-card");
+    console.log("🚀 ~ useLayoutEffect ~ data:", data);
+    Flip.to(data, {
+      duration: 1,
+      scale: true,
+      stagger: 0.1,
+      ease: "circ.inOut",
+    });
   }, [filter.filterIsOpen]);
   const MapCollectionCard = () => {
     return products.map((product, i) => {
