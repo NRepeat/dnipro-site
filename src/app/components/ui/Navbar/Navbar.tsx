@@ -3,8 +3,7 @@ import React, { useLayoutEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
-import BagModal from "../../Bag/BagModal";
-import BuyRightNowModal from "../../Bag/BuyRightNowModal";
+
 import NavbarCustomContent from "./NavbarContent";
 
 const NavBar = () => {
@@ -41,8 +40,8 @@ const NavBar = () => {
   //   };
   // }, [dispatch]);
   return (
-    <div className="main-tool-bar  w-full ">
-      <div className="max-w-[1524px] flex justify-between w-full z-50">
+    <div className="main-tool-bar  w-full z-50">
+      <div className="max-w-[1524px] flex justify-between w-full">
         <NavbarCustomContent />
       </div>
       {/* <BagModal /> */}

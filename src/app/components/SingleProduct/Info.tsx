@@ -12,6 +12,9 @@ import { Button } from "@/components/ui/button";
 import { Divider } from "@nextui-org/react";
 import { FullProductItem } from "@/app/types/types";
 import Link from "next/link";
+import { CartStateType } from "@/app/store/slice/cartSlice";
+import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 const Info = ({
   item,
@@ -21,11 +24,13 @@ const Info = ({
   variantId: number;
 }) => {
   const dispatch = useAppDispatch();
+  const cartState = useSelector((state: { cart: CartStateType }) => state.cart);
+  console.log("🚀 ~ cartState:", cartState);
 
   const onAddProduct = (id: number) => {
-    dispatch(
-      cartThunk.thunk.createCartItem({ productItemId: id, quantity: 1 })
-    );
+    dispatch(cartThunk.thunk.createCartItem({ productItemId: id, quantity: 1 }))
+      .catch(() => toast.success("Виникла помилка при додавання товару"))
+      .finally(() => toast.success("Товар додан до корзини"));
   };
 
   return (
@@ -67,6 +72,7 @@ const Info = ({
             <Button
               className="w-[150px]"
               variant={"outline"}
+              loading={cartState.cartItemsLoading && cartState.loading}
               onClick={() => onAddProduct(item.id)}
             >
               Add to cart

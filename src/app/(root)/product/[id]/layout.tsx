@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <main className="w-full flex justify-center">
-      <div className="max-w-[1524px] flex flex-col justify-start w-full px-6">
+      <div className="max-w-[1524px] flex flex-col justify-start w-full px-6  z-10">
         {children}
         {item}
         {moreProducts}

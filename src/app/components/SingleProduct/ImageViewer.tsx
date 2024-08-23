@@ -47,7 +47,7 @@ const ImageViewer = ({ images }: { images: string[] }) => {
   return (
     <div
       ref={imageViewerRef}
-      className={`sticky  left-0  z-auto h-fit ${
+      className={`sticky z-10 left-0   h-fit ${
         filter.filterShouldStick ? "top-0" : "top-[60px]"
       }`}
     >

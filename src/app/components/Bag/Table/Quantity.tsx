@@ -1,5 +1,4 @@
 "use client";
-import { addBulkProducts } from "@/app/actions/products";
 import { Button, Input } from "@nextui-org/react";
 import React, { useState } from "react";
 

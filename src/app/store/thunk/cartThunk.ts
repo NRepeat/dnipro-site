@@ -1,12 +1,18 @@
 import cartAPIactions from "@/app/services/cart";
 import { CartDto, CreateCartItem } from "@/app/services/dto/cart";
 import { createAsyncThunk, ActionReducerMapBuilder } from "@reduxjs/toolkit";
-import { CartStateType } from "../slice/cartSlice";
+import {
+  CartStateType,
+  setCartItemsLoading,
+  setCartLoading,
+} from "../slice/cartSlice";
 import { getCartDetails } from "@/app/lib/get-cart-details";
+import toast from "react-hot-toast";
 
 const fetchCart = createAsyncThunk<CartDto>(
   "cart/fetchCart",
   async (_, thunkAPI) => {
+    thunkAPI.dispatch(setCartItemsLoading({ cartItemsLoading: true }));
     const response = await cartAPIactions.fetchCart({});
     return response.data.cart;
   }
@@ -17,6 +23,7 @@ const updateCartQuantity = createAsyncThunk<
 >(
   "cart/updateCartQuantity",
   async ({ id, quantity }: { id: number; quantity: number }, thunkAPI) => {
+    thunkAPI.dispatch(setCartLoading({ cartLoading: true }));
     const response = await cartAPIactions.updateCartQuantity({ id, quantity });
     return response.data.cart;
   }
@@ -32,6 +39,7 @@ const deleteCart = createAsyncThunk<CartDto, { id: number }>(
 const createCartItem = createAsyncThunk<CartDto, CreateCartItem>(
   "cart/createCartItem",
   async ({ productItemId, quantity }, thunkAPI) => {
+    thunkAPI.dispatch(setCartLoading({ cartLoading: true }));
     const response = await cartAPIactions.createCartItem({
       productItemId,
       quantity,
@@ -50,15 +58,16 @@ const cartCase = (
     state.loading = false;
   });
   const pending = builder.addCase(thunk.pending, (state, action) => {
-    state.loading = true;
+    // state.loading = true;
   });
   const rejected = builder.addCase(thunk.rejected, (state, action) => {
     state.error = true;
     state.loading = false;
+    state.cartItemsLoading = false;
   });
   return { fulfilled, pending, rejected };
 };
-
+// const;
 const extraReducers = (builder: ActionReducerMapBuilder<CartStateType>) => {
   cartCase(builder, updateCartQuantity);
   cartCase(builder, fetchCart);

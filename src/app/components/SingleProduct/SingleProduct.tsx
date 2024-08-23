@@ -14,7 +14,7 @@ type ProductType = {
 const SingleProduct: FC<ProductType> = ({ item, variantId }) => {
   const images = item.images as string[];
   return (
-    <div className="flex w-full flex-col ">
+    <div className="flex w-full flex-col">
       <div className="flex pb-32 gap-12 justify-between px-4">
         <ImageViewer images={images} />
         <Info item={item} variantId={variantId} />

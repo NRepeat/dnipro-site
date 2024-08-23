@@ -1,6 +1,9 @@
 import prisma from "@/app/utils/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
+// Ensure this API route is treated as dynamic
+export const dynamic = "force-dynamic";
+
 export async function GET(req: NextRequest) {
   try {
     const limit = parseInt(req.nextUrl.searchParams.get("limit") || "10", 10);
@@ -14,6 +17,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(products);
   } catch (error) {
-    throw new Error("Error while search products");
+    console.log("🚀 ~ GET ~ error:", error);
+    throw new Error("Error while searching products");
   }
 }

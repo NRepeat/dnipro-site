@@ -10,7 +10,7 @@ import CartDriver from "../../CartDriver/CartDriver";
 
 const NavbarCustomContent = () => {
   return (
-    <div className="text-black  max-navbar-w-disable w-full flex items-center justify-between px-4 ">
+    <div className="text-black  max-navbar-w-disable w-full flex items-center justify-between px-4 z-50 ">
       <div className="w-1/3 flex">
         <Link
           href="/"

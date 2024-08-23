@@ -4,10 +4,6 @@ import "../globals.css";
 import { Providers } from "../providers/providers";
 import CustomFooter from "../components/Footer/Footer";
 import NavBar from "../components/ui/Navbar/Navbar";
-import NavbarCustomContent from "../components/ui/Navbar/NavbarContent";
-import BagModal from "../components/Bag/BagModal";
-import BuyRightNowModal from "../components/Bag/BuyRightNowModal";
-import SearchInput from "../components/ui/SearchInput/SearchInput";
 
 const inter = Inter({ subsets: ["latin"] });
 

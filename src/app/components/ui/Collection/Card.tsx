@@ -26,33 +26,35 @@ const CollectionCard: FC<CollectionCardProps> = ({ product }) => {
     (variant) => variant.images as string
   );
   return (
-    <Link
-      href={`/product/${product.uid}/item/${product.variants[0].id}`}
-      prefetch
-    >
-      <div
-        className={`container  transition-transform-background-disable w-full rounded-none cursor-pointer  border-1 hover:border-black border-b-2`}
+    <div className="flex flex-col">
+      <Link
+        href={`/product/${product.uid}/item/${product.variants[0].id}`}
+        prefetch
       >
-        <div className="flex w-full items-center justify-center overflow-hidden min-h-[300px]">
-          <Image
-            width={300}
-            height={300}
-            src={images[0]}
-            alt="image"
-            className={`w-full h-auto object-cover rounded-none  `}
-          />
+        <div
+          className={`container  transition-transform-background-disable w-full rounded-none cursor-pointer  border-1 hover:border-black border-b-2`}
+        >
+          <div className="flex w-full items-center justify-center overflow-hidden min-h-[300px]">
+            <Image
+              width={300}
+              height={300}
+              src={images[0]}
+              alt="image"
+              className={`w-full h-auto object-cover rounded-none  `}
+            />
+          </div>
         </div>
-        <div className="justify-between flex">
-          <p className="text-medium">{product.title}</p>
-          <Link
-            href={`/buy/product/${product.id}/item/${product.variants[0].id}`}
-            className="w-[150px]"
-          >
-            Buy it now
-          </Link>
-        </div>
+      </Link>
+      <div className="justify-between flex">
+        <p className="text-medium">{product.title}</p>
+        <Link
+          href={`/buy/product/${product.id}/item/${product.variants[0].id}`}
+          className="w-[150px]"
+        >
+          Buy it now
+        </Link>
       </div>
-    </Link>
+    </div>
   );
 };
 
