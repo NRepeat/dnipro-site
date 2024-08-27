@@ -13,9 +13,14 @@ export default async function RootLayout({
 }>) {
   const brands = await filtersAPIactions.getAllBrands();
   const manufactures = await filtersAPIactions.getAllManufactures();
+  const sizes = await filtersAPIactions.getAllProductSizes();
 
   return (
-    <Filter brands={brands.data} manufactures={manufactures.data}>
+    <Filter
+      brands={brands.data}
+      manufactures={manufactures.data}
+      sizes={sizes.data}
+    >
       <div className="flex flex-col">
         <BreadcrumbsCustom />
         {children}

@@ -27,6 +27,7 @@ const GridWrapper = ({
   children?: React.ReactNode;
   productsInitialData: FullProduct[];
 }) => {
+  console.log("🚀 ~ productsInitialData:", productsInitialData);
   gsap.registerPlugin(Flip);
   const NUMBER_OF_USERS_TO_FETCH = 12;
   const [offset, setOffset] = useState(NUMBER_OF_USERS_TO_FETCH);
@@ -54,7 +55,6 @@ const GridWrapper = ({
 
   useLayoutEffect(() => {
     const data = Flip.getState(".container-card");
-    console.log("🚀 ~ useLayoutEffect ~ data:", data);
     Flip.to(data, {
       duration: 1,
       scale: true,
@@ -63,7 +63,7 @@ const GridWrapper = ({
     });
   }, [filter.filterIsOpen]);
   const MapCollectionCard = () => {
-    return products.map((product, i) => {
+    return productsInitialData.map((product, i) => {
       return <CollectionCard key={i} product={product} />;
     });
   };

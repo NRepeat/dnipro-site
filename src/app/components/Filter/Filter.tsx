@@ -9,7 +9,6 @@ import {
   setFlipState,
 } from "@/app/store/slice/filterSlice";
 import gsap from "gsap";
-import { Flip } from "gsap/all";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -26,18 +25,28 @@ import { useSet } from "react-use";
 import PriceRange from "./PriceRange";
 import { useRouter, useSearchParams } from "next/navigation";
 import qs from "qs";
+import { AllProductSizes } from "@/app/types/types";
+
+export type ManufacturerWithProductCount = Manufacturer & {
+  _count: { product: number };
+};
+export type CategoryWithProductCount = Category & {
+  _count: { product: number };
+};
 type FilterProps = {
   children: React.ReactNode;
-  brands: Category[];
-  manufactures: Manufacturer[];
+  brands: CategoryWithProductCount[];
+  manufactures: ManufacturerWithProductCount[];
+  sizes: AllProductSizes[];
 };
 
 interface QueryFilters extends PriseRangeState {
   brand: string;
   manufacture: string;
+  size: string;
 }
 
-const Filter: FC<FilterProps> = ({ children, brands, manufactures }) => {
+const Filter: FC<FilterProps> = ({ children, brands, manufactures, sizes }) => {
   const dispatch = useDispatch();
   const params = useSearchParams() as unknown as Map<
     keyof QueryFilters,
@@ -49,6 +58,9 @@ const Filter: FC<FilterProps> = ({ children, brands, manufactures }) => {
       params.has("manufacture") ? params.get("manufacture")?.split(",") : []
     )
   );
+  const sizesItemsFilterSet = useSet<string>(
+    new Set(params.has("size") ? params.get("size")?.split(",") : [])
+  );
   const brandItemsFilterSet = useSet<string>(
     new Set(params.has("brand") ? params.get("brand")?.split(",") : [])
   );
@@ -57,6 +69,7 @@ const Filter: FC<FilterProps> = ({ children, brands, manufactures }) => {
     priceTo: Number(params.get("priceTo")) || undefined,
   });
   const [brandSetItemsValues] = brandItemsFilterSet;
+  const [sizeSetItemsValues] = sizesItemsFilterSet;
   const [manufactureSetItemsValues] = manufactureItemsFilterSet;
   const filter = useSelector(
     (state: { filter: FilterStateType }) => state.filter
@@ -118,10 +131,17 @@ const Filter: FC<FilterProps> = ({ children, brands, manufactures }) => {
       ...price,
       brand: Array.from(brandSetItemsValues),
       manufacture: Array.from(manufactureSetItemsValues),
+      size: Array.from(sizeSetItemsValues),
     };
     const query = qs.stringify(filters, { arrayFormat: "comma" });
     router.push(`?${query}`, { scroll: false });
-  }, [router, price, brandSetItemsValues, manufactureSetItemsValues]);
+  }, [
+    router,
+    price,
+    brandSetItemsValues,
+    manufactureSetItemsValues,
+    sizeSetItemsValues,
+  ]);
 
   const handleShowFilter = () => {
     dispatch(setFilterIsOpen(!filter.filterIsOpen));
@@ -131,13 +151,28 @@ const Filter: FC<FilterProps> = ({ children, brands, manufactures }) => {
     value: brand.slug,
     slug: brand.slug,
     text: brand.name,
+    productAmount: brand._count,
   }));
-  const manufactureItems: Item[] = manufactures.map((brand) => ({
-    value: brand.slug,
-    slug: brand.slug,
-    text: brand.name,
+  const manufactureItems: Item[] = manufactures.map((manufacture) => ({
+    value: manufacture.slug,
+    slug: manufacture.slug,
+    text: manufacture.name,
+    productAmount: manufacture._count,
   }));
 
+  const allSizes: number[] = sizes
+    .flatMap((size) => {
+      const allSizes = size.variants.map((variant) => variant.size);
+      return allSizes;
+    })
+    .sort((a, b) => a - b);
+
+  const uniqSizes = Array.from(new Set(allSizes));
+  const sizeItems: Item[] = uniqSizes.map((size) => ({
+    value: String(size),
+    slug: String(size),
+    text: String(size),
+  }));
   return (
     <div className="flex  flex-col w-full ">
       <div
@@ -189,6 +224,11 @@ const Filter: FC<FilterProps> = ({ children, brands, manufactures }) => {
                   name: "Manufacture",
                   properties: manufactureItems,
                   filterSet: manufactureItemsFilterSet,
+                },
+                {
+                  name: "Sizes",
+                  properties: sizeItems,
+                  filterSet: sizesItemsFilterSet,
                 },
               ]}
             />

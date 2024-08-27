@@ -74,7 +74,7 @@ model ProductItem {
   uid       String     @unique
   name      String
   slug      String
-  size      Json
+  size      Int
   price     String
   color     String
   sales     Int?

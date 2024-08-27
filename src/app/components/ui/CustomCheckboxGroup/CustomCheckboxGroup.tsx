@@ -45,7 +45,6 @@ export const CheckboxFiltersGroup: FC<Props> = ({
   useEffect(() => {
     onChange?.(Array.from(selected));
   }, [selected, onChange]);
-
   return (
     <div className={className}>
       {showAll && (
@@ -66,6 +65,7 @@ export const CheckboxFiltersGroup: FC<Props> = ({
             value={item.value}
             text={item.text}
             slug={item.slug}
+            disabled={item.productAmount?.product === 0}
             endAdornment={item.endAdornment}
           />
         ))}

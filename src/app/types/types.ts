@@ -11,3 +11,21 @@ export type FullProduct = Product & {
   variants: ProductItem[];
   category: Category;
 };
+
+export interface GetSearchParams {
+  query?: string;
+  sortBy?: string;
+  brand?: string;
+  size?: string;
+  manufacture?: string;
+  priceTo?: string;
+  priceFrom?: string;
+  category?: string;
+}
+
+export type AllProductSizes = Product & {
+  variants: { size: number }[];
+  _count: {
+    variants: number;
+  };
+};

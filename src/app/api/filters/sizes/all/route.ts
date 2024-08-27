@@ -3,14 +3,15 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const categories = await prisma.category.findMany({
+    const manufactures = await prisma.product.findMany({
       include: {
+        variants: { select: { size: true } },
         _count: {
-          select: { products: true },
+          select: { variants: true },
         },
       },
     });
-    return NextResponse.json(categories);
+    return NextResponse.json(manufactures);
   } catch (error) {
     throw new Error("Error find all manufactures");
   }

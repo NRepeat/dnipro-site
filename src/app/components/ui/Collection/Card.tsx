@@ -22,39 +22,52 @@ type CollectionCardProps = {
 // };
 
 const CollectionCard: FC<CollectionCardProps> = ({ product }) => {
+  console.log("🚀 ~ product :", product);
   const images: string[] = product.variants.flatMap(
     (variant) => variant.images as string
   );
   return (
-    <div className="container-card flex flex-col">
-      <Link
-        href={`/product/${product.uid}/item/${product.variants[0].id}`}
-        prefetch
-      >
-        <div
-          className={`  transition-transform-background-disable w-full rounded-none cursor-pointer  border-1 hover:border-black border-b-2`}
-        >
-          <div className="flex w-full items-center justify-center overflow-hidden min-h-[300px]">
-            <Image
-              width={300}
-              height={300}
-              src={images[0]}
-              alt="image"
-              className={`w-full h-auto object-cover rounded-none  `}
-            />
+    <>
+      {product.variants[0] && (
+        <div className="container-card flex flex-col">
+          <Link
+            href={
+              product.variants[0]
+                ? `/product/${product.uid}/item/${product.variants[0].id}`
+                : ""
+            }
+            prefetch
+          >
+            <div
+              className={`  transition-transform-background-disable w-full rounded-none cursor-pointer  border-1 hover:border-black border-b-2`}
+            >
+              <div className="flex w-full items-center justify-center overflow-hidden min-h-[300px]">
+                <Image
+                  width={300}
+                  height={300}
+                  src={images[0]}
+                  alt="image"
+                  className={`w-full h-auto object-cover rounded-none  `}
+                />
+              </div>
+            </div>
+          </Link>
+          <div className="justify-between flex">
+            <p className="text-medium">{product.title}</p>
+            <Link
+              href={
+                product.variants[0]
+                  ? `/buy/product/${product.uid}/item/${product.variants[0].id}`
+                  : ""
+              }
+              className="w-[150px]"
+            >
+              Buy it now
+            </Link>
           </div>
         </div>
-      </Link>
-      <div className="justify-between flex">
-        <p className="text-medium">{product.title}</p>
-        <Link
-          href={`/buy/product/${product.id}/item/${product.variants[0].id}`}
-          className="w-[150px]"
-        >
-          Buy it now
-        </Link>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 
