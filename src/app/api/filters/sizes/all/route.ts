@@ -13,6 +13,7 @@ export async function GET() {
     });
     return NextResponse.json(manufactures);
   } catch (error) {
+    console.log("🚀 ~ GET ~ error:", error)
     throw new Error("Error find all manufactures");
   }
 }

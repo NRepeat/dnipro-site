@@ -52,10 +52,13 @@ const cartCase = (
   thunk: any
 ) => {
   const fulfilled = builder.addCase(thunk.fulfilled, (state, action) => {
+   if(action.payload){
     const { items, totalAmount } = getCartDetails(action.payload);
     state.items = items;
     state.totalAmount = totalAmount;
     state.loading = false;
+   }
+   state.loading = true;
   });
   const pending = builder.addCase(thunk.pending, (state, action) => {
     // state.loading = true;

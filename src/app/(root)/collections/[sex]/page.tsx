@@ -6,6 +6,7 @@ import React from "react";
 
 const page = async ({ searchParams }: { searchParams: GetSearchParams }) => {
   const products = await findProduct(searchParams);
+
   return <GridWrapper productsInitialData={products} />;
 };
 
