@@ -12,10 +12,7 @@ type PriceRangeProps = {
 };
 
 const PriceRange: FC<PriceRangeProps> = ({ price, setPrice }) => {
-  const filter = useSelector(
-    (state: { filter: { price: PriseRangeState } }) => state.filter
-  );
-  const dispatch = useDispatch();
+
   const handleInput = (name: keyof PriseRangeState, value: number) => {
     setPrice({ [name]: value });
   };
@@ -30,7 +27,7 @@ const PriceRange: FC<PriceRangeProps> = ({ price, setPrice }) => {
           min={0}
           placeholder="0"
           value={String(price.priceFrom)}
-          max={10000}
+          max={100000}
           onChange={(e) => handleInput("priceFrom", Number(e.target.value))}
         />
         <Input

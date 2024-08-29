@@ -5,6 +5,7 @@ export const findOrCreateCart = async (token: string) => {
     let userCart = await prisma.cart.findFirst({
       where: { token },
     });
+    console.log("🚀 ~ findOrCreateCart ~ userCart:", userCart)
     if (!userCart) {
       userCart = await prisma.cart.create({
         data: { token },

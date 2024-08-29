@@ -7,6 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   try {
     const token = req.cookies.get("cart")?.value;
+    console.log("🚀 ~ GET ~ token:", token)
     if (!token) {
       return NextResponse.json({ cart: { totalAmount: 0, products: [] } });
     }
@@ -25,6 +26,7 @@ export async function GET(req: NextRequest) {
         },
       },
     });
+    console.log("🚀 ~ GET ~ userCart:", userCart)
     return NextResponse.json({ cart: userCart });
   } catch (error) {
     return NextResponse.json({ message: "Error get  cart" });

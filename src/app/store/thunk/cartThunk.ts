@@ -12,8 +12,9 @@ import toast from "react-hot-toast";
 const fetchCart = createAsyncThunk<CartDto>(
   "cart/fetchCart",
   async (_, thunkAPI) => {
-    thunkAPI.dispatch(setCartItemsLoading({ cartItemsLoading: true }));
+    thunkAPI.dispatch(setCartItemsLoading({ cartItemsLoading: false }));
     const response = await cartAPIactions.fetchCart({});
+    console.log("🚀 ~ response:", response.data)
     return response.data.cart;
   }
 );
@@ -52,6 +53,7 @@ const cartCase = (
   thunk: any
 ) => {
   const fulfilled = builder.addCase(thunk.fulfilled, (state, action) => {
+   console.log("🚀 ~ fulfilled ~ action:", action)
    if(action.payload){
     const { items, totalAmount } = getCartDetails(action.payload);
     state.items = items;

@@ -25,7 +25,6 @@ const Info = ({
 }) => {
   const dispatch = useAppDispatch();
   const cartState = useSelector((state: { cart: CartStateType }) => state.cart);
-  console.log("🚀 ~ cartState:", cartState);
 
   const onAddProduct = (id: number) => {
     dispatch(cartThunk.thunk.createCartItem({ productItemId: id, quantity: 1 }))
@@ -72,7 +71,7 @@ const Info = ({
             <Button
               className="w-[150px]"
               variant={"outline"}
-              loading={cartState.cartItemsLoading && cartState.loading}
+              loading={cartState.cartItemsLoading}
               onClick={() => onAddProduct(item.id)}
             >
               Add to cart
